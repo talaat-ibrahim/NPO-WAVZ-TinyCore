@@ -48,4 +48,19 @@ Route::middleware(['auth'])->group(function () {
 
     // Routers
     Route::resource('/routers', \App\Http\Controllers\Router\RouterController::class);
+
+    // switch modal
+    Route::resource('/switch-modal', \App\Http\Controllers\SwitchModal\SwitchModalController::class);
+
+    // ups installations
+    Route::resource('/ups-installations', \App\Http\Controllers\UpsInstallation\UpsInstaltionController::class);
+
+    // line capacities
+    Route::resource('/line-capacities', \App\Http\Controllers\LineCapaties\LineCapacityController::class);
+
+    // entuity status
+    Route::resource('/entuity-status', \App\Http\Controllers\EntuityStatus\EntuityStatusController::class);
+
+    // governments
+    Route::resource('/government', \App\Http\Controllers\Government\GovernmentController::class);
 });

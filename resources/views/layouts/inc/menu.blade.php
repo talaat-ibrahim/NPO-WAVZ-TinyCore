@@ -71,6 +71,41 @@
                         <span key="t-contacts">@lang('Routers types')</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{ route('switch-modal.index') }}" class="waves-effect">
+                        <i class="bx bxs-user-pin"></i>
+                        <span key="t-contacts">@lang('Switch modal')</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('ups-installations.index') }}" class="waves-effect">
+                        <i class="bx bxs-user-pin"></i>
+                        <span key="t-contacts">@lang('Ups Installation')</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('line-capacities.index') }}" class="waves-effect">
+                        <i class="bx bxs-user-pin"></i>
+                        <span key="t-contacts">@lang('Line Capacitie')</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('entuity-status.index') }}" class="waves-effect">
+                        <i class="bx bxs-user-pin"></i>
+                        <span key="t-contacts">@lang('Entuity Status')</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('government.index') }}" class="waves-effect">
+                        <i class="bx bxs-user-pin"></i>
+                        <span key="t-contacts">@lang('Government')</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- Sidebar -->
