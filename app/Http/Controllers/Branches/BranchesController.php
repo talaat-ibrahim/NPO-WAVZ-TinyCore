@@ -10,11 +10,16 @@ use App\Imports\BranchesImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Branch;
 use App\Models\BranchLevel;
+use App\Models\EntuityStatus;
+use App\Models\Government;
+use App\Models\LineCapacitie;
 use App\Models\LineType;
 use App\Models\Network;
 use App\Models\Project;
 use App\Models\Router;
+use App\Models\SwitchModel;
 use App\Models\Terminal;
+use App\Models\UpsInstallation;
 
 class BranchesController extends Controller
 {
@@ -81,6 +86,11 @@ class BranchesController extends Controller
             'levels' => BranchLevel::all(),
             'lineTypes' => LineType::all(),
             'routers' => Router::all(),
+            'upsInstallations' => UpsInstallation::all(),
+            'lineCapacities' => LineCapacitie::all(),
+            'switchModels' => SwitchModel::all(),
+            'governments' => Government::all(),
+            'entuityStaus' => EntuityStatus::all(),
         ]);
     }
 
@@ -137,6 +147,11 @@ class BranchesController extends Controller
             'levels' => BranchLevel::all(),
             'lineTypes' => LineType::all(),
             'routers' => Router::all(),
+            'upsInstallations' => UpsInstallation::all(),
+            'lineCapacities' => LineCapacitie::all(),
+            'switchModels' => SwitchModel::all(),
+            'governments' => Government::all(),
+            'entuityStaus' => EntuityStatus::all(),
         ]);
     }
 

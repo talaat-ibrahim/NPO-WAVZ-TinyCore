@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSwitchModalsTable extends Migration
+class CreateSwitchModelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSwitchModalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('switch_modals', function (Blueprint $table) {
+        Schema::create('switch_models', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->softDeletes();
@@ -28,6 +28,6 @@ class CreateSwitchModalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('switch_modals');
+        Schema::dropIfExists('switch_models');
     }
 }

@@ -5,10 +5,10 @@ namespace App\Http\Controllers\SwitchModal;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ModelSwith\CreateSwitchModalRequest;
 use App\Http\Requests\ModelSwith\UpdateSwitchModalRequest;
-use App\Models\SwitchModal;
+use App\Models\SwitchModel;
 use Illuminate\Http\Request;
 
-class SwitchModalController extends Controller
+class SwitchModelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class SwitchModalController extends Controller
                 ]
             ],
         ];
-        $lists = SwitchModal::orderBy('id', 'desc')->paginate();
+        $lists = SwitchModel::orderBy('id', 'desc')->paginate();
         return view('pages.switch-modal.index', [
             'breadcrumb' => $breadcrumb,
             'lists'     => $lists,
@@ -67,17 +67,17 @@ class SwitchModalController extends Controller
      */
     public function store(CreateSwitchModalRequest $request)
     {
-        SwitchModal::create($request->all());
+        SwitchModel::create($request->all());
         return redirect()->route('switch-modal.index')->with('success', __("This row has been created."));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  SwitchModal $modal
+     * @param  SwitchModel $modal
      * @return \Illuminate\Http\Response
      */
-    public function show(SwitchModal $modal)
+    public function show(SwitchModel $modal)
     {
         $breadcrumb = [
             'title' =>  __("Show Modal"),
@@ -101,10 +101,10 @@ class SwitchModalController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param SwitchModal $modal
+     * @param SwitchModel $modal
      * @return \Illuminate\Http\Response
      */
-    public function edit(SwitchModal $SwitchModal)
+    public function edit(SwitchModel $SwitchModel)
     {
        
         $breadcrumb = [
@@ -122,7 +122,7 @@ class SwitchModalController extends Controller
         ];
         return view('pages.switch-modal.edit', [
             'breadcrumb'    =>  $breadcrumb,
-            'data'         =>  $SwitchModal,
+            'data'         =>  $SwitchModel,
         ]);
     }
 
@@ -130,24 +130,24 @@ class SwitchModalController extends Controller
      * Update the specified resource in storage.
      *
      * @param  UpdateSwitchModalRequest  $request
-     * @param  SwitchModal $modal
+     * @param  SwitchModel $modal
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSwitchModalRequest $request, SwitchModal $SwitchModal)
+    public function update(UpdateSwitchModalRequest $request, SwitchModel $SwitchModel)
     {
-        $SwitchModal->update($request->all());
+        $SwitchModel->update($request->all());
         return redirect()->route('switch-modal.index')->with('success', __("This row has been updated."));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  SwitchModal $modal
+     * @param  SwitchModel $modal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SwitchModal $SwitchModal)
+    public function destroy(SwitchModel $SwitchModel)
     {
-        $SwitchModal->delete();
+        $SwitchModel->delete();
         return redirect()->route('switch-modal.index')->with('success', __("This row has been deleted."));
     }
 }
