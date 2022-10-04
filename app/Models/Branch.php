@@ -47,4 +47,31 @@ class Branch extends Model
     {
         return $this->belongsTo(Router::class);
     }
+
+ 
+
+    public function lineCapacity(){
+        return $this->belongsTo(LineCapacitie::class);
+    }
+
+
+    public function routerName(){
+        return $this->belongsTo(Router::class, 'router_model_id' );
+    }
+
+    public function upsInstallation(){
+        return $this->belongsTo(UpsInstallation::class,'ups_installation_id');
+    }
+
+    public function model(){
+        return $this->belongsTo(SwitchModel::class , 'switch_model_id');
+    }
+
+    public function entutiyStatus(){
+        return $this->belongsTo(EntuityStatus::class , 'entuity_status_id');
+    }
+
+    public function government(){
+        return $this->belongsTo(Government::class);
+    }
 }

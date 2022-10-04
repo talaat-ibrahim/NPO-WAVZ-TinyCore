@@ -37,9 +37,7 @@ class BranchesController extends Controller
         ];
         $lists = Branch::when(request('keyword'), function ($query) {
             $keyword = request('keyword');
-            $query->where('name->en', 'like', '%' . $keyword . '%')
-                ->orWhere('name->ar', 'like', '%' . $keyword . '%')
-                ->orWhere('lan_ip', 'like', '%' . $keyword . '%')
+            $query->Where('lan_ip', 'like', '%' . $keyword . '%')
                 ->orWhere('wan_ip', 'like', '%' . $keyword . '%')
                 ->orWhere('tunnel_ip', 'like', '%' . $keyword . '%')
                 ->orWhere('main_order_id', 'like', '%' . $keyword . '%')
@@ -47,9 +45,7 @@ class BranchesController extends Controller
                 ->orWhere('area', 'like', '%' . $keyword . '%')
                 ->orWhere('sector', 'like', '%' . $keyword . '%')
                 ->orWhere('address', 'like', '%' . $keyword . '%')
-                ->orWhere('phone', 'like', '%' . $keyword . '%')
-                ->orWhere('phone', 'like', '%' . $keyword . '%')
-                ->orWhere('financial_code', 'like', '%' . $keyword . '%');
+                ->orWhere('telephone', 'like', '%' . $keyword . '%');
         })->orderBy('id', 'asc')->paginate();
         return view('pages.branches.index', [
             'breadcrumb' => $breadcrumb,

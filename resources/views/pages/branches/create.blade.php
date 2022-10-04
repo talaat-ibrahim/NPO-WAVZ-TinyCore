@@ -1,4 +1,11 @@
 @extends('layouts.master')
+@push('styles')
+    <style>
+        .hide{
+            display: none
+        }
+    </style>
+@endpush
 @section('PageTitle', $breadcrumb['title'])
 @section('PageContent')
     @includeIf('layouts.inc.breadcrumb')
@@ -97,11 +104,29 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="display: flex">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" name="telephone"
-                                        value="{{ old('telephone') }}" placeholder="@lang('phone')" />
-                                    <label>@lang('phone')</label>
+                                    <select class="form-control" name="government_id" required placeholder="@lang('Government ') ">
+                                        @foreach ($governments as $goverment)
+                                            <option selected="{{ old('government_id') == $goverment->id }}"
+                                                value="{{ $goverment->id }}">{{ $goverment->name }}
+                                                --{{ $goverment->code }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    <label>@lang('Government')</label>
+                                    @error('government_id')
+                                        <span style="color:red;">
+                                            {{ $errors->first('government_id') }}
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-floating mb-3">
+                                    
+                                    <input type="number" required class="form-control" name="telephone"
+                                        value="{{ old('telephone') }}" placeholder="@lang('telephone')"aria-describedby="basic-addon1"aria-label="telephone" />
+                                    <label>@lang('telephone')</label>
                                     @error('telephone')
                                         <span style="color:red;">
                                             {{ $errors->first('telephone') }}
@@ -313,25 +338,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <select class="form-control" name="government_id" placeholder="@lang('Government ') ">
-                                        @foreach ($governments as $goverment)
-                                            <option selected="{{ old('government_id') == $goverment->id }}"
-                                                value="{{ $goverment->id }}">{{ $goverment->name }}
-                                                --{{ $goverment->code }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    <label>@lang('Government')</label>
-                                    @error('government_id')
-                                        <span style="color:red;">
-                                            {{ $errors->first('government_id') }}
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
+                            
                         </div>
 
                         <hr>
@@ -399,7 +406,7 @@
                                 </div>
                             </div>
                             <div class="col-md-10">
-                                <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 hide " id="atm-ip">
                                     <input type="text" class="form-control" name="atm_ip"
                                         value="{{ old('atm_ip') }}" placeholder="@lang('ATM IP') }}" />
                                     <label>@lang('ATM IP')</label>
@@ -413,7 +420,7 @@
                             <div class="col-md-2">
                                 <div class="form-check mt-3">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="atm_exists"
+                                        <input class="form-check-input" id="atm-exists" type="checkbox" name="atm_exists"
                                             value="1">
                                         ATM exists
                                     </label>
@@ -805,3 +812,18 @@
 
 
 @endsection
+@push('scripts')
+    <script>
+        
+        $(function () {
+        $("#atm-exists").click(function () {
+            if ($(this).is(":checked")) {
+                $("#atm-ip").removeClass('hide');
+            } else {
+                $("#atm-ip").addClass('hide');
+            }
+        });
+    })
+    </script>
+
+@endpush

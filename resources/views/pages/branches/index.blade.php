@@ -5,7 +5,7 @@
 
     <div
         style="margin-bottom: 14px; position: relative; display: flex; justify-content: space-between; align-items: center;">
-        <form method="GET" style="display: flex; justify-content: space-between; gap: 10px">
+        <form method="GET" style="display: flex; justify-content: space-between; gap: 10px" action="{{ route('branches.index') }}">
             <div class="form-floating" style="height: 40px;">
                 <input type="text" class="form-control" style="height: 40px;" name="keyword" value="{{ request('keyword') }}"
                     placeholder="@lang('Search...') }}" />
