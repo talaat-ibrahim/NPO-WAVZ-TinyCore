@@ -34,9 +34,9 @@ class CreateBranchesTable extends Migration
             $table->string("backup_order_id")->nullable();
             $table->foreignId('project_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('modeling')->nullable();
-            $table->unsignedBigInteger('ups_installation_id')->nullable();
-            $table->foreign('ups_installation_id')->references('id')->on('ups_installations')->onDelete('cascade');
+            $table->foreignId('ups_installation_id')->nullable()->constrained()->cascadeOnDelete();
 
+           
             $table->foreignId('line_type_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('line_capacity_id')->nullable()->constrained()->cascadeOnDelete();
             $table->boolean('added_on_entuity')->nullable();
@@ -51,10 +51,11 @@ class CreateBranchesTable extends Migration
             $table->string('router_model_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('entuity_systemname')->nullable();
             $table->string('switch_serial')->nullable();
-            $table->unsignedBigInteger('switch_model_id')->nullable();
-            $table->foreign('switch_model_id')->references('id')->on('switch_models')->onDelete('cascade');
-            $table->unsignedBigInteger('government_id')->nullable();
-            $table->foreign('government_id')->references('id')->on('governments')->onDelete('cascade');
+            $table->foreignId('switch_model_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('government_id')->nullable()->constrained()->cascadeOnDelete();
+
+            
+           
             $table->string('switch_ip')->nullable();
             $table->longText('switch_nots')->nullable();
             $table->boolean('atm_exists')->default(false)->nullable();

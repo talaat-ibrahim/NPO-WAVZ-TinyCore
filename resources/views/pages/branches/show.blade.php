@@ -1,6 +1,348 @@
 @extends('layouts.master')
+
 @section('PageTitle', $breadcrumb['title'])
+
 @section('PageContent')
+    @includeIf('layouts.inc.breadcrumb')
+
+    <div class="row">
+        <div class="col-md-8 col-12">
+            <div class="card  ">
+                <div class="card-header bg-white ">
+                    <h5><b>@lang('Branch Info'):</b></h5>
+
+                </div>
+                <hr style="margin: 0">
+                <div class="card-body bg-white">
+                    <div class="row  p-3" style="border-bottom: 2px dashed lightblue">
+                        <div class="col-md-6">
+                            <b>@lang('Name Ar') :</b>
+                            <span class="me-3 ms-3"> {{ $branch->name['ar'] }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <b>@lang('Name EN') :</b>
+                            <span class="me-3 ms-3"> {{ $branch->name['en'] }}</span>
+                        </div>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b>@lang('Main Order Id') :</b>
+                                <span class="me-3 ms-3"> {{ $branch->main_order_id }}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <b>@lang('Buckup Order Id') :</b>
+                                <span class="me-3 ms-3"> {{ $branch->backup_order_id }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b>@lang('Area') :</b>
+                                <span class="me-3 ms-3"> {{ $branch->area }}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <b>@lang('Address') :</b>
+                                <span class="me-3 ms-3"> {{ $branch->address }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b>@lang('Phone') :</b>
+                                <span class="me-3 ms-3"> {{ $branch->telephone }}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <b>@lang('Sector') :</b>
+                                <span class="me-3 ms-3"> {{ $branch->sector }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b>@lang('Financial code') :</b>
+                                <span class="me-3 ms-3"> {{ $branch->financial_code }}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <b>@lang('ISP Id') :</b>
+                                <span class="me-3 ms-3"> {{ optional($branch->network)->name }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b>@lang('Project') :</b>
+                                <span class="me-3 ms-3"> {{ optional($branch->project)->name }}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <b>@lang('Line Capacity') :</b>
+                                <span class="me-3 ms-3"> {{ optional($branch->lineCapacity)->name }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b>@lang('Post Number') :</b>
+                                <span class="me-3 ms-3"> {{ $branch->post_number }}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <b>@lang('Level') :</b>
+                                <span class="me-3 ms-3"> {{ optional($branch->branchLevel)->name }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b>@lang('Nots') :</b>
+                                <span class="me-3 ms-3"> {{ $branch->notes }}</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b>@lang('VIOP No ') :</b>
+                                <span class="me-3 ms-3"> {{ $branch->viop_no }}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <b>@lang('Line Type') :</b>
+                                <span class="me-3 ms-3"> {{ optional($branch->lineType)->name }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b>@lang('Router ') :</b>
+                                <span class="me-3 ms-3"> {{ optional($branch->routerName)->name }}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <b>@lang('Ups Installiation') :</b>
+                                <span class="me-3 ms-3"> {{ optional($branch->upsInstallation)->name }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b>@lang('Model ') :</b>
+                                <span class="me-3 ms-3"> {{ optional($branch->model)->name }}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <b>@lang('Entuty status') :</b>
+                                <span class="me-3 ms-3"> {{ optional($branch->entutiyStatus)->name }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b>@lang('Government ') :</b>
+                                <span class="me-3 ms-3"> {{ optional($branch->government)->name }}</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-12">
+            <div class="card  ">
+                <div class="card-header bg-white ">
+                    <h5><b>@lang('Branch Ips'):</b></h5>
+                </div>
+                <hr style="margin: 0">
+                <div class="card-body bg-white">
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Wan Ip') :</b>
+                        <span class="me-3 ms-3"> {{ $branch->wan_ip }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Lan Ip') :</b>
+                        <span class="me-3 ms-3"> {{ $branch->lan_ip }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Tunnel Ip') :</b>
+                        <span class="me-3 ms-3"> {{ $branch->tunnel_ip }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Additional Ips') :</b>
+                        <span class="me-3 ms-3"> {{ $branch->additional_ips }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Ip nots ') :</b>
+                        <span class="me-3 ms-3"> {{ $branch->ip_notes }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Atm Ip') :</b>
+                        <span class="me-3 ms-3"> {{ $branch->atm_ip }}</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card  ">
+                <div class="card-header bg-white ">
+                    <h5><b>@lang('Technical Info'):</b></h5>
+                </div> <hr style="margin: 0">
+                <div class="card-body bg-white">
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue" >
+                        <b>@lang('Technical support name') :</b> 
+                        <span class="me-3 ms-3"> {{ $branch->technical_support_name }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue" >
+                        <b>@lang('Technical support phone') :</b> 
+                        <span class="me-3 ms-3"> {{ $branch->technical_support_phone }}</span>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <div class="col-md-6">
+            <div class="card  ">
+                <div class="card-header bg-white ">
+                    <h5><b>@lang('Manager  Info'):</b></h5>
+                </div> <hr style="margin: 0">
+                <div class="card-body bg-white">
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue" >
+                        <b>@lang('Branch Manager name') :</b> 
+                        <span class="me-3 ms-3"> {{ $branch->branch_manager_name }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue" >
+                        <b>@lang('Branch Manager phone') :</b> 
+                        <span class="me-3 ms-3"> {{ $branch->branch_manager_phone }}</span>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <div class="col-md-12">
+            <div class="card  ">
+                <div class="card-header bg-white ">
+                    <h5><b>@lang('Branch Schedular:'):</b></h5>
+                </div> <hr style="margin: 0">
+                <div class="card-body bg-white">
+                    <table class="mx-2">
+                        <thead>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input disabled {{isset($branch->working_days['day'][0])? ($branch->working_days['day'][0] == 'Sat' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
+                                                name="working_days[day][]" value="Sat">
+                                            Saturday
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input disabled {{ isset($branch->working_days['day'][1])?($branch->working_days['day'][1] == 'Sun' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
+                                                name="working_days[day][]" value="Sun">
+                                            Sunday
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input disabled {{ isset($branch->working_days['day'][2])?( $branch->working_days['day'][2] == 'Mon' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
+                                                name="working_days[day][]" value="Mon">
+                                            Monday
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input disabled {{ isset($branch->working_days['day'][3])?($branch->working_days['day'][3] == 'Tue' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
+                                                name="working_days[day][]" value="Tue">
+                                            Tuesday
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input disabled {{isset($branch->working_days['day'][4])? ($branch->working_days['day'][4] == 'Wed' ? 'checked':'') :'' }} class="form-check-input" type="checkbox"
+                                                name="working_days[day][]" value="Wed">
+                                            Wednesday
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input disabled {{ isset($branch->working_days['day'][5])? ($branch->working_days['day'][5] == 'Thu' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
+                                                name="working_days[day][]" value="Thu">
+                                            Thursday
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input disabled {{ isset($branch->working_days['day'][6])? ($branch->working_days['day'][6] == 'Fri' ? 'checked ':''):'' }} class="form-check-input" type="checkbox"
+                                                name="working_days[day][]" value="Fri">
+                                            Friday
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @for ($i=0; $i<=6; $i++)
+                                <td>
+                                    <div class="form-floating mb-3">
+                                        <input disabled type="time" class="form-control"
+                                            name="working_days[start_time][]" value="{{$branch->working_days['start_time'][$i]}}"
+                                            placeholder="@lang('Start time') }}" />
+                                        <label>@lang('Start time')</label>
+                                       
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input disabled type="time" class="form-control"
+                                            name="working_days[end_time][]" value="{{ $branch->working_days['end_time'][$i] }}"
+                                            placeholder="@lang('End time') }}" />
+                                        <label>@lang('End time')</label>
+                                       
+                                    </div>
+                                </td>
+                                @endfor
+                             
+                               
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>  
+        </div>
+    </div>
+
+@endsection
+
+
+
+{{-- @section('PageContent')
     @includeIf('layouts.inc.breadcrumb')
 
 
@@ -152,4 +494,4 @@
             const app = new App("app");
         })();
     </script>
-@endpush
+@endpush --}}

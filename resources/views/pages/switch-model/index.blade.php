@@ -4,7 +4,7 @@
     @includeIf('layouts.inc.breadcrumb')
 
     <div style=" margin-bottom: 14px; position: relative; text-align: right; ">
-        <a type="button" class="btn btn-primary" href="{{ route('switch-modal.create') }}">@lang('Create new modal')</a>
+        <a type="button" class="btn btn-primary" href="{{ route('switch-model.create') }}">@lang('Create new model')</a>
     </div>
 
     @if ($lists->count() > 0)
@@ -25,7 +25,7 @@
                                 @foreach ($lists as $list)
                                     <tr>
                                         <td>
-                                            <a href="{{ route('switch-modal.edit', $list->id) }}">
+                                            <a href="{{ route('switch-model.edit', $list->id) }}">
                                                 {{ $list->name ?? '' }}
                                             </a>
                                         </td>
@@ -35,10 +35,10 @@
                                         </td>
                                         <td style="display: inline-flex;">
                                             <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
-                                                href="{{ route('switch-modal.edit', $list->id) }}">
+                                                href="{{ route('switch-model.edit', $list->id) }}">
                                                 <i class="bx bx-pencil"></i>
                                             </a>
-                                            {!! action_table_delete(route('switch-modal.destroy', $list->id), $list->id) !!}
+                                            {!! action_table_delete(route('switch-model.destroy', $list->id), $list->id) !!}
                                         </td>
                                     </tr>
                                 @endforeach

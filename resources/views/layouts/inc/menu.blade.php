@@ -73,9 +73,9 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('switch-modal.index') }}" class="waves-effect">
+                    <a href="{{ route('switch-model.index') }}" class="waves-effect">
                         <i class="bx bxs-user-pin"></i>
-                        <span key="t-contacts">@lang('Switch modal')</span>
+                        <span key="t-contacts">@lang('Switch model')</span>
                     </a>
                 </li>
 

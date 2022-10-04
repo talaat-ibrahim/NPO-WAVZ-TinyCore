@@ -9,7 +9,7 @@
         <div class="col-8 mx-auto mt-3">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('switch-modal.update', $data->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('switch-model.update', $data->id) }}" method="post" enctype="multipart/form-data">
 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingNameInput" name="name"

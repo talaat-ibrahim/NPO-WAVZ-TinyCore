@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="{{ route('switch-modal.store')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('switch-model.store')}}" method="post" enctype="multipart/form-data">
                         
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingNameInput" name="name"

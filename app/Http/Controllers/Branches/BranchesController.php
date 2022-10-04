@@ -120,7 +120,6 @@ class BranchesController extends Controller
         return view('pages.branches.show', [
             'breadcrumb'    =>  $breadcrumb,
             'branch'         =>  $branch,
-            'lists'         =>  Terminal::all(),
         ]);
     }
 

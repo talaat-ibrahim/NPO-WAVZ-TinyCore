@@ -49,8 +49,8 @@ Route::middleware(['auth'])->group(function () {
     // Routers
     Route::resource('/routers', \App\Http\Controllers\Router\RouterController::class);
 
-    // switch modal
-    Route::resource('/switch-modal', \App\Http\Controllers\SwitchModal\SwitchModalController::class);
+    // switch model
+    Route::resource('/switch-model', \App\Http\Controllers\SwitchModel\SwitchModelController::class);
 
     // ups installations
     Route::resource('/ups-installations', \App\Http\Controllers\UpsInstallation\UpsInstaltionController::class);
