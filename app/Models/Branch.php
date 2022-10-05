@@ -18,6 +18,16 @@ class Branch extends Model
         'working_days' => 'json',
     ];
 
+    public static $DAYS = [
+        'Sat' => 'Saturday' ,
+        'Sun' => 'Sunday' ,
+        'Mon' => 'Monday' ,
+        'Tus' => 'Tuesday' ,
+        'Wed' => 'Wednesday' ,
+        'Thu' => 'Thursday' ,
+        'Fri' => 'Friday' ,
+    ];
+
     public function network()
     {
         return $this->belongsTo(Network::class);

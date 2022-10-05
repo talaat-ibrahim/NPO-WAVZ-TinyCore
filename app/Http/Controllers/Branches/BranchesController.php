@@ -39,6 +39,8 @@ class BranchesController extends Controller
             $keyword = request('keyword');
             $query->Where('lan_ip', 'like', '%' . $keyword . '%')
                 ->orWhere('wan_ip', 'like', '%' . $keyword . '%')
+                ->orWhere('wan_ip', 'like', '%' . $keyword . '%')
+                ->orWhere('project_id', 'like', '%' . $keyword . '%')
                 ->orWhere('tunnel_ip', 'like', '%' . $keyword . '%')
                 ->orWhere('main_order_id', 'like', '%' . $keyword . '%')
                 ->orWhere('backup_order_id', 'like', '%' . $keyword . '%')
@@ -47,9 +49,33 @@ class BranchesController extends Controller
                 ->orWhere('address', 'like', '%' . $keyword . '%')
                 ->orWhere('telephone', 'like', '%' . $keyword . '%');
         })->orderBy('id', 'asc')->paginate();
+
+        //filter by project_id
+        $lists = Branch::when(request('project_id'), function ($query) {
+            $project_id = request('project_id');
+            $query->Where('project_id',   $project_id );
+        })->orderBy('id', 'asc')->paginate();
+
+        //filter by upsInstallations
+        $lists = Branch::when(request('ups_installation_id'), function ($query) {
+            $ups_installation_id = request('ups_installation_id');
+            $query->Where('ups_installation_id',  $ups_installation_id );
+        })->orderBy('id', 'asc')->paginate();
+
+        //filter by line type id
+        $lists = Branch::when(request('line_type_id'), function ($query) {
+            $line_type_id = request('line_type_id');
+            $query->Where('line_type_id',   $line_type_id );
+        })->orderBy('id', 'asc')->paginate();
+
+        // $lists = Branch::where('working_days' , 'like', '%  %')->get();
+        // dd($lists);
         return view('pages.branches.index', [
             'breadcrumb' => $breadcrumb,
             'lists'     => $lists,
+            'projects'     => Project::all(),
+            'upsInstallations' => UpsInstallation::all(),
+            'lineTypes' => LineType::all(),
         ]);
     }
 
@@ -87,6 +113,7 @@ class BranchesController extends Controller
             'switchModels' => SwitchModel::all(),
             'governments' => Government::all(),
             'entuityStaus' => EntuityStatus::all(),
+            'days' =>Branch::$DAYS,
         ]);
     }
 
@@ -113,9 +140,17 @@ class BranchesController extends Controller
                 ],
             ],
         ];
+        $work_day=[];
+        if($branch->working_days){
+            foreach($branch->working_days as $k=>$v){
+                $work_day[]= $k;
+            }
+        }
         return view('pages.branches.show', [
             'breadcrumb'    =>  $breadcrumb,
             'branch'         =>  $branch,
+            'days' =>Branch::$DAYS,
+            'work_day'=>$work_day,
         ]);
     }
 
@@ -134,6 +169,12 @@ class BranchesController extends Controller
                 ],
             ],
         ];
+        $work_day=[];
+        if($branch->working_days){
+            foreach($branch->working_days as $k=>$v){
+                $work_day[]= $k;
+            }
+        }
         return view('pages.branches.edit', [
             'breadcrumb'    =>  $breadcrumb,
             'branch'         =>  $branch,
@@ -147,6 +188,8 @@ class BranchesController extends Controller
             'switchModels' => SwitchModel::all(),
             'governments' => Government::all(),
             'entuityStaus' => EntuityStatus::all(),
+            'days' =>Branch::$DAYS,
+            'work_day'=>$work_day,
         ]);
     }
 

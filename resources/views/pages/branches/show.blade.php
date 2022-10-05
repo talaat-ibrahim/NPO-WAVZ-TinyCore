@@ -243,91 +243,49 @@
                     <table class="mx-2">
                         <thead>
                             <tr>
+                               @foreach ($days as $k => $v)
                                 <td>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input disabled {{isset($branch->working_days['day'][0])? ($branch->working_days['day'][0] == 'Sat' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
-                                                name="working_days[day][]" value="Sat">
-                                            Saturday
+                                            <input disabled onclick="showInput(this)" data-day="{{ $k }}" {{in_array($k , $work_day) ? 'checked':'' }} class="form-check-input" type="checkbox"
+                                                name="" value="Sat">
+                                           {{  $v }}
                                         </label>
                                     </div>
                                 </td>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input disabled {{ isset($branch->working_days['day'][1])?($branch->working_days['day'][1] == 'Sun' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
-                                                name="working_days[day][]" value="Sun">
-                                            Sunday
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input disabled {{ isset($branch->working_days['day'][2])?( $branch->working_days['day'][2] == 'Mon' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
-                                                name="working_days[day][]" value="Mon">
-                                            Monday
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input disabled {{ isset($branch->working_days['day'][3])?($branch->working_days['day'][3] == 'Tue' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
-                                                name="working_days[day][]" value="Tue">
-                                            Tuesday
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input disabled {{isset($branch->working_days['day'][4])? ($branch->working_days['day'][4] == 'Wed' ? 'checked':'') :'' }} class="form-check-input" type="checkbox"
-                                                name="working_days[day][]" value="Wed">
-                                            Wednesday
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input disabled {{ isset($branch->working_days['day'][5])? ($branch->working_days['day'][5] == 'Thu' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
-                                                name="working_days[day][]" value="Thu">
-                                            Thursday
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input disabled {{ isset($branch->working_days['day'][6])? ($branch->working_days['day'][6] == 'Fri' ? 'checked ':''):'' }} class="form-check-input" type="checkbox"
-                                                name="working_days[day][]" value="Fri">
-                                            Friday
-                                        </label>
-                                    </div>
-                                </td>
+                               @endforeach
+                                
+                               
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                @for ($i=0; $i<=6; $i++)
+                                @foreach ( $days as $k => $v)
                                 <td>
                                     <div class="form-floating mb-3">
-                                        <input disabled type="time" class="form-control"
-                                            name="working_days[start_time][]" value="{{$branch->working_days['start_time'][$i]}}"
+                                        <input disabled type="time" class="form-control" {{ !isset($branch->working_days[$k]['start_time'])?'disabled':'' }}  id="start-time-{{ $k }}"
+                                            name="working_days[{{ $k }}][start_time]" value="{{ isset($branch->working_days[$k]['start_time'])?$branch->working_days[$k]['start_time']:'' }}"
                                             placeholder="@lang('Start time') }}" />
                                         <label>@lang('Start time')</label>
-                                       
+                                        @error('start_time')
+                                            <span style="color:red;">
+                                                {{ $errors->first('start_time') }}
+                                            </span>
+                                        @enderror
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input disabled type="time" class="form-control"
-                                            name="working_days[end_time][]" value="{{ $branch->working_days['end_time'][$i] }}"
+                                        <input disabled type="time" class="form-control"  {{ !isset($branch->working_days[$k]['end_time'])?'disabled':'' }}  id="end-time-{{ $k }}"
+                                            name="working_days[{{ $k }}][end_time]" value="{{ isset($branch->working_days[$k]['end_time'])?$branch->working_days[$k]['end_time']:'' }}"
                                             placeholder="@lang('End time') }}" />
                                         <label>@lang('End time')</label>
-                                       
+                                        @error('end_time')
+                                            <span style="color:red;">
+                                                {{ $errors->first('end_time') }}
+                                            </span>
+                                        @enderror
                                     </div>
                                 </td>
-                                @endfor
+                                @endforeach
                              
                                
                             </tr>

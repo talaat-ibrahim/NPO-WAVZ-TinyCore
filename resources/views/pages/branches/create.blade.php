@@ -236,7 +236,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" name="viop_no"
                                         value="{{ old('viop_no') }}" placeholder="@lang('VIOP no.') }}" />
@@ -248,7 +248,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <select class="form-control" name="line_type_id" placeholder="@lang('Line Type')">
                                         @foreach ($lineTypes as $lineType)
@@ -283,6 +283,30 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="router_serial"
+                                        value="{{ old('router_serial') }}" placeholder="@lang('Router Serial') }}" />
+                                    <label>@lang('Router Serial')</label>
+                                    @error('router_serial')
+                                        <span style="color:red;">
+                                            {{ $errors->first('router_serial') }}
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="entuity_systemname"
+                                        value="{{ old('entuity_systemname') }}" placeholder="@lang('Entuity Systemname') }}" />
+                                    <label>@lang('Entuity Systemname')</label>
+                                    @error('entuity_systemname')
+                                        <span style="color:red;">
+                                            {{ $errors->first('entuity_systemname') }}
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
                                     <select class="form-control" name="ups_installation_id"
                                         placeholder="@lang('UPS installation') ">
                                         @foreach ($upsInstallations as $ups)
@@ -302,25 +326,6 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <select class="form-control" name="switch_model_id"
-                                        placeholder="@lang('Modeling ') ">
-                                        @foreach ($switchModels as $model)
-                                            <option selected="{{ old('switch_model_id') == $model->id }}"
-                                                value="{{ $model->id }}">{{ $model->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    <label>@lang('Modeling')</label>
-                                    @error('switch_model_id')
-                                        <span style="color:red;">
-                                            {{ $errors->first('switch_model_id') }}
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
                                     <select class="form-control" name="entuity_status_id"
                                         placeholder="@lang('Entutiy Status ') ">
                                         @foreach ($entuityStaus as $statu)
@@ -338,6 +343,49 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <select class="form-control" name="switch_model_id"
+                                        placeholder="@lang('Switch Model ') ">
+                                        @foreach ($switchModels as $model)
+                                            <option selected="{{ old('switch_model_id') == $model->id }}"
+                                                value="{{ $model->id }}">{{ $model->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    <label>@lang('Switch Model')</label>
+                                    @error('switch_model_id')
+                                        <span style="color:red;">
+                                            {{ $errors->first('switch_model_id') }}
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="switch_serial"
+                                        value="{{ old('switch_serial') }}" placeholder="@lang('Switch Serial') }}" />
+                                    <label>@lang('Switch Serial')</label>
+                                    @error('switch_serial')
+                                        <span style="color:red;">
+                                            {{ $errors->first('switch_serial') }}
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" name="switch_nots" value="{{ old('switch_nots') }}" placeholder="@lang('Switch Notes')"></textarea>
+                                    <label>@lang('Switch Nots')</label>
+                                    @error('switch_nots')
+                                        <span style="color:red;">
+                                            {{ $errors->first('switch_nots') }}
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            
                             
                         </div>
 
@@ -504,16 +552,19 @@
                                 <table class="mx-2">
                                     <thead>
                                         <tr>
+                                           @foreach ($days as $key => $value)
                                             <td>
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Sat">
-                                                        Saturday
+                                                        <input onclick="showInput(this)" data-day="{{ $key }}" class="form-check-input" type="checkbox"
+                                                            name="" value="{{ $key }}">
+                                                        {{ $value }}
                                                     </label>
                                                 </div>
                                             </td>
-                                            <td>
+                                           @endforeach
+                                            
+                                            {{-- <td>
                                                 <div class="form-check">
                                                     <label class="form-check-label">
                                                         <input class="form-check-input" type="checkbox"
@@ -566,15 +617,16 @@
                                                         Friday
                                                     </label>
                                                 </div>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>
+                                            @foreach ($days as $key =>$value)
+                                                <td>
                                                 <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time') }}"
+                                                    <input disabled id="start-time-{{ $key }}" type="time" class="form-control"
+                                                        name="working_days[{{ $key }}][start_time]" value="{{ old('start_time') }}"
                                                         placeholder="@lang('Start time') }}" />
                                                     <label>@lang('Start time')</label>
                                                     @error('start_time')
@@ -584,8 +636,8 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time') }}"
+                                                    <input disabled id="end-time-{{ $key }}" type="time" class="form-control"
+                                                        name="working_days[{{ $key }}][end_time]" value="{{ old('end_time') }}"
                                                         placeholder="@lang('End time') }}" />
                                                     <label>@lang('End time')</label>
                                                     @error('end_time')
@@ -595,150 +647,9 @@
                                                     @enderror
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time') }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time') }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time') }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time') }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time') }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time') }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time') }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time') }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time') }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time') }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time') }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time') }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
+                                            @endforeach
+                                            
+                                           
                                            
                                         </tr>
                                     </tbody>
@@ -824,6 +735,17 @@
             }
         });
     })
+
+    function showInput(element){
+        var day = $(element).data('day');
+        if ($(element).is(":checked")) {
+                $("#start-time-"+day).removeAttr('disabled');
+                $("#end-time-"+day).removeAttr('disabled');
+            } else {
+                $("#start-time-"+day).attr('disabled', 'true');
+                $("#end-time-"+day).attr('disabled','true');
+            }
+    }
     </script>
 
 @endpush

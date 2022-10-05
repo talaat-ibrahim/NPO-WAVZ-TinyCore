@@ -102,12 +102,28 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="display: flex">
+                                <div class="form-floating mb-3">
+                                    <select class="form-control" name="government_id" placeholder="@lang('Government ') ">
+                                        @foreach ($governments as $goverment)
+                                            <option {{$branch->government_id == $goverment->id?'selected':'' }}
+                                                value="{{ $goverment->id }}">{{ $goverment->name }}
+                                                --{{ $goverment->code }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label>@lang('Government')</label>
+                                    @error('government_id')
+                                        <span style="color:red;">
+                                            {{ $errors->first('government_id') }}
+                                        </span>
+                                    @enderror
+                                </div>
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" name="telephone"
-                                        value="{{ old('telephone',$branch->telephone) }}" placeholder="@lang('phone')" />
+                                        value="{{ old('telephone',$branch->telephone) }}" placeholder="@lang('Telephone')" />
                                     <label>@lang('phone')</label>
-                                    @error('telephone')
+                                    @error('Telephone')
                                         <span style="color:red;">
                                             {{ $errors->first('telephone') }}
                                         </span>
@@ -216,7 +232,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" name="viop_no"
                                         value="{{ old('viop_no',$branch->viop_no) }}" placeholder="@lang('VIOP no.') }}" />
@@ -228,7 +244,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <select class="form-control" name="line_type_id" placeholder="@lang('Line Type')">
                                         @foreach ($lineTypes as $lineType)
@@ -257,6 +273,30 @@
                                     @error('router_model_id')
                                         <span style="color:red;">
                                             {{ $errors->first('router_model_id') }}
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="router_serial"
+                                        value="{{$branch->router_serial }}" placeholder="@lang('Router Serial') }}" />
+                                    <label>@lang('Router Serial')</label>
+                                    @error('router_serial')
+                                        <span style="color:red;">
+                                            {{ $errors->first('router_serial') }}
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="entuity_systemname"
+                                        value="{{ $branch->entuity_systemname }}" placeholder="@lang('Entuity Systemname') }}" />
+                                    <label>@lang('Entuity Systemname')</label>
+                                    @error('entuity_systemname')
+                                        <span style="color:red;">
+                                            {{ $errors->first('entuity_systemname') }}
                                         </span>
                                     @enderror
                                 </div>
@@ -299,7 +339,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <select class="form-control" name="entuity_status_id"
                                         placeholder="@lang('Entutiy Status ') ">
@@ -318,25 +358,30 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <select class="form-control" name="government_id" placeholder="@lang('Government ') ">
-                                        @foreach ($governments as $goverment)
-                                            <option {{$branch->government_id == $goverment->id?'selected':'' }}
-                                                value="{{ $goverment->id }}">{{ $goverment->name }}
-                                                --{{ $goverment->code }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    <label>@lang('Government')</label>
-                                    @error('government_id')
+                                    <input type="text" class="form-control" name="switch_serial"
+                                        value="{{ $branch->switch_serial }}" placeholder="@lang('Switch Serial') }}" />
+                                    <label>@lang('Switch Serial')</label>
+                                    @error('switch_serial')
                                         <span style="color:red;">
-                                            {{ $errors->first('government_id') }}
+                                            {{ $errors->first('switch_serial') }}
                                         </span>
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" name="switch_nots"  placeholder="@lang('Switch Notes')">{{ $branch->switch_notsF }}</textarea>
+                                    <label>@lang('Switch Nots')</label>
+                                    @error('switch_nots')
+                                        <span style="color:red;">
+                                            {{ $errors->first('switch_nots') }}
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            
                         </div>
 
                         <hr>
@@ -404,9 +449,9 @@
                                 </div>
                             </div>
                             <div class="col-md-10">
-                                <div class="form-floating mb-3 " id="atm-ip">
-                                    <input type="text" class="form-control" name="atm_ip"
-                                        value="{{ old('atm_ip',$branch->atm_ip) }}" placeholder="@lang('ATM IP') }}" />
+                                <div class="form-floating mb-3 {{  isset($branch->atm_ip)?'':'hide' }}" id="atm-ip">
+                                    <input type="text" class="form-control" name="atm_ip" id="atm-input"
+                                        value="{{ $branch->atm_ip }}" placeholder="@lang('ATM IP') }}" />
                                     <label>@lang('ATM IP')</label>
                                     @error('atm_ip')
                                         <span style="color:red;">
@@ -418,8 +463,8 @@
                             <div class="col-md-2">
                                 <div class="form-check mt-3">
                                     <label class="form-check-label">
-                                        <input id="#atm-exists" class="form-check-input" {{ $branch->atm_exists == 1 ? 'checked' :''}} type="checkbox" name="atm_exists"
-                                            value="1">
+                                        <input onclick="toggelInput(this)" id="atm-exists" class="form-check-input" {{ $branch->atm_exists == '1' ? 'checked' :''}} type="checkbox" name="atm_exists"
+                                            value="">
                                         ATM exists
                                     </label>
                                 </div>
@@ -502,78 +547,28 @@
                                 <table class="mx-2">
                                     <thead>
                                         <tr>
+                                           @foreach ($days as $k => $v)
                                             <td>
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input {{isset($branch->working_days['day'][0])? ($branch->working_days['day'][0] == 'Sat' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Sat">
-                                                        Saturday
+                                                        <input onclick="showInput(this)" data-day="{{ $k }}" {{in_array($k , $work_day) ? 'checked':'' }} class="form-check-input" type="checkbox"
+                                                            name="" value="Sat">
+                                                       {{  $v }}
                                                     </label>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input {{ isset($branch->working_days['day'][1])?($branch->working_days['day'][1] == 'Sun' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Sun">
-                                                        Sunday
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input {{ isset($branch->working_days['day'][2])?( $branch->working_days['day'][2] == 'Mon' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Mon">
-                                                        Monday
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input {{ isset($branch->working_days['day'][3])?($branch->working_days['day'][3] == 'Tue' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Tue">
-                                                        Tuesday
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input {{isset($branch->working_days['day'][4])? ($branch->working_days['day'][4] == 'Wed' ? 'checked':'') :'' }} class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Wed">
-                                                        Wednesday
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input {{ isset($branch->working_days['day'][5])? ($branch->working_days['day'][5] == 'Thu' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Thu">
-                                                        Thursday
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input {{ isset($branch->working_days['day'][6])? ($branch->working_days['day'][6] == 'Fri' ? 'checked':''):'' }} class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Fri">
-                                                        Friday
-                                                    </label>
-                                                </div>
-                                            </td>
+                                           @endforeach
+                                            
+                                           
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            @for ($i=0; $i<=6; $i++)
+                                            @foreach ( $days as $k => $v)
                                             <td>
                                                 <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time',$branch->working_days['start_time'][$i]) }}"
+                                                    <input type="time" class="form-control" {{ !isset($branch->working_days[$k]['start_time'])?'disabled':'' }}  id="start-time-{{ $k }}"
+                                                        name="working_days[{{ $k }}][start_time]" value="{{ isset($branch->working_days[$k]['start_time'])?$branch->working_days[$k]['start_time']:'' }}"
                                                         placeholder="@lang('Start time') }}" />
                                                     <label>@lang('Start time')</label>
                                                     @error('start_time')
@@ -583,8 +578,8 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time',$branch->working_days['end_time'][$i]) }}"
+                                                    <input type="time" class="form-control"  {{ !isset($branch->working_days[$k]['end_time'])?'disabled':'' }}  id="end-time-{{ $k }}"
+                                                        name="working_days[{{ $k }}][end_time]" value="{{ isset($branch->working_days[$k]['end_time'])?$branch->working_days[$k]['end_time']:'' }}"
                                                         placeholder="@lang('End time') }}" />
                                                     <label>@lang('End time')</label>
                                                     @error('end_time')
@@ -594,175 +589,8 @@
                                                     @enderror
                                                 </div>
                                             </td>
-                                            @endfor
-                                            {{-- <td>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time',iseet($branch->working_days['start_time'][0])?$branch->working_days['start_time'][0]:'') }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time',iseet($branch->working_days['end_time'][0])?$branch->working_days['end_time'][0]:'')) }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time',iseet($branch->working_days['start_time'][1])?$branch->working_days['start_time'][2]:'')) }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time') }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time') }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time') }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time') }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time') }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time') }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time') }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time') }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time') }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[start_time][]" value="{{ old('start_time') }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="time" class="form-control"
-                                                        name="working_days[end_time][]" value="{{ old('end_time') }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td> --}}
+                                            @endforeach
+                                         
                                            
                                         </tr>
                                     </tbody>
@@ -842,15 +670,29 @@
 @push('scripts')
     <script>
         
-        $(function () {
-        $("#atm-exists").click(function () {
-            if ($(this).is(":checked")) {
+       function toggelInput(element){
+            if ($(element).is(":checked")) {
                 $("#atm-ip").removeClass('hide');
             } else {
+                
+                $("#atm-input").val('');
                 $("#atm-ip").addClass('hide');
+                $(element).val('0');
             }
-        });
-    })
+       }
+
+    function showInput(element){
+        var day = $(element).data('day');
+        if ($(element).is(":checked")) {
+                $("#start-time-"+day).removeAttr('disabled');
+                $("#end-time-"+day).removeAttr('disabled');
+            } else {
+                $("#start-time-"+day).attr('disabled', 'true');
+                $("#end-time-"+day).attr('disabled','true');
+                $("#start-time-"+day).val('');
+                $("#end-time-"+day).val('');
+            }
+    }
     </script>
 
 @endpush
