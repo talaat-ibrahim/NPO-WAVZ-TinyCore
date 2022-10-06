@@ -4,18 +4,24 @@
     @includeIf('layouts.inc.breadcrumb')
 
     <div style="margin-bottom: 14px; position: relative; display: flex; justify-content: space-between; align-items: center;">
-        {{-- <form method="POST" enctype="multipart/form-data" action="{{ route('branches.import') }}"
-            style="display: flex; justify-content: space-between; gap: 10px">
+       @if (auth()->user()->can('Branche_import-branches'))
+        <form method="POST" enctype="multipart/form-data" action="{{ route('branches.import') }}" style="display: flex; justify-content: space-between; gap: 10px">
             @csrf
-            <div style="height: 40px;">
-                <input type="file" class="form-control" name="file" />
-            </div>
-            <button type="submit" class="btn btn-success">@lang('Import')</button>
-        </form> --}}
+                <div style="height: 40px;">
+                    <input type="file" class="form-control" name="file" />
+                </div>
+                <button type="submit" class="btn btn-success">@lang('Import')</button>
+            </form>
+       @endif
+        @if (auth()->user()->can('Branche_export-branches'))
+        <a href="{{ route('branches.export') }}" class="btn btn-info">@lang('Export')</a>
+        @endif
 
-        <a type="button" class="btn btn-primary float-start" href="{{ route('branches.create') }}">@lang('Create new branche')</a>
+        @if(auth()->user()->can('Branche_create-branches'))
+            <a type="button" class="btn btn-primary float-start" href="{{ route('branches.create') }}">@lang('Create new branche')</a>
+        @endif
     </div>
-    
+    @if(auth()->user()->can('Branche_filter-branches'))
     <div class="filter p-3 ">
         <form method="GET"  action="{{ route('branches.index') }}">
             <div class="card">
@@ -75,11 +81,12 @@
                     </div>
                     <br>
                     <button type="submit" class="btn btn-success">@lang('Search')</button>
+                    
                 </div>
             </div>
         </form>
     </div>
-
+    @endif
     @if ($lists->count() > 0)
 
         <div class="row">
@@ -122,15 +129,23 @@
                                             {{ $list->created_at }}
                                         </td>
                                         <td style="display: inline-flex;">
+                                           @if (auth()->user()->can('Branche_read-branches'))
                                             <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
                                                 href="{{ route('branches.show', $list->id) }}">
                                                 <i class="bx bx-zoom-in"></i>
                                             </a>
+                                           @endif
+                                           @if (auth()->user()->can('Branche_update-branches'))
                                             <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
                                                 href="{{ route('branches.edit', $list->id) }}">
                                                 <i class="bx bx-pencil"></i>
                                             </a>
-                                            {!! action_table_delete(route('branches.destroy', $list->id), $list->id) !!}
+                                           @endif
+                                           @if (auth()->user()->can('Branche_delete-branches'))
+                                                {!! action_table_delete(route('branches.destroy', $list->id), $list->id) !!}
+                                           @endif
+                                            
+                                            
                                         </td>
                                     </tr>
                                 @endforeach

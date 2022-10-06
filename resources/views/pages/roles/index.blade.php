@@ -1,13 +1,16 @@
 @extends('layouts.master')
 @section('PageTitle', $breadcrumb['title'])
+
 @section('PageContent')
-    @includeIf('layouts.inc.breadcrumb')
-    @if (auth()->user()->can('Branche_create-ups-installation'))
-    <div style=" margin-bottom: 14px; position: relative; text-align: right; ">
-        <a type="button" class="btn btn-primary" href="{{ route('ups-installations.create') }}">@lang('Create new Ups Installation')</a>
-    </div>
-    @endif
-    @if ($lists->count() > 0)
+@includeIf('layouts.inc.breadcrumb')
+@if (auth()->user()->can('Branche_create-roles'))
+<div style=" margin-bottom: 14px; position: relative; text-align: right; ">
+    <a type="button" class="btn btn-primary" href="{{ route('roles.create') }}">@lang('Create new Role')</a>
+</div>
+@endif
+    <div class="row">
+        
+        @if ($lists->count() > 0)
 
         <div class="row">
             <div class="col-lg-12">
@@ -25,7 +28,7 @@
                                 @foreach ($lists as $list)
                                     <tr>
                                         <td>
-                                            <a href="{{ route('ups-installations.edit', $list->id) }}">
+                                            <a href="{{ route('roles.edit', $list->id) }}">
                                                 {{ $list->name ?? '' }}
                                             </a>
                                         </td>
@@ -34,14 +37,14 @@
                                             {{ $list->created_at }}
                                         </td>
                                         <td style="display: inline-flex;">
-                                            @if (auth()->user()->can('Branche_update-ups-installation'))
+                                            @if (auth()->user()->can('Branche_update-roles'))
                                             <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
-                                                href="{{ route('ups-installations.edit', $list->id) }}">
+                                                href="{{ route('roles.edit', $list->id) }}">
                                                 <i class="bx bx-pencil"></i>
                                             </a>
                                             @endif
-                                            @if (auth()->user()->can('Branche_delete-ups-installation'))
-                                            {!! action_table_delete(route('ups-installations.destroy', $list->id), $list->id) !!}
+                                            @if (auth()->user()->can('Branche_delete-roles'))
+                                            {!! action_table_delete(route('roles.destroy', $list->id), $list->id) !!}
                                             @endif
                                         </td>
                                     </tr>
@@ -73,5 +76,6 @@
 
 
     @endif
-
+    </div>
 @endsection
+

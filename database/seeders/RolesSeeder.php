@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -15,23 +16,15 @@ class RolesSeeder extends Seeder
      */
     public function run()
     {
-        $roles = [
-            'Administrator' => [
-                'home',
-                'profile.index',
-                'profile.edit',
-            ],
-        ];
-
-        foreach ($roles as $role => $permissions) {
-            $getRole = Role::firstOrCreate([
-                'name' => $role,
+        $role = Role::where('name', 'Administrator')->first();
+        if(!$role){
+            $role = Role::updateOrCreate([
+                'name'  => 'Administrator',
                 'guard_name' => 'web'
             ]);
-            foreach ($permissions as $permission) {
-                Permission::firstOrCreate(['name' => $permission]);
-                $getRole->givePermissionTo($permission);
-            }
         }
+        $permission = Permission::all();
+        $role->syncPermissions($permission);
+        
     }
 }

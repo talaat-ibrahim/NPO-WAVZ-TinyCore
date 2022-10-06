@@ -9,6 +9,7 @@ use App\Http\Requests\Users\UpdateUsersRequest;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
@@ -46,15 +47,17 @@ class UsersController extends Controller
         ];
 
         return view('pages.users.create',[
-            'breadcrumb'=>$breadcrumb
+            'breadcrumb'=>$breadcrumb,
+            'roles'         => Role::all(),
         ]);
     }
 
     public function store(CreateUsersRequest $request) {
-        $data = $request->all();
+        $data = $request->except('role_id');
         $data['password'] = Hash::make($request['password']);
         $data['email_verified_at'] = Carbon::now();
         $user = User::create($data);
+        $user->assignRole(Role::where("id",$request->role_id)->first());
         return redirect()->route('users.index')->with('success', __("This row has been created."));
     }
     
@@ -78,6 +81,7 @@ class UsersController extends Controller
         return view('pages.users.edit',[
             'breadcrumb'    =>  $breadcrumb,
             'user'         =>  $user,
+            'roles'         => Role::all(),
         ]);
     }
 

@@ -3,9 +3,12 @@
 @section('PageContent')
     @includeIf('layouts.inc.breadcrumb')
 
+   @if (auth()->user()->can('Branche_create-entiity-stayus'))
     <div style=" margin-bottom: 14px; position: relative; text-align: right; ">
         <a type="button" class="btn btn-primary" href="{{ route('entuity-status.create') }}">@lang('Create new Entuity Status')</a>
     </div>
+   @endif
+    
 
     @if ($lists->count() > 0)
 
@@ -34,11 +37,15 @@
                                             {{ $list->created_at }}
                                         </td>
                                         <td style="display: inline-flex;">
+                                           @if (auth()->user()->can('Branche_update-entuity-status'))
                                             <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
                                                 href="{{ route('entuity-status.edit', $list->id) }}">
                                                 <i class="bx bx-pencil"></i>
                                             </a>
+                                           @endif
+                                           @if (auth()->user()->can('Branche_delete-entuity-status'))
                                             {!! action_table_delete(route('entuity-status.destroy', $list->id), $list->id) !!}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

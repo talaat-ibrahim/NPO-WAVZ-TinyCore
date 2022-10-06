@@ -2,11 +2,11 @@
 @section('PageTitle', $breadcrumb['title'])
 @section('PageContent')
     @includeIf('layouts.inc.breadcrumb')
-
+    @if (auth()->user()->can('Branche_create-project'))
     <div style=" margin-bottom: 14px; position: relative; text-align: right; ">
         <a type="button" class="btn btn-primary" href="{{ route('projects.create') }}">@lang('Create new project')</a>
     </div>
-
+    @endif
     @if ($lists->count() > 0)
 
         <div class="row">
@@ -33,11 +33,15 @@
                                             {{ $list->created_at }}
                                         </td>
                                         <td style="display: inline-flex;">
+                                            @if (auth()->user()->can('Branche_update-project'))
                                             <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
                                                 href="{{ route('projects.edit', $list->id) }}">
                                                 <i class="bx bx-pencil"></i>
                                             </a>
+                                            @endif
+                                            @if (auth()->user()->can('Branche_delete-project'))
                                             {!! action_table_delete(route('projects.destroy', $list->id), $list->id) !!}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

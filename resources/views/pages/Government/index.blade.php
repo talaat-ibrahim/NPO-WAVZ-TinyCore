@@ -2,10 +2,11 @@
 @section('PageTitle', $breadcrumb['title'])
 @section('PageContent')
     @includeIf('layouts.inc.breadcrumb')
-
+    @if (auth()->user()->can('Branche_create-government'))
     <div style=" margin-bottom: 14px; position: relative; text-align: right; ">
         <a type="button" class="btn btn-primary" href="{{ route('government.create') }}">@lang('Create new government')</a>
     </div>
+    @endif
 
     @if ($lists->count() > 0)
 
@@ -37,11 +38,15 @@
                                             {{ $list->created_at }}
                                         </td>
                                         <td style="display: inline-flex;">
+                                            @if (auth()->user()->can('Branche_update-government'))
                                             <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
                                                 href="{{ route('government.edit', $list->id) }}">
                                                 <i class="bx bx-pencil"></i>
                                             </a>
+                                            @endif
+                                            @if (auth()->user()->can('Branche_delete-government'))
                                             {!! action_table_delete(route('government.destroy', $list->id), $list->id) !!}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

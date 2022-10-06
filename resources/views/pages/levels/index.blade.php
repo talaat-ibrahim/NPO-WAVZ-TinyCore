@@ -2,10 +2,11 @@
 @section('PageTitle', $breadcrumb['title'])
 @section('PageContent')
     @includeIf('layouts.inc.breadcrumb')
-
+    @if (auth()->user()->can('Branche_create-branch-level'))
     <div style=" margin-bottom: 14px; position: relative; text-align: right; ">
         <a type="button" class="btn btn-primary" href="{{ route('levels.create') }}">@lang('Create new branch level')</a>
     </div>
+    @endif
 
     @if ($lists->count() > 0)
 
@@ -33,11 +34,15 @@
                                             {{ $list->created_at }}
                                         </td>
                                         <td style="display: inline-flex;">
+                                            @if (auth()->user()->can('Branche_update-branch-level'))
                                             <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
                                                 href="{{ route('levels.edit', $list->id) }}">
                                                 <i class="bx bx-pencil"></i>
                                             </a>
+                                            @endif
+                                            @if (auth()->user()->can('Branche_delete-branch-level'))
                                             {!! action_table_delete(route('levels.destroy', $list->id), $list->id) !!}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

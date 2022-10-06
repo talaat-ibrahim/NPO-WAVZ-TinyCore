@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Branches;
 
+use App\Exports\BranchsExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Branches\CreateBranchesRequest;
@@ -35,39 +36,49 @@ class BranchesController extends Controller
                 ]
             ],
         ];
-        $lists = Branch::when(request('keyword'), function ($query) {
-            $keyword = request('keyword');
-            $query->Where('lan_ip', 'like', '%' . $keyword . '%')
-                ->orWhere('wan_ip', 'like', '%' . $keyword . '%')
-                ->orWhere('wan_ip', 'like', '%' . $keyword . '%')
-                ->orWhere('project_id', 'like', '%' . $keyword . '%')
-                ->orWhere('tunnel_ip', 'like', '%' . $keyword . '%')
-                ->orWhere('main_order_id', 'like', '%' . $keyword . '%')
-                ->orWhere('backup_order_id', 'like', '%' . $keyword . '%')
-                ->orWhere('area', 'like', '%' . $keyword . '%')
-                ->orWhere('sector', 'like', '%' . $keyword . '%')
-                ->orWhere('address', 'like', '%' . $keyword . '%')
-                ->orWhere('telephone', 'like', '%' . $keyword . '%');
-        })->orderBy('id', 'asc')->paginate();
-
+        $lists = Branch::orderBy('id', 'asc')->paginate();
+        if(request('keyword')){
+            $lists = Branch::when(request('keyword'), function ($query) {
+                $keyword = request('keyword');
+                $query->Where('lan_ip', 'like', '%' . $keyword . '%')
+                    ->orWhere('wan_ip', 'like', '%' . $keyword . '%')
+                    ->orWhere('wan_ip', 'like', '%' . $keyword . '%')
+                    ->orWhere('project_id', 'like', '%' . $keyword . '%')
+                    ->orWhere('tunnel_ip', 'like', '%' . $keyword . '%')
+                    ->orWhere('main_order_id', 'like', '%' . $keyword . '%')
+                    ->orWhere('backup_order_id', 'like', '%' . $keyword . '%')
+                    ->orWhere('area', 'like', '%' . $keyword . '%')
+                    ->orWhere('sector', 'like', '%' . $keyword . '%')
+                    ->orWhere('address', 'like', '%' . $keyword . '%')
+                    ->orWhere('telephone', 'like', '%' . $keyword . '%');
+            })->orderBy('id', 'asc')->paginate();
+    
+        }
         //filter by project_id
-        $lists = Branch::when(request('project_id'), function ($query) {
-            $project_id = request('project_id');
-            $query->Where('project_id',   $project_id );
-        })->orderBy('id', 'asc')->paginate();
+       if(request()->project_id){
+            $lists = Branch::when(request('project_id'), function ($query) {
+                $project_id = request('project_id');
+                $query->Where('project_id',   $project_id );
+            })->orderBy('id', 'asc')->paginate();
 
+            
+       }
         //filter by upsInstallations
-        $lists = Branch::when(request('ups_installation_id'), function ($query) {
-            $ups_installation_id = request('ups_installation_id');
-            $query->Where('ups_installation_id',  $ups_installation_id );
-        })->orderBy('id', 'asc')->paginate();
-
+        if(request('ups_installation_id')){
+            $lists = Branch::when(request('ups_installation_id'), function ($query) {
+                $ups_installation_id = request('ups_installation_id');
+                $query->Where('ups_installation_id',  $ups_installation_id );
+            })->orderBy('id', 'asc')->paginate();
+    
+        }
         //filter by line type id
+       if(request('line_type_id')){
         $lists = Branch::when(request('line_type_id'), function ($query) {
             $line_type_id = request('line_type_id');
             $query->Where('line_type_id',   $line_type_id );
         })->orderBy('id', 'asc')->paginate();
 
+       }
         // $lists = Branch::where('working_days' , 'like', '%  %')->get();
         // dd($lists);
         return view('pages.branches.index', [
@@ -210,5 +221,20 @@ class BranchesController extends Controller
         Excel::import(new BranchesImport, $request->file('file'));
 
         return redirect('/')->with('success', 'All good!');
+    }
+
+    public function export() 
+    {
+        $branch = app(Branch::class)->newQuery();
+
+        if ( request()->has('project_id') && !empty(request()->get('project_id')) ) {
+            $project_id = request()->query('project_id');
+            $branch->where(function ($query) use($project_id) {
+                $query->where('project_id', $project_id);    
+            });
+        } 
+       
+        $branches = $branch->orderBy('id', 'asc')->paginate();
+        return Excel::download(new BranchsExport($branches), 'branches.xlsx');
     }
 }

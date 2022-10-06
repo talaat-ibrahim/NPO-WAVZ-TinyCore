@@ -105,7 +105,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4" style="display: flex">
-                                <div class="form-floating mb-3">
+                                <div class="form-floating mb-3" style="width: 30%">
                                     <select class="form-control" name="government_id" required placeholder="@lang('Government ') ">
                                         @foreach ($governments as $goverment)
                                             <option selected="{{ old('government_id') == $goverment->id }}"
@@ -122,7 +122,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-floating mb-3">
+                                <div class="form-floating mb-3" style="width: 70%">
                                     
                                     <input type="number" required class="form-control" name="telephone"
                                         value="{{ old('telephone') }}" placeholder="@lang('telephone')"aria-describedby="basic-addon1"aria-label="telephone" />
@@ -393,7 +393,7 @@
 
                         <div class="row">
                             <h5><b>@lang('Branch Ips'):</b></h5>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" name="wan_ip"
                                         value="{{ old('wan_ip') }}" placeholder="@lang('Wan IP')" />
@@ -405,7 +405,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" name="lan_ip"
                                         value="{{ old('lan_ip') }}" placeholder="@lang('Lan IP')" />
@@ -417,7 +417,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" name="tunnel_ip"
                                         value="{{ old('tunnel_ip') }}" placeholder="@lang('Tunnel IP')" />
@@ -430,7 +430,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" name="additional_ips"
                                         value="{{ old('additional_ips') }}" placeholder="@lang('Additional IPs (comma separated)')" />
@@ -442,7 +442,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-8">
                                 <div class="form-floating mb-3">
                                     <textarea class="form-control" name="ip_notes" value="{{ old('ip_notes') }}" placeholder="@lang('IP Notes')"></textarea>
                                     <label>@lang('IP Notes')</label>

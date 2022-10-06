@@ -26,11 +26,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile', [\App\Http\Controllers\Profile\ProfileController::class, 'store'])->name("profile.store");
     // Users
     Route::resource('/users', \App\Http\Controllers\Users\UsersController::class);
+
+    // roles
+    Route::resource('/roles', \App\Http\Controllers\Roles\RoleController::class);
+
     // Terminal
     Route::resource('/terminals', \App\Http\Controllers\Terminals\TerminalsController::class);
     // Branches
     Route::get('/branches/run/{code}', [\App\Http\Controllers\Branches\BranchesController::class, "code"]);
     Route::post('/branches/import', [\App\Http\Controllers\Branches\BranchesController::class, "import"])->name('branches.import');
+    Route::get('/branches/export', [\App\Http\Controllers\Branches\BranchesController::class, 'export'])->name('branches.export');
     Route::resource('/branches', \App\Http\Controllers\Branches\BranchesController::class);
 
     // Network

@@ -2,11 +2,11 @@
 @section('PageTitle', $breadcrumb['title'])
 @section('PageContent')
     @includeIf('layouts.inc.breadcrumb')
-
+    @if (auth()->user()->can('Branche_create-line-capacity'))
     <div style=" margin-bottom: 14px; position: relative; text-align: right; ">
         <a type="button" class="btn btn-primary" href="{{ route('line-capacities.create') }}">@lang('Create new line capacities')</a>
     </div>
-
+    @endif
     @if ($lists->count() > 0)
 
         <div class="row">
@@ -34,11 +34,15 @@
                                             {{ $list->created_at }}
                                         </td>
                                         <td style="display: inline-flex;">
+                                            @if (auth()->user()->can('Branche_update-line-capacity'))
                                             <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
                                                 href="{{ route('line-capacities.edit', $list->id) }}">
                                                 <i class="bx bx-pencil"></i>
                                             </a>
+                                            @endif
+                                            @if (auth()->user()->can('Branche_delete-line-capacity'))
                                             {!! action_table_delete(route('line-capacities.destroy', $list->id), $list->id) !!}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

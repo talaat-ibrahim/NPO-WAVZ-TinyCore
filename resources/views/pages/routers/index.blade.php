@@ -2,11 +2,11 @@
 @section('PageTitle', $breadcrumb['title'])
 @section('PageContent')
     @includeIf('layouts.inc.breadcrumb')
-
+    @if (auth()->user()->can('Branche_create-router-type'))
     <div style=" margin-bottom: 14px; position: relative; text-align: right; ">
         <a type="button" class="btn btn-primary" href="{{ route('routers.create') }}">@lang('Create new router')</a>
     </div>
-
+    @endif
     @if ($lists->count() > 0)
 
         <div class="row">
@@ -37,11 +37,15 @@
                                             {{ $list->created_at }}
                                         </td>
                                         <td style="display: inline-flex;">
+                                            @if (auth()->user()->can('Branche_update-router-type'))
                                             <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
                                                 href="{{ route('routers.edit', $list->id) }}">
                                                 <i class="bx bx-pencil"></i>
                                             </a>
+                                            @endif
+                                            @if (auth()->user()->can('Branche_delete-router-type'))
                                             {!! action_table_delete(route('routers.destroy', $list->id), $list->id) !!}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

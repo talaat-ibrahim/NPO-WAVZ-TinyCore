@@ -27,6 +27,7 @@ class AdminSeeder extends Seeder
                 'password'      => \Hash::make("admin@123456"),
             ]);
         }
+        
         $admin->assignRole(Role::where("name","Administrator")->first());
     }
 }
