@@ -223,18 +223,65 @@ class BranchesController extends Controller
         return redirect('/')->with('success', 'All good!');
     }
 
-    public function export() 
-    {
-        $branch = app(Branch::class)->newQuery();
+    public function commander(Branch $branch, Request $request) {
+        $breadcrumb = [
+            'title' =>  __("Shell Commander"),
+            'items' =>  [
+                [
+                    'title' =>  __("Branches Lists"),
+                    'url'   => route('branches.index'),
+                ],
+                [
+                    'title' =>  __("Edit Branch"),
+                    'url'   =>  '#!',
+                ],
+            ],
+        ];
+        $ips = [];
+        if ($branch->lan_ip)
+            $ips["Lan IP: " . $branch->lan_ip] = $branch->lan_ip;
 
-        if ( request()->has('project_id') && !empty(request()->get('project_id')) ) {
-            $project_id = request()->query('project_id');
-            $branch->where(function ($query) use($project_id) {
-                $query->where('project_id', $project_id);    
-            });
-        } 
-       
-        $branches = $branch->orderBy('id', 'asc')->paginate();
-        return Excel::download(new BranchsExport($branches), 'branches.xlsx');
+        if ($branch->wan_ip)
+            $ips["Wan IP: " . $branch->wan_ip] = $branch->wan_ip;
+
+        if ($branch->tunnel_ip)
+            $ips["Tunnel IP: " . $branch->tunnel_ip] = $branch->tunnel_ip;
+
+        if ($branch->switch_ip)
+            $ips["Switch IP: " . $branch->switch_ip] = $branch->switch_ip;
+
+        if ($branch->atm_ip)
+            $ips["Atm IP: " . $branch->atm_ip] = $branch->atm_ip;
+
+        $commands = Terminal::all();
+        return view("pages.branches.terminal", compact("ips", "branch", "commands", "breadcrumb"));
+    }
+
+    public function execute(Request $request) {
+        $command = Terminal::find($request->cmd_id);
+        $ip = $request->ip;
+
+        if ($command && $ip) {
+            try {
+                $cmd = $command->commands;
+                $cmd = str_replace("{ip}", $ip, $cmd);
+                $res = shell_exec($cmd);
+                return [
+                    "status" => true,
+                    "msg" => __('Doen'),
+                    "data" => $res,
+                ];
+            } catch (\Exception $th) {
+                return [
+                    "status" => false,
+                    "msg" => $th->getMessage()
+                ];
+            }
+        } else {
+            return [
+                "status" => false,
+                "msg" => __('Missing Ip And Command')
+            ];
+        }
     }
 }

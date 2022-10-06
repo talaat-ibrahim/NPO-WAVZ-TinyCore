@@ -21,7 +21,6 @@
             <a type="button" class="btn btn-primary float-start" href="{{ route('branches.create') }}">@lang('Create new branche')</a>
         @endif
     </div>
-    @if(auth()->user()->can('Branche_filter-branches'))
     <div class="filter p-3 ">
         <form method="GET"  action="{{ route('branches.index') }}">
             <div class="card">
@@ -47,13 +46,13 @@
                                     @endforeach
                                 </select>
                                 <label>@lang('Project')</label>
-                                
+
                             </div>
                         </div>
                         <div class="col-md-3 pt-2">
                             <div class="form-floating" >
                                 <select class="form-control" name="ups_installation_id"placeholder="@lang('UPS installation') ">
-                                    <option selected disabled hidden value="">@lang('Select')</option>   
+                                    <option selected disabled hidden value="">@lang('Select')</option>
                                         @foreach ($upsInstallations as $ups)
                                             <option {{ request('ups_installation_id') == $ups->id  ? 'selected' :''}}
                                                 value="{{ $ups->id }}">{{ $ups->name }}
@@ -61,13 +60,13 @@
                                         @endforeach
                                     </select>
                                 <label>@lang('Ups Installation')</label>
-                                
+
                             </div>
                         </div>
                         <div class="col-md-3 pt-2">
                             <div class="form-floating" >
                                 <select class="form-control" name="line_type_id"placeholder="@lang('Line Type') ">
-                                    <option selected disabled hidden value="">@lang('Select')</option>   
+                                    <option selected disabled hidden value="">@lang('Select')</option>
                                         @foreach ($lineTypes as $line)
                                             <option {{ request('line_type_id') == $line->id  ? 'selected' :''}}
                                                 value="{{ $line->id }}">{{ $line->name }}
@@ -75,7 +74,7 @@
                                         @endforeach
                                     </select>
                                 <label>@lang('Line Type')</label>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -130,6 +129,10 @@
                                         </td>
                                         <td style="display: inline-flex;">
                                            @if (auth()->user()->can('Branche_read-branches'))
+                                            <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
+                                                href="{{ route('branches.commander', $list->id) }}">
+                                                <i class="bx bx-terminal"></i>
+                                            </a>
                                             <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
                                                 href="{{ route('branches.show', $list->id) }}">
                                                 <i class="bx bx-zoom-in"></i>
