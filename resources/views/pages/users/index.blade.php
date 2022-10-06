@@ -18,6 +18,7 @@
                             <tr>
                                 <th scope="col">@lang('Name')</th>
                                 <th scope="col">@lang('Email')</th>
+                                <th scope="col">@lang('role')</th>
                                 <th scope="col">@lang('Created At')</th>
                                 <th scope="col">@lang('Action')</th>
                             </tr>
@@ -34,6 +35,9 @@
                                         <a href="mailto:{{ $list->email ?? '' }}">
                                             {{ $list->email ?? '' }}
                                         </a>
+                                    </td>
+                                    <td>
+                                        {{ $list->roles()->first()->name }}
                                     </td>
                                     <td>
                                         {{ $list->created_at}}

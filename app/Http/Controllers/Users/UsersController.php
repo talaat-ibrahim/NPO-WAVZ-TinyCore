@@ -62,9 +62,9 @@ class UsersController extends Controller
     }
     
     public function edit(User $user) {
-        if($user->id == \Auth::user()->id) {
-            return redirect()->route('profile.index');
-        }
+        // if($user->id == \Auth::user()->id) {
+        //     return redirect()->route('profile.index');
+        // }
         $breadcrumb = [
             'title' =>  __("Edit user"),
             'items' =>  [
@@ -82,17 +82,19 @@ class UsersController extends Controller
             'breadcrumb'    =>  $breadcrumb,
             'user'         =>  $user,
             'roles'         => Role::all(),
+            'roleId'        => $user->roles()->first()->id ,
         ]);
     }
 
     public function update(UpdateUsersRequest $request, User $user) {
-        $data = $request->all();
+        $data = $request->except('role_id');
         if(request()->has('password') && !is_null(request('password'))) {
             $data['password'] = Hash::make($request['password']);
         } else {
             unset($data['password']);
         }
         $user->update($data);
+        $user->assignRole(Role::where("id",$request->role_id)->first());
         return redirect()->route('users.index')->with('success', __("This row has been updated."));
     }
 
@@ -100,4 +102,6 @@ class UsersController extends Controller
         $user->delete();
         return redirect()->route('users.index')->with('success', __("This row has been deleted."));
     }
+
+    
 }

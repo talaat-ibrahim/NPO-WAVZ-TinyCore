@@ -14,13 +14,14 @@
             </form>
        @endif
         @if (auth()->user()->can('Branche_export-branches'))
-        <a href="{{ route('branches.export') }}" class="btn btn-info">@lang('Export')</a>
+        <a href="" class="btn btn-info">@lang('Export')</a>
         @endif
 
         @if(auth()->user()->can('Branche_create-branches'))
             <a type="button" class="btn btn-primary float-start" href="{{ route('branches.create') }}">@lang('Create new branche')</a>
         @endif
     </div>
+    @if (auth()->user()->can('Branche_filter-branches'))
     <div class="filter p-3 ">
         <form method="GET"  action="{{ route('branches.index') }}">
             <div class="card">

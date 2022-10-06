@@ -72,7 +72,7 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingtel2Input" name="tel2" placeholder="@lang('tel2')"  value="{{ old('tel2',$user->tel1) }}">
+                        <input type="text" class="form-control" id="floatingtel2Input" name="tel1" placeholder="@lang('tel2')"  value="{{ old('tel2',$user->tel1) }}">
                         <label for="floatingtel1Input">@lang('tel1')</label>
                         @error('tel1')
                             <span style="color:red;">
@@ -90,7 +90,17 @@
                             </span>
                         @enderror
                     </div>
-
+                    <div class="form-floating mb-3">
+                        <select class="form-control" name="role_id" placeholder="@lang('Role')" required>
+                            <option selected disabled hidden value="">@lang('Select')</option>
+                            @foreach ($roles as $role)
+                                <option {{ $roleId == $role->id ?'selected':''}}
+                                    value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                        </select>
+                        <label>@lang('Role')</label>
+                       
+                    </div>
                     <div class="row" style=" margin-top: 20px; ">
                         <div style="text-align: right">
                             @csrf
