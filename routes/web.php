@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/terminals', \App\Http\Controllers\Terminals\TerminalsController::class);
     // Branches
     Route::get('/branches/run/{code}', [\App\Http\Controllers\Branches\BranchesController::class, "code"]);
+    Route::get('/branches/commander/{branch}', [\App\Http\Controllers\Branches\BranchesController::class, "commander"])->name("branches.commander");
+    Route::post('/branches/cmd', [\App\Http\Controllers\Branches\BranchesController::class, "execute"])->name('branches.cmd');
     Route::post('/branches/import', [\App\Http\Controllers\Branches\BranchesController::class, "import"])->name('branches.import');
     Route::resource('/branches', \App\Http\Controllers\Branches\BranchesController::class);
 
