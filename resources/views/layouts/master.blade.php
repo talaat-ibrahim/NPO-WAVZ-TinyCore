@@ -2,8 +2,16 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     @includeIf('layouts.inc.head')
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     @yield("css")
+
+    <style>
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
 </head>
 <body data-sidebar="dark">
      <!-- Loader -->

@@ -30,14 +30,14 @@
                 </div>
                 <div class="card-body " id="filter-body">
                     <div class="row">
-                        <div class="col-md-3 pt-2">
+                        <div class="col-md-12 pt-2">
                             <div class="form-floating" >
                                 <input type="text" class="form-control" style="height: 58px;" name="keyword" value="{{ request('keyword') }}"
                                     placeholder="@lang('Search...') }}" />
                                 <label style="margin-top: -10px;">@lang('Search...')</label>
                             </div>
                         </div>
-                        <div class="col-md-3 pt-2">
+                        <div class="col-md-4 pt-2">
                             <div class="form-floating" >
                                 <select class="form-control" name="project_id" placeholder="@lang('Project')">
                                     <option selected disabled hidden value="">@lang('Select')</option>
@@ -50,7 +50,7 @@
 
                             </div>
                         </div>
-                        <div class="col-md-3 pt-2">
+                        <div class="col-md-4 pt-2">
                             <div class="form-floating" >
                                 <select class="form-control" name="ups_installation_id"placeholder="@lang('UPS installation') ">
                                     <option selected disabled hidden value="">@lang('Select')</option>
@@ -64,7 +64,7 @@
 
                             </div>
                         </div>
-                        <div class="col-md-3 pt-2">
+                        <div class="col-md-4 pt-2">
                             <div class="form-floating" >
                                 <select class="form-control" name="line_type_id"placeholder="@lang('Line Type') ">
                                     <option selected disabled hidden value="">@lang('Select')</option>
@@ -81,7 +81,7 @@
                     </div>
                     <br>
                     <button type="submit" class="btn btn-success">@lang('Search')</button>
-                    
+
                 </div>
             </div>
         </form>
@@ -129,11 +129,13 @@
                                             {{ $list->created_at }}
                                         </td>
                                         <td style="display: inline-flex;">
-                                           @if (auth()->user()->can('Branche_read-branches'))
+                                           @if (auth()->user()->can('Branche_terminal-branches'))
                                             <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
                                                 href="{{ route('branches.commander', $list->id) }}">
                                                 <i class="bx bx-terminal"></i>
                                             </a>
+                                            @endif
+                                           @if (auth()->user()->can('Branche_read-branches'))
                                             <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
                                                 href="{{ route('branches.show', $list->id) }}">
                                                 <i class="bx bx-zoom-in"></i>
@@ -148,8 +150,8 @@
                                            @if (auth()->user()->can('Branche_delete-branches'))
                                                 {!! action_table_delete(route('branches.destroy', $list->id), $list->id) !!}
                                            @endif
-                                            
-                                            
+
+
                                         </td>
                                     </tr>
                                 @endforeach

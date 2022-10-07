@@ -142,7 +142,7 @@
             },
 
             console: function(msg) {
-                var output = "<br>:> " + msg + "<br>----------------------<br>";
+                var output = "<br>:> " + msg.replaceAll('\n', "<br>") + "<br>----------------------<br>";
                 this.terminal.html(this.terminal.html() + output);
             },
 
@@ -152,12 +152,16 @@
 
             shareWhatsapp() {
                 var consoleText = this.terminal.text();
+                console.log(consoleText);
+                consoleText = consoleText.replaceAll('<br>', '\n');
                 var url = this.whatsappLink.replace("{text}", encodeURI(consoleText));
                 window.open(url, "_blank");
             },
 
             shareEmail() {
                 var consoleText = this.terminal.text();
+                console.log(consoleText);
+                consoleText = consoleText.replaceAll('<br>', '\n');
                 var url = this.emailLink
                     .replace("{subject}", "Shell Commander:")
                     .replace("{body}", encodeURI(consoleText));

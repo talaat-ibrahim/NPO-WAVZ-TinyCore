@@ -52,7 +52,7 @@ class BranchesController extends Controller
                     ->orWhere('address', 'like', '%' . $keyword . '%')
                     ->orWhere('telephone', 'like', '%' . $keyword . '%');
             })->orderBy('id', 'asc')->paginate();
-    
+
         }
         //filter by project_id
        if(request()->project_id){
@@ -61,7 +61,7 @@ class BranchesController extends Controller
                 $query->Where('project_id',   $project_id );
             })->orderBy('id', 'asc')->paginate();
 
-            
+
        }
         //filter by upsInstallations
         if(request('ups_installation_id')){
@@ -69,14 +69,14 @@ class BranchesController extends Controller
                 $ups_installation_id = request('ups_installation_id');
                 $query->Where('ups_installation_id',  $ups_installation_id );
             })->orderBy('id', 'asc')->paginate();
-    
+
         }
         //filter by line type id
        if(request('line_type_id')){
         $lists = Branch::when(request('line_type_id'), function ($query) {
             $line_type_id = request('line_type_id');
             $query->Where('line_type_id',   $line_type_id );
-        })->orderBy('id', 'asc')->paginate();
+        })->orderBy('id', 'asc')->paginate(20);
 
        }
         // $lists = Branch::where('working_days' , 'like', '%  %')->get();
