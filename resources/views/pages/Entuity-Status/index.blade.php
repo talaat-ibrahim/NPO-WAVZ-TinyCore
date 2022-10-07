@@ -3,7 +3,7 @@
 @section('PageContent')
     @includeIf('layouts.inc.breadcrumb')
 
-   @if (auth()->user()->can('Branche_create-entiity-stayus'))
+   @if (auth()->user()->can('Branche_create-entuity-status'))
     <div style=" margin-bottom: 14px; position: relative; text-align: right; ">
         <a type="button" class="btn btn-primary" href="{{ route('entuity-status.create') }}">@lang('Create new Entuity Status')</a>
     </div>

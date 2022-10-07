@@ -42,7 +42,6 @@ class BranchesController extends Controller
                 $keyword = request('keyword');
                 $query->Where('lan_ip', 'like', '%' . $keyword . '%')
                     ->orWhere('wan_ip', 'like', '%' . $keyword . '%')
-                    ->orWhere('wan_ip', 'like', '%' . $keyword . '%')
                     ->orWhere('project_id', 'like', '%' . $keyword . '%')
                     ->orWhere('tunnel_ip', 'like', '%' . $keyword . '%')
                     ->orWhere('main_order_id', 'like', '%' . $keyword . '%')
@@ -58,7 +57,7 @@ class BranchesController extends Controller
        if(request()->project_id){
             $lists = Branch::when(request('project_id'), function ($query) {
                 $project_id = request('project_id');
-                $query->Where('project_id',   $project_id );
+                $query->whereIn('project_id',   $project_id );
             })->orderBy('id', 'asc')->paginate();
 
 
@@ -67,7 +66,7 @@ class BranchesController extends Controller
         if(request('ups_installation_id')){
             $lists = Branch::when(request('ups_installation_id'), function ($query) {
                 $ups_installation_id = request('ups_installation_id');
-                $query->Where('ups_installation_id',  $ups_installation_id );
+                $query->whereIn('ups_installation_id',  $ups_installation_id );
             })->orderBy('id', 'asc')->paginate();
 
         }
@@ -75,18 +74,56 @@ class BranchesController extends Controller
        if(request('line_type_id')){
         $lists = Branch::when(request('line_type_id'), function ($query) {
             $line_type_id = request('line_type_id');
-            $query->Where('line_type_id',   $line_type_id );
+            $query->whereIn('line_type_id',   $line_type_id );
         })->orderBy('id', 'asc')->paginate(20);
 
        }
-        // $lists = Branch::where('working_days' , 'like', '%  %')->get();
-        // dd($lists);
+        //filter by  sector 
+       if(request('sector')){
+        $lists = Branch::when(request('sector'), function ($query) {
+            $sector = request('sector');
+            $query->whereIn('sector',   $sector );
+        })->orderBy('id', 'asc')->paginate(20);
+
+       }
+        //filter by  time 
+        if(request('start_time') != null ){
+            $lists = Branch::when(request('start_time'), function ($query) {
+                $start_time = request('start_time');
+                $query->where('start_time', '<=',  $start_time );
+            })->orderBy('id', 'asc')->paginate(20);
+           }
+        //filter by  time 
+        if( request('end_time') != null){
+           
+            $lists = Branch::when(request('end_time'), function ($query) {
+                $end_time = request('end_time');
+                $query->where('end_time', '>=',  $end_time );
+            })->orderBy('id', 'asc')->paginate(20);
+           }
+        //filter by  working days 
+       if(request('work_day')){
+        $lists = Branch::when(request('work_day'), function ($query) {
+            $work_day = request('work_day');
+            $branch=[] ;
+            foreach($work_day as $key=>$val){
+              $branch[] =  $query->whereIn('working_days->'.$val,   $work_day )->get();
+            }
+            $query = $branch;
+            
+        })->orderBy('id', 'asc')->paginate(20);
+
+       }
+        
+       
         return view('pages.branches.index', [
             'breadcrumb' => $breadcrumb,
             'lists'     => $lists,
             'projects'     => Project::all(),
             'upsInstallations' => UpsInstallation::all(),
             'lineTypes' => LineType::all(),
+            'sectors' => Branch::groupby('sector')->distinct()->pluck('sector')->toArray(),
+            'days' =>Branch::$DAYS,
         ]);
     }
 

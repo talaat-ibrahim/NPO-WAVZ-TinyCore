@@ -21,31 +21,20 @@
 
                         <div class="row">
                             <h5><b>@lang('Branch Info'):</b></h5>
-                            <div class="col-md-6">
+                            
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="floatingNameInput" name="name[en]"
-                                        value="{{ old('name[en]') }}" placeholder="@lang('English Name')" />
-                                    <label for="floatingNameInput">@lang('English Name')</label>
-                                    @error('name[en]')
+                                    <input type="text" class="form-control" id="floatingName2Input" name="name"
+                                        value="{{ old('name') }}" placeholder="@lang(' Name')" />
+                                    <label for="floatingName2Input">@lang(' Name')</label>
+                                    @error('name')
                                         <span style="color:red;">
-                                            {{ $errors->first('name[en]') }}
+                                            {{ $errors->first('name') }}
                                         </span>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="floatingName2Input" name="name[ar]"
-                                        value="{{ old('name[ar]') }}" placeholder="@lang('Arbic Name')" />
-                                    <label for="floatingName2Input">@lang('Arbic Name')</label>
-                                    @error('name[ar]')
-                                        <span style="color:red;">
-                                            {{ $errors->first('name[ar]') }}
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" name="main_order_id"
                                         value="{{ old('main_order_id') }}" placeholder="@lang('Main order ID')" />
@@ -57,7 +46,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" name="backup_order_id"
                                         value="{{ old('backup_order_id') }}" placeholder="@lang('Backup order ID')" />
@@ -167,7 +156,7 @@
                                     <select class="form-control" name="project_id" placeholder="@lang('Project')">
                                         @foreach ($projects as $project)
                                             <option selected="{{ old('project_id') == $project->id }}"
-                                                value="{{ $project->id }}">{{ $project->name }}</option>
+                                                value="{{$project->id}}">{{ $project->name }}</option>
                                         @endforeach
                                     </select>
                                     <label>@lang('Project')</label>
@@ -557,104 +546,49 @@
                                                 <div class="form-check">
                                                     <label class="form-check-label">
                                                         <input onclick="showInput(this)" data-day="{{ $key }}" class="form-check-input" type="checkbox"
-                                                            name="" value="{{ $key }}">
+                                                            name="working_days[{{ $key }}]" value="{{ $key }}">
                                                         {{ $value }}
                                                     </label>
                                                 </div>
                                             </td>
                                            @endforeach
                                             
-                                            {{-- <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Sun">
-                                                        Sunday
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Mon">
-                                                        Monday
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Tue">
-                                                        Tuesday
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Wed">
-                                                        Wednesday
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Thu">
-                                                        Thursday
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="working_days[day][]" value="Fri">
-                                                        Friday
-                                                    </label>
-                                                </div>
-                                            </td> --}}
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            @foreach ($days as $key =>$value)
-                                                <td>
-                                                <div class="form-floating mb-3">
-                                                    <input disabled id="start-time-{{ $key }}" type="time" class="form-control"
-                                                        name="working_days[{{ $key }}][start_time]" value="{{ old('start_time') }}"
-                                                        placeholder="@lang('Start time') }}" />
-                                                    <label>@lang('Start time')</label>
-                                                    @error('start_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('start_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <input disabled id="end-time-{{ $key }}" type="time" class="form-control"
-                                                        name="working_days[{{ $key }}][end_time]" value="{{ old('end_time') }}"
-                                                        placeholder="@lang('End time') }}" />
-                                                    <label>@lang('End time')</label>
-                                                    @error('end_time')
-                                                        <span style="color:red;">
-                                                            {{ $errors->first('end_time') }}
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            @endforeach
-                                            
-                                           
-                                           
-                                        </tr>
+                                       
                                     </tbody>
                                 </table>
-
+                                <div class="row pt-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input  id="start-time" type="time" class="form-control"
+                                                name="start_time" value="{{ old('start_time') }}"
+                                                placeholder="@lang('Start time') }}" />
+                                            <label>@lang('Start time')</label>
+                                            @error('start_time')
+                                                <span style="color:red;">
+                                                    {{ $errors->first('start_time') }}
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input  id="end-time" type="time" class="form-control"
+                                                name="end_time" value="{{ old('end_time') }}"
+                                                placeholder="@lang('End time') }}" />
+                                            <label>@lang('End time')</label>
+                                            @error('end_time')
+                                                <span style="color:red;">
+                                                    {{ $errors->first('end_time') }}
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>

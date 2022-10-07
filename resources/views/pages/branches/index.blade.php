@@ -21,8 +21,33 @@
             <a type="button" class="btn btn-primary float-start" href="{{ route('branches.create') }}">@lang('Create new branche')</a>
         @endif
     </div>
-    @if (auth()->user()->can('Branche_filter-branches'))
+    @if (auth()->user()->can('Branche_search-filter-branches'))
     <div class="filter p-3 ">
+        <form method="GET"  action="{{ route('branches.index') }}">
+            <div class="card">
+                
+                <div class="card-body " >
+                    <div class="row">
+                        <div class="col-md-10 pt-2">
+                            <div class="form-floating" >
+                                <input type="text" class="form-control" style="height: 58px;" name="keyword" value="{{ request('keyword') }}"
+                                    placeholder="@lang('Search...') }}" />
+                                <label style="margin-top: -10px;">@lang('Search...')</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2 pt-3">
+                            <button type="submit" class="btn btn-success">@lang('Search')</button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    @endif
+    @if (auth()->user()->can('Branche_filter-branches'))
+    <div class="filter p-2 ">
         <form method="GET"  action="{{ route('branches.index') }}">
             <div class="card">
                 <div class="card-header">
@@ -30,20 +55,14 @@
                 </div>
                 <div class="card-body " id="filter-body">
                     <div class="row">
-                        <div class="col-md-12 pt-2">
-                            <div class="form-floating" >
-                                <input type="text" class="form-control" style="height: 58px;" name="keyword" value="{{ request('keyword') }}"
-                                    placeholder="@lang('Search...') }}" />
-                                <label style="margin-top: -10px;">@lang('Search...')</label>
-                            </div>
-                        </div>
+                       
                         <div class="col-md-4 pt-2">
                             <div class="form-floating" >
-                                <select class="form-control" name="project_id" placeholder="@lang('Project')">
-                                    <option selected disabled hidden value="">@lang('Select')</option>
+                                <select class="form-control select2" name="project_id[]" placeholder="@lang('Project')"multiple>
+                                    <option  disabled hidden value="">@lang('Select')</option>
                                     @foreach ($projects as $project)
-                                        <option {{ request('project_id') == $project->id ?'selected':''}}
-                                            value="{{ $project->id }}">{{ $project->name }}</option>
+                                        <option {{ !empty(request('project_id')) ?(in_array($project->id,request('project_id'))? 'selected' :''):'' }}
+                                            value="{{$project->id}}">{{ $project->name }}</option>
                                     @endforeach
                                 </select>
                                 <label>@lang('Project')</label>
@@ -52,10 +71,10 @@
                         </div>
                         <div class="col-md-4 pt-2">
                             <div class="form-floating" >
-                                <select class="form-control" name="ups_installation_id"placeholder="@lang('UPS installation') ">
-                                    <option selected disabled hidden value="">@lang('Select')</option>
+                                <select class="form-control select2" name="ups_installation_id[]"placeholder="@lang('UPS installation') "multiple>
+                                    <option  disabled hidden value="">@lang('Select')</option>
                                         @foreach ($upsInstallations as $ups)
-                                            <option {{ request('ups_installation_id') == $ups->id  ? 'selected' :''}}
+                                            <option {{ !empty(request('ups_installation_id')) ?(in_array($ups->id,request('ups_installation_id'))? 'selected' :''):''}}
                                                 value="{{ $ups->id }}">{{ $ups->name }}
                                             </option>
                                         @endforeach
@@ -66,10 +85,10 @@
                         </div>
                         <div class="col-md-4 pt-2">
                             <div class="form-floating" >
-                                <select class="form-control" name="line_type_id"placeholder="@lang('Line Type') ">
-                                    <option selected disabled hidden value="">@lang('Select')</option>
+                                <select class="form-control select2" name="line_type_id[]"placeholder="@lang('Line Type') " multiple>
+                                    <option  disabled hidden value="">@lang('Select')</option>
                                         @foreach ($lineTypes as $line)
-                                            <option {{ request('line_type_id') == $line->id  ? 'selected' :''}}
+                                            <option {{ !empty(request('line_type_id')) ?(in_array($line->id,request('line_type_id'))? 'selected' :''):''}}
                                                 value="{{ $line->id }}">{{ $line->name }}
                                             </option>
                                         @endforeach
@@ -78,9 +97,59 @@
 
                             </div>
                         </div>
+                        <div class="col-md-4 pt-2">
+                            <div class="form-floating" >
+                                <select class="form-control select2" name="sector[]"placeholder="@lang('Sector') " multiple>
+                                    <option  disabled hidden value="">@lang('Select')</option>
+                                        @foreach ($sectors as $key=>$sector)
+                                            <option {{ !empty(request('sector')) ?(in_array($sector,request('sector'))? 'selected' :''):''}}
+                                                value="{{ $sector }}">{{ $sector }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                <label>@lang('Sector')</label>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4 pt-2">
+                            <div class="form-floating" >
+                                <style>
+                                    .select2-selection__rendered{
+                                        text-align: center !important
+                                    }
+                                </style>
+                                    <select class="form-control select2" name="work_day[]"placeholder="@lang('Working Days') " multiple>
+                                    <option  disabled hidden value="">@lang('Select')</option>
+                                        @foreach ($days as $key=>$val)
+                                            <option {{ request()->work_day== $key ?'selected' :'' }}
+                                                value="{{ $key }}">{{ $val }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                <label>@lang('Working Days')</label>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4 pt-2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating" >
+                                        <input type="time" class="form-control" name="start_time" value="{{ request()->start_time }}">
+                                        <label>@lang('Start Time')</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating" >
+                                        <input type="time" class="form-control" name="end_time" value="{{ request()->end_time }}">
+                                        <label>@lang('End Time')</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <br>
                     <button type="submit" class="btn btn-success">@lang('Search')</button>
+                    <a href="{{ route('branches.index') }}" class="btn bg-light btn-default">@lang('Clear')</a>
 
                 </div>
             </div>
@@ -96,12 +165,18 @@
                         <table class="table project-list-table table-nowrap align-middle table-borderless">
                             <thead>
                                 <tr>
-                                    <th scope="col">@lang('English Name')</th>
-                                    <th scope="col">@lang('Arabic Name')</th>
+                                    <th scope="col">@lang(' Name')</th>
                                     <th scope="col">@lang('Project')</th>
+                                    <th scope="col">@lang('Sector')</th>
+                                    <th scope="col">@lang('Area')</th>
                                     <th scope="col">@lang('Ups Installations')</th>
                                     <th scope="col">@lang('Line Type')</th>
-                                    <th scope="col">@lang('Created At')</th>
+                                    <th scope="col">@lang('Wan IP')</th>
+                                    <th scope="col">@lang('Lan IP')</th>
+                                    <th scope="col">@lang('Telephone')</th>
+                                    <th scope="col">@lang('address')</th>
+                                    <th scope="col">@lang('Main Order ID')</th>
+                                    <th scope="col">@lang('Backup Order ID')</th>
                                     <th scope="col">@lang('Action')</th>
                                 </tr>
                             </thead>
@@ -110,15 +185,20 @@
                                     <tr>
                                         <td>
                                             <a href="{{ route('branches.edit', $list->id) }}">
-                                                {{ $list->name['en'] ?? '' }}
+                                                {{ $list->name ?? '' }}
                                             </a>
                                         </td>
-                                        <td>
-                                            {{ $list->name['ar'] ?? '' }}
-                                        </td>
+                                       
                                         <td>
                                             {{ optional($list->project)->name}}
                                         </td>
+                                        <td>
+                                            {{ $list->sector }}
+                                        </td>
+                                        <td>
+                                            {{ $list->area }}
+                                        </td>
+                                       
                                         <td>
                                             {{ optional($list->upsInstallation)->name}}
                                         </td>
@@ -126,7 +206,22 @@
                                             {{ optional($list->lineType)->name}}
                                         </td>
                                         <td>
-                                            {{ $list->created_at }}
+                                            {{ $list->wan_ip }}
+                                        </td>
+                                        <td>
+                                            {{ $list->lan_ip }}
+                                        </td>
+                                        <td>
+                                            {{ $list->telephone }}
+                                        </td>
+                                        <td>
+                                            {{ $list->address }}
+                                        </td>
+                                        <td>
+                                            {{ $list->main_order_id }}
+                                        </td>
+                                        <td>
+                                            {{ $list->backup_order_id }}
                                         </td>
                                         <td style="display: inline-flex;">
                                            @if (auth()->user()->can('Branche_terminal-branches'))
@@ -189,5 +284,7 @@
         $('#filter').on('click' , function (){
             $('#filter-body').slideToggle('slow');
         });
+
+        $('.select2').select2({});
     </script>
 @endpush

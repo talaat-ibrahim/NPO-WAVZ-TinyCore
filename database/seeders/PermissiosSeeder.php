@@ -35,6 +35,7 @@ class PermissiosSeeder extends Seeder
             ['name' => $perfix . 'create-branches','display_name' => 'Create branches','description' => 'اضافة فرع','category' => 'branches', 'guard_name' => 'web'],
             ['name' => $perfix . 'update-branches','display_name' => 'Update branches','description' => 'تعديل فرع','category' => 'branches', 'guard_name' => 'web'],
             ['name' => $perfix . 'delete-branches','display_name' => 'Delete branches','description' => 'حذف فرع','category' => 'branches', 'guard_name' => 'web'],
+            ['name' => $perfix . 'search-filter-branches','display_name' => 'Search filter branches','description' => 'فلتر بحث الفروع','category' => 'branches', 'guard_name' => 'web'],
             ['name' => $perfix . 'filter-branches','display_name' => 'Filter branches','description' => 'فلتر الفروع','category' => 'branches', 'guard_name' => 'web'],
             ['name' => $perfix . 'export-branches','display_name' => 'Export branches','description' => 'تصدير الفروع','category' => 'branches', 'guard_name' => 'web'],
             ['name' => $perfix . 'import-branches','display_name' => 'Import branches','description' => 'استيراد الفروع','category' => 'branches', 'guard_name' => 'web'],

@@ -14,15 +14,10 @@
                 </div>
                 <hr style="margin: 0">
                 <div class="card-body bg-white">
-                    <div class="row  p-3" style="border-bottom: 2px dashed lightblue">
-                        <div class="col-md-6">
-                            <b>@lang('Name Ar') :</b>
-                            <span class="me-3 ms-3"> {{ $branch->name['ar'] }}</span>
-                        </div>
-                        <div class="col-md-6">
-                            <b>@lang('Name EN') :</b>
-                            <span class="me-3 ms-3"> {{ $branch->name['en'] }}</span>
-                        </div>
+                    <div class="  p-3" style="border-bottom: 2px dashed lightblue">
+                            <b>@lang('Name ') :</b>
+                            <span class="me-3 ms-3"> {{ $branch->name}}</span>
+                       
                     </div>
                     <div class="p-3" style="border-bottom: 2px dashed lightblue">
                         <div class="row">
@@ -259,38 +254,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                @foreach ( $days as $k => $v)
-                                <td>
-                                    <div class="form-floating mb-3">
-                                        <input disabled type="time" class="form-control" {{ !isset($branch->working_days[$k]['start_time'])?'disabled':'' }}  id="start-time-{{ $k }}"
-                                            name="working_days[{{ $k }}][start_time]" value="{{ isset($branch->working_days[$k]['start_time'])?$branch->working_days[$k]['start_time']:'' }}"
-                                            placeholder="@lang('Start time') }}" />
-                                        <label>@lang('Start time')</label>
-                                        @error('start_time')
-                                            <span style="color:red;">
-                                                {{ $errors->first('start_time') }}
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input disabled type="time" class="form-control"  {{ !isset($branch->working_days[$k]['end_time'])?'disabled':'' }}  id="end-time-{{ $k }}"
-                                            name="working_days[{{ $k }}][end_time]" value="{{ isset($branch->working_days[$k]['end_time'])?$branch->working_days[$k]['end_time']:'' }}"
-                                            placeholder="@lang('End time') }}" />
-                                        <label>@lang('End time')</label>
-                                        @error('end_time')
-                                            <span style="color:red;">
-                                                {{ $errors->first('end_time') }}
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </td>
-                                @endforeach
-                             
-                               
-                            </tr>
+                            
                         </tbody>
                     </table>
+                    <div class="row pt-3">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input disabled  id="start-time" type="time" class="form-control"
+                                    name="start_time" value="{{ $branch->start_time }}"
+                                    placeholder="@lang('Start time') }}" />
+                                <label>@lang('Start time')</label>
+                                @error('start_time')
+                                    <span style="color:red;">
+                                        {{ $errors->first('start_time') }}
+                                    </span>
+                                @enderror
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input disabled id="end-time" type="time" class="form-control"
+                                    name="end_time" value="{{ $branch->end_time }}"
+                                    placeholder="@lang('End time') }}" />
+                                <label>@lang('End time')</label>
+                                @error('end_time')
+                                    <span style="color:red;">
+                                        {{ $errors->first('end_time') }}
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>  
         </div>

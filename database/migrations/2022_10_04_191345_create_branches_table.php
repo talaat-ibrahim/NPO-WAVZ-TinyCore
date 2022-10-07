@@ -28,7 +28,8 @@ class CreateBranchesTable extends Migration
             $table->string('viop_no')->nullable();
             $table->foreignId('branch_level_id')->nullable()->constrained()->cascadeOnDelete();
             $table->json('working_days')->nullable();
-            $table->json('working_hours')->nullable();
+            $table->string('start_time')->nullable();
+            $table->string('end_time')->nullable();
             $table->text("address")->nullable();
             $table->string("main_order_id")->nullable();
             $table->string("backup_order_id")->nullable();
@@ -54,8 +55,6 @@ class CreateBranchesTable extends Migration
             $table->foreignId('switch_model_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('government_id')->nullable()->constrained()->cascadeOnDelete();
 
-            
-           
             $table->string('switch_ip')->nullable();
             $table->longText('switch_nots')->nullable();
             $table->boolean('atm_exists')->default(false)->nullable();
