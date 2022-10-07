@@ -78,7 +78,7 @@ class BranchesController extends Controller
         })->orderBy('id', 'asc')->paginate(20);
 
        }
-        //filter by  sector 
+        //filter by  sector
        if(request('sector')){
         $lists = Branch::when(request('sector'), function ($query) {
             $sector = request('sector');
@@ -86,22 +86,28 @@ class BranchesController extends Controller
         })->orderBy('id', 'asc')->paginate(20);
 
        }
-        //filter by  time 
+       if(request('area')){
+            $lists = Branch::when(request('area'), function ($query) {
+                $area = request('area');
+                $query->whereIn('area',   $area);
+            })->orderBy('id', 'asc')->paginate(20);
+       }
+        //filter by  time
         if(request('start_time') != null ){
             $lists = Branch::when(request('start_time'), function ($query) {
                 $start_time = request('start_time');
                 $query->where('start_time', '<=',  $start_time );
             })->orderBy('id', 'asc')->paginate(20);
            }
-        //filter by  time 
+        //filter by  time
         if( request('end_time') != null){
-           
+
             $lists = Branch::when(request('end_time'), function ($query) {
                 $end_time = request('end_time');
                 $query->where('end_time', '>=',  $end_time );
             })->orderBy('id', 'asc')->paginate(20);
            }
-        //filter by  working days 
+        //filter by  working days
        if(request('work_day')){
         $lists = Branch::when(request('work_day'), function ($query) {
             $work_day = request('work_day');
@@ -110,12 +116,16 @@ class BranchesController extends Controller
               $branch[] =  $query->whereIn('working_days->'.$val,   $work_day )->get();
             }
             $query = $branch;
-            
+
         })->orderBy('id', 'asc')->paginate(20);
 
        }
-        
-       
+
+       if (request()->export == 1) {
+            return Excel::download(new BranchsExport, 'branches.xlsx');
+       }
+
+
         return view('pages.branches.index', [
             'breadcrumb' => $breadcrumb,
             'lists'     => $lists,
@@ -123,6 +133,7 @@ class BranchesController extends Controller
             'upsInstallations' => UpsInstallation::all(),
             'lineTypes' => LineType::all(),
             'sectors' => Branch::groupby('sector')->distinct()->pluck('sector')->toArray(),
+            'areas' => Branch::groupby('area')->distinct()->pluck('area')->toArray(),
             'days' =>Branch::$DAYS,
         ]);
     }
@@ -257,7 +268,18 @@ class BranchesController extends Controller
     {
         Excel::import(new BranchesImport, $request->file('file'));
 
-        return redirect('/')->with('success', 'All good!');
+        return redirect()->route('branches.index')->with('success', 'All good!');
+    }
+
+    public function downloadTemplate(Request $request)
+    {
+        $file= public_path(). "/files/Pinger_Excel_Template.xlsx";
+
+        $headers = array(
+            'Content-Type: application/xlsx',
+        );
+
+        return  response()->download($file, 'template.xlsx', $headers);
     }
 
     public function commander(Branch $branch, Request $request) {
