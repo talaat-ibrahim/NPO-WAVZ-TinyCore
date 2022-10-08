@@ -9,10 +9,10 @@
     <div class="col-8 mx-auto mt-3">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('terminals.update',$user->id) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('terminals.update',$terminal->id) }}" method="post" enctype="multipart/form-data">
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingNameInput" name="commands" value="{{ old('commands',$user->commands) }}" placeholder="@lang('Commands')" />
+                        <input type="text" class="form-control" id="floatingNameInput" name="commands" value="{{ old('commands',$terminal->commands) }}" placeholder="@lang('Commands')" />
                         <label for="floatingNameInput">@lang('Commands')</label>
                         @error('commands')
                             <span style="color:red;">

@@ -105,7 +105,7 @@
                         <div class="mt-5 text-center">
 
                             <div>
-                                <p>{{ date('Y') }} © {{ env('APP_NAME') }}.
+                                <p>NOC TEAM.
                             </div>
                         </div>
 
