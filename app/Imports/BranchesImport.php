@@ -23,14 +23,14 @@ class BranchesImport implements ToModel, WithHeadingRow
     protected function trim($name)
     {
         $name = str_replace("  ", " ", $name);
-        $name = strtolower($name);
+        //$name = strtolower($name);
         return $name;
     }
 
     protected function createOrUpdateNetwork($name)
     {
         $name = $this->trim($name);
-        $network = Network::where('name', 'like', '%' . mb_strtolower($name) . '%')->first();
+        $network = Network::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$network) {
             Network::create(
@@ -44,7 +44,7 @@ class BranchesImport implements ToModel, WithHeadingRow
     protected function createOrUpdateProject($name)
     {
         $name = $this->trim($name);
-        $project = Project::where('name', 'like', '%' . mb_strtolower($name) . '%')->first();
+        $project = Project::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$project) {
             Project::create(
@@ -58,7 +58,7 @@ class BranchesImport implements ToModel, WithHeadingRow
     public function createOrUpdateBranchLevel($name)
     {
         $name = $this->trim($name);
-        $level = BranchLevel::where('name', 'like', '%' . mb_strtolower($name) . '%')->first();
+        $level = BranchLevel::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$level) {
             BranchLevel::create(
@@ -72,7 +72,7 @@ class BranchesImport implements ToModel, WithHeadingRow
     public function createOrUpdateLineType($name)
     {
         $name = $this->trim($name);
-        $lineType = LineType::where('name', 'like', '%' . mb_strtolower($name) . '%')->first();
+        $lineType = LineType::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$lineType) {
             LineType::create(
@@ -86,7 +86,7 @@ class BranchesImport implements ToModel, WithHeadingRow
     public function createOrUpdateLineCapacity($name)
     {
         $name = $this->trim($name);
-        $lineCap = LineCapacitie::where('name', 'like', '%' . mb_strtolower($name) . '%')->first();
+        $lineCap = LineCapacitie::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$lineCap) {
             LineCapacitie::create(
@@ -100,7 +100,7 @@ class BranchesImport implements ToModel, WithHeadingRow
     public function createOrUpdateEntuityStatus($name)
     {
         $name = $this->trim($name);
-        $entuityStatus = EntuityStatus::where('name', 'like', '%' . mb_strtolower($name) . '%')->first();
+        $entuityStatus = EntuityStatus::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$entuityStatus) {
             EntuityStatus::create(
@@ -114,7 +114,7 @@ class BranchesImport implements ToModel, WithHeadingRow
     public function createOrUpdateRouter($name)
     {
         $name = $this->trim($name);
-        $router = Router::where('name', 'like', '%' . mb_strtolower($name) . '%')->first();
+        $router = Router::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$router) {
             Router::create(
@@ -128,7 +128,7 @@ class BranchesImport implements ToModel, WithHeadingRow
     public function createOrUpdateSwitchModel($name)
     {
         $name = $this->trim($name);
-        $switch = SwitchModel::where('name', 'like', '%' . mb_strtolower($name) . '%')->first();
+        $switch = SwitchModel::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$switch) {
             SwitchModel::create(
@@ -142,7 +142,7 @@ class BranchesImport implements ToModel, WithHeadingRow
     public function createOrUpdateRouter_($name, $number)
     {
         $name = $this->trim($name);
-        $router = Router::where('name', 'like', '%' . mb_strtolower($name) . '%')->first();
+        $router = Router::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$router) {
             Router::create(
@@ -157,7 +157,7 @@ class BranchesImport implements ToModel, WithHeadingRow
     public function createOrUpdateUps($name)
     {
         $name = $this->trim($name);
-        $ups = UpsInstallation::where('name', 'like', '%' . mb_strtolower($name) . '%')->first();
+        $ups = UpsInstallation::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$ups) {
             UpsInstallation::create(

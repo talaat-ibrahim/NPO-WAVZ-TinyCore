@@ -151,11 +151,10 @@
             },
 
             shareWhatsapp() {
-                var consoleText = this.terminal.text();
-                console.log(consoleText);
-                consoleText = consoleText.replaceAll('<br>', '\n');
-                var url = this.whatsappLink.replace("{text}", encodeURI(consoleText));
-                window.open(url, "_blank");
+                var consoleText = this.terminal.text().replaceAll('\n', '\n\r');
+                console.log(encodeURI(consoleText));
+                var url = this.whatsappLink.replace("{text}", consoleText);
+                window.open(encodeURI(url), "_blank");
             },
 
             shareEmail() {
