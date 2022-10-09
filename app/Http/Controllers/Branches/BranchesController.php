@@ -50,7 +50,7 @@ class BranchesController extends Controller
                     ->orWhere('sector', 'like', '%' . $keyword . '%')
                     ->orWhere('address', 'like', '%' . $keyword . '%')
                     ->orWhere('telephone', 'like', '%' . $keyword . '%');
-            })->orderBy('id', 'asc')->paginate();
+            })->orderBy('id', 'asc')->paginate(30);
 
         }
         //filter by project_id
@@ -75,7 +75,7 @@ class BranchesController extends Controller
         $lists = Branch::when(request('line_type_id'), function ($query) {
             $line_type_id = request('line_type_id');
             $query->whereIn('line_type_id',   $line_type_id );
-        })->orderBy('id', 'asc')->paginate(20);
+        })->orderBy('id', 'asc')->paginate(30);
 
        }
         //filter by  sector
@@ -83,21 +83,21 @@ class BranchesController extends Controller
         $lists = Branch::when(request('sector'), function ($query) {
             $sector = request('sector');
             $query->whereIn('sector',   $sector );
-        })->orderBy('id', 'asc')->paginate(20);
+        })->orderBy('id', 'asc')->paginate(30);
 
        }
        if(request('area')){
             $lists = Branch::when(request('area'), function ($query) {
                 $area = request('area');
                 $query->whereIn('area',   $area);
-            })->orderBy('id', 'asc')->paginate(20);
+            })->orderBy('id', 'asc')->paginate(30);
        }
         //filter by  time
         if(request('start_time') != null ){
             $lists = Branch::when(request('start_time'), function ($query) {
                 $start_time = request('start_time');
                 $query->where('start_time', '<=',  $start_time );
-            })->orderBy('id', 'asc')->paginate(20);
+            })->orderBy('id', 'asc')->paginate(30);
            }
         //filter by  time
         if( request('end_time') != null){
@@ -105,7 +105,7 @@ class BranchesController extends Controller
             $lists = Branch::when(request('end_time'), function ($query) {
                 $end_time = request('end_time');
                 $query->where('end_time', '>=',  $end_time );
-            })->orderBy('id', 'asc')->paginate(20);
+            })->orderBy('id', 'asc')->paginate(30);
            }
         //filter by  working days
        if(request('work_day')){
@@ -117,7 +117,7 @@ class BranchesController extends Controller
             }
             $query = $branch;
 
-        })->orderBy('id', 'asc')->paginate(20);
+        })->orderBy('id', 'asc')->paginate(30);
 
        }
 
@@ -201,14 +201,18 @@ class BranchesController extends Controller
         ];
         $work_day=[];
         if($branch->working_days){
-            foreach($branch->working_days as $k=>$v){
+            if (is_array($branch->working_days))
+                $workDays = $branch->working_days;
+            else
+                $workDays = json_decode($branch->working_days);
+            foreach($workDays as $k=>$v){
                 $work_day[]= $k;
             }
         }
         return view('pages.branches.show', [
             'breadcrumb'    =>  $breadcrumb,
             'branch'         =>  $branch,
-            'days' =>Branch::$DAYS,
+            'days' => Branch::$DAYS,
             'work_day'=>$work_day,
         ]);
     }
@@ -230,7 +234,11 @@ class BranchesController extends Controller
         ];
         $work_day=[];
         if($branch->working_days){
-            foreach($branch->working_days as $k=>$v){
+            if (is_array($branch->working_days))
+                $workDays = $branch->working_days;
+            else
+                $workDays = json_decode($branch->working_days);
+            foreach($workDays as $k=>$v){
                 $work_day[]= $k;
             }
         }

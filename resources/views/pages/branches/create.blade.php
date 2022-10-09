@@ -21,7 +21,7 @@
 
                         <div class="row">
                             <h5><b>@lang('Branch Info'):</b></h5>
-                            
+
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="floatingName2Input" name="name"
@@ -54,6 +54,18 @@
                                     @error('backup_order_id')
                                         <span style="color:red;">
                                             {{ $errors->first('backup_order_id') }}
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="modeling" value="{{ old('modeling') }}"
+                                        placeholder="@lang('modeling')" />
+                                    <label>@lang('modeling')</label>
+                                    @error('modeling')
+                                        <span style="color:red;">
+                                            {{ $errors->first('modeling') }}
                                         </span>
                                     @enderror
                                 </div>
@@ -112,7 +124,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-floating mb-3" style="width: 70%">
-                                    
+
                                     <input type="number" required class="form-control" name="telephone"
                                         value="{{ old('telephone') }}" placeholder="@lang('telephone')"aria-describedby="basic-addon1"aria-label="telephone" />
                                     <label>@lang('telephone')</label>
@@ -374,8 +386,8 @@
                                     @enderror
                                 </div>
                             </div>
-                            
-                            
+
+
                         </div>
 
                         <hr>
@@ -552,12 +564,12 @@
                                                 </div>
                                             </td>
                                            @endforeach
-                                            
-                                            
+
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
+
                                     </tbody>
                                 </table>
                                 <div class="row pt-3">
@@ -573,7 +585,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        
+
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3">
@@ -639,7 +651,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            
+
                         </div> --}}
 
                         <div class="row" style=" margin-top: 20px; ">
@@ -659,7 +671,7 @@
 @endsection
 @push('scripts')
     <script>
-        
+
         $(function () {
         $("#atm-exists").click(function () {
             if ($(this).is(":checked")) {

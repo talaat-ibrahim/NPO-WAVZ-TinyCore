@@ -170,7 +170,7 @@ class BranchesImport implements ToModel, WithHeadingRow
 
     protected function getWorkDays($data)
     {
-        return $data;
+        return json_encode(explode(",", $data));
     }
 
     /**
@@ -203,10 +203,10 @@ class BranchesImport implements ToModel, WithHeadingRow
             "network_id" => optional($this->createOrUpdateNetwork($row['network_id']))->id,
             "line_type_id" => optional($this->createOrUpdateLineType($row['line_type_id']))->id,
             "line_capacity_id" => optional($this->createOrUpdateLineCapacity($row['line_capacity_id']))->id,
-            "entuity_status_id" => optional($this->createOrUpdateEntuityStatus($row['entuity_status_id']))->id,
+            "entuity_status_id" => optional($this->createOrUpdateEntuityStatus($row['Entuty_add-id']))->id,
             "router_model_id" => optional($this->createOrUpdateRouter($row['router_model_id']))->id,
             "switch_model_id" => optional($this->createOrUpdateSwitchModel($row['switch_model_id']))->id,
-            "added_on_entuity" => $row['added_on_entuity'] == 1? true : false,
+            "added_on_entuity" => $row['entuity_status'] == "Yes"? true : false,
             "lan_ip" => $row['lan_ip'],
             "additional_ips" => $row['additional_ips'],
             "ip_notes" => $row['ip_notes'],
@@ -218,9 +218,9 @@ class BranchesImport implements ToModel, WithHeadingRow
             "switch_serial" => $row['switch_serial'],
             "switch_ip" => $row['switch_ip'],
             "switch_nots" => $row['switch_nots'],
-            "atm_exists" => $row['atm_exists'] == 1 ? true : false,
+            "atm_exists" => $row['atm_exists'] == "Yes" ? true : false,
             "atm_ip" => $row['atm_ip'],
-            "installation_and_commissioning" => $row['installation_and_commissioning'] == 1? true : false,
+            "installation_and_commissioning" => $row['installation_and_commissioning'] == "Yes"? true : false,
             "user_id" => auth()->user()->id,
         ];
 

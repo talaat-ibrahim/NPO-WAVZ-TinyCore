@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Terminals\CreateTerminalsRequest;
 use App\Http\Requests\Terminals\UpdateTerminalsRequest;
-use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon;
 use App\Models\Terminal;
 
 class TerminalsController extends Controller
@@ -54,7 +52,7 @@ class TerminalsController extends Controller
         Terminal::create($request->all());
         return redirect()->route('terminals.index')->with('success', __("This row has been created."));
     }
-    
+
     public function edit(Terminal $terminal) {
         $breadcrumb = [
             'title' =>  __("Edit terminal"),
@@ -75,7 +73,7 @@ class TerminalsController extends Controller
         ]);
     }
 
-    public function update(UpdateTerminalsRequest $request, User $terminal) {
+    public function update(UpdateTerminalsRequest $request, Terminal $terminal) {
         $terminal->update($request->all());
         return redirect()->route('terminals.index')->with('success', __("This row has been updated."));
     }

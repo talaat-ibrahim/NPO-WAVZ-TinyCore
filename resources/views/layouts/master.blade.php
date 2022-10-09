@@ -11,6 +11,9 @@
         * {
             font-family: 'Roboto', sans-serif;
         }
+        #sidebar-menu ul li a {
+            font-size: 16px!important;
+        }
     </style>
 </head>
 <body data-sidebar="dark">

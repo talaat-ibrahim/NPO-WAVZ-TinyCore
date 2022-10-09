@@ -58,7 +58,7 @@ class Branch extends Model
         return $this->belongsTo(Router::class);
     }
 
- 
+
 
     public function lineCapacity(){
         return $this->belongsTo(LineCapacitie::class);

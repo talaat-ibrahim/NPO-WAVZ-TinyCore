@@ -53,7 +53,8 @@
                 <div class="card">
                     <div class="card-header">
                         <button type="button" id="filter" class="btn btn-default"> <i class="fa fa-filter"></i>
-                            @lang('Filter')</button>
+                            <b class="h4" >@lang('Filter')</b>
+                        </button>
                     </div>
                     <div class="card-body " id="filter-body">
                         <div class="row">

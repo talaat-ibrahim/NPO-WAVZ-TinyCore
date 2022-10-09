@@ -17,7 +17,6 @@
                             <thead>
                                 <tr>
                                     <th scope="col">@lang('Name')</th>
-                                    <th scope="col">@lang('Number')</th>
                                     <th scope="col">@lang('Created At')</th>
                                     <th scope="col">@lang('Action')</th>
                                 </tr>
@@ -29,9 +28,6 @@
                                             <a href="{{ route('routers.edit', $list->id) }}">
                                                 {{ $list->name ?? '' }}
                                             </a>
-                                        </td>
-                                        <td>
-                                            {{ $list->number }}
                                         </td>
                                         <td>
                                             {{ $list->created_at }}
