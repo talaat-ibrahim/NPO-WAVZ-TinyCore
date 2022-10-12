@@ -1,5 +1,9 @@
 @extends('layouts.master')
 @section('PageTitle', $breadcrumb['title'])
+@section('css')
+    <link rel="stylesheet" href="{{ asset('assets/css/datatable/bootstrap.min.css') }}">
+    <link href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css" rel="stylesheet" />
+@endsection
 @section('PageContent')
     @includeIf('layouts.inc.breadcrumb')
 
@@ -121,7 +125,7 @@
                                     <select class="form-control select2" name="work_day[]"placeholder="@lang('Working Days') " multiple>
                                     <option  disabled hidden value="">@lang('Select')</option>
                                         @foreach ($days as $key=>$val)
-                                            <option {{ request()->work_day== $key ?'selected' :'' }}
+                                            <option {{ !empty(request('work_day')) ?(in_array($key,request('work_day'))? 'selected' :''):'' }}
                                                 value="{{ $key }}">{{ $val }}
                                             </option>
                                         @endforeach
@@ -162,7 +166,7 @@
             <div class="col-lg-12">
                 <div class="">
                     <div class="table-responsive">
-                        <table class="table project-list-table table-nowrap align-middle table-borderless">
+                        <table class="table project-list-table table-nowrap align-middle table-borderless" id="branchesTable">
                             <thead>
                                 <tr>
                                     <th scope="col">@lang(' Name')</th>
@@ -256,7 +260,7 @@
                 </div>
             </div>
         </div>
-        {{ $lists->links('layouts.inc.paginator') }}
+        {{-- {{ $lists->links('layouts.inc.paginator') }} --}}
     @else
         <div class="row">
             <div class="col-lg-12">
@@ -280,11 +284,31 @@
 
 @endsection
 @push('scripts')
+<script src="{{ asset('assets/js/datatable/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/js/datatable/jquery.dataTables.min.js') }}"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.js"></script>    
+<script src="{{ asset('assets/js/datatable/jszip.min.js') }}"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.bootstrap.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+
     <script>
         $('#filter').on('click' , function (){
             $('#filter-body').slideToggle('slow');
         });
 
         $('.select2').select2({});
+
+
+        $(function () {
+            $('#branchesTable').DataTable({
+            'order': [[1, 'desc']],
+                    responsive: true,
+                    "dom": 'lBfrtip',
+                    "buttons": [
+                            'copy', 'csv', 'excel', 'pdf', 'print',
+                    ]
+            });
+        });
     </script>
 @endpush

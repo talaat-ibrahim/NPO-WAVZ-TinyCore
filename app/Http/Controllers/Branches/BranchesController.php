@@ -37,6 +37,7 @@ class BranchesController extends Controller
             ],
         ];
         $lists = Branch::orderBy('id', 'asc')->paginate();
+        
         if(request('keyword')){
             $lists = Branch::when(request('keyword'), function ($query) {
                 $keyword = request('keyword');
@@ -86,6 +87,7 @@ class BranchesController extends Controller
         })->orderBy('id', 'asc')->paginate(20);
 
        }
+
         //filter by  time 
         if(request('start_time') != null ){
             $lists = Branch::when(request('start_time'), function ($query) {
