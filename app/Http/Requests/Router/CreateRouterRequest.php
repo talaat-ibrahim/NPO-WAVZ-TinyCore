@@ -26,7 +26,6 @@ class CreateRouterRequest extends FormRequest
     {
         return [
             "name"      => 'required|string|max:150',
-            "number"      => 'required|string|max:150',
         ];
     }
 }

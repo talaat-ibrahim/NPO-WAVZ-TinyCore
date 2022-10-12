@@ -7,158 +7,192 @@
 @section('PageContent')
     @includeIf('layouts.inc.breadcrumb')
 
-    <div style="margin-bottom: 14px; position: relative; display: flex; justify-content: space-between; align-items: center;">
-       @if (auth()->user()->can('Branche_import-branches'))
-        <form method="POST" enctype="multipart/form-data" action="{{ route('branches.import') }}" style="display: flex; justify-content: space-between; gap: 10px">
-            @csrf
+    <div
+        style="margin-bottom: 14px; position: relative; display: flex; justify-content: space-between; align-items: center;">
+        @if (auth()->user()->can('Branche_import-branches'))
+            <form method="POST" enctype="multipart/form-data" action="{{ route('branches.import') }}"
+                style="display: flex; justify-content: space-between; gap: 10px">
+                @csrf
                 <div style="height: 40px;">
                     <input type="file" class="form-control" name="file" />
                 </div>
                 <button type="submit" class="btn btn-success">@lang('Import')</button>
+                <a role="button" href="{{ route('branches.downloadTemplate') }}" class="btn btn-primary">@lang('Download Template File')</a>
             </form>
-       @endif
-        @if (auth()->user()->can('Branche_export-branches'))
-        <a href="" class="btn btn-info">@lang('Export')</a>
         @endif
 
-        @if(auth()->user()->can('Branche_create-branches'))
-            <a type="button" class="btn btn-primary float-start" href="{{ route('branches.create') }}">@lang('Create new branche')</a>
+        @if (auth()->user()->can('Branche_create-branches'))
+            <a type="button" class="btn btn-primary float-start"
+                href="{{ route('branches.create') }}">@lang('Create new branche')</a>
         @endif
     </div>
     @if (auth()->user()->can('Branche_search-filter-branches'))
-    <div class="filter p-3 ">
-        <form method="GET"  action="{{ route('branches.index') }}">
-            <div class="card">
-                
-                <div class="card-body " >
-                    <div class="row">
-                        <div class="col-md-10 pt-2">
-                            <div class="form-floating" >
-                                <input type="text" class="form-control" style="height: 58px;" name="keyword" value="{{ request('keyword') }}"
-                                    placeholder="@lang('Search...') }}" />
-                                <label style="margin-top: -10px;">@lang('Search...')</label>
+        <div class="filter p-3 ">
+            <form method="GET" action="{{ route('branches.index') }}">
+                <div class="card">
+
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-md-10 pt-2">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" style="height: 58px;" name="keyword"
+                                        value="{{ request('keyword') }}" placeholder="@lang('Search...') }}" />
+                                    <label style="margin-top: -10px;">@lang('Search...')</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pt-3">
+                                <button type="submit" class="btn btn-success">@lang('Search')</button>
+
                             </div>
                         </div>
-                        <div class="col-md-2 pt-3">
-                            <button type="submit" class="btn btn-success">@lang('Search')</button>
 
-                        </div>
                     </div>
-
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
     @endif
     @if (auth()->user()->can('Branche_filter-branches'))
-    <div class="filter p-2 ">
-        <form method="GET"  action="{{ route('branches.index') }}">
-            <div class="card">
-                <div class="card-header">
-                    <button type="button" id="filter" class="btn btn-default"> <i class="fa fa-filter"></i> @lang('Filter')</button>
-                </div>
-                <div class="card-body " id="filter-body">
-                    <div class="row">
-                       
-                        <div class="col-md-4 pt-2">
-                            <div class="form-floating" >
-                                <select class="form-control select2" name="project_id[]" placeholder="@lang('Project')"multiple>
-                                    <option  disabled hidden value="">@lang('Select')</option>
-                                    @foreach ($projects as $project)
-                                        <option {{ !empty(request('project_id')) ?(in_array($project->id,request('project_id'))? 'selected' :''):'' }}
-                                            value="{{$project->id}}">{{ $project->name }}</option>
-                                    @endforeach
-                                </select>
-                                <label>@lang('Project')</label>
+        <div class="filter p-2 ">
+            <form method="GET" action="{{ route('branches.index') }}" __onsubmit="$('#exportInput').val('0')">
+                <div class="card">
+                    <div class="card-header">
+                        <button type="button" id="filter" class="btn btn-default"> <i class="fa fa-filter"></i>
+                            <b class="h4" >@lang('Filter')</b>
+                        </button>
+                    </div>
+                    <div class="card-body " id="filter-body">
+                        <div class="row">
 
+                            <div class="col-md-4 pt-2">
+                                <div class="form-floating">
+                                    <select id="project_id" class="form-control select2" name="project_id"placeholder="@lang('Project')">
+                                        <option  value="">@lang('Select')</option>
+                                        @foreach ($projects as $project)
+                                            <option
+                                                {{ !empty(request('project_id')) ? (in_array($project->id, request('project_id')) ? 'selected' : '') : '' }}
+                                                value="{{ $project->id }}">{{ $project->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <label>@lang('Project')</label>
+
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 pt-2">
-                            <div class="form-floating" >
-                                <select class="form-control select2" name="ups_installation_id[]"placeholder="@lang('UPS installation') "multiple>
-                                    <option  disabled hidden value="">@lang('Select')</option>
+                            <div class="col-md-4 pt-2">
+                                <div class="form-floating">
+                                    <select id="ups_installation_id" class="form-control select2"name="ups_installation_id"placeholder="@lang('UPS installation') ">
+                                        <option  value="">@lang('Select')</option>
                                         @foreach ($upsInstallations as $ups)
-                                            <option {{ !empty(request('ups_installation_id')) ?(in_array($ups->id,request('ups_installation_id'))? 'selected' :''):''}}
+                                            <option
+                                                {{ !empty(request('ups_installation_id')) ? (in_array($ups->id, request('ups_installation_id')) ? 'selected' : '') : '' }}
                                                 value="{{ $ups->id }}">{{ $ups->name }}
                                             </option>
                                         @endforeach
                                     </select>
-                                <label>@lang('Ups Installation')</label>
+                                    <label>@lang('Ups Installation')</label>
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 pt-2">
-                            <div class="form-floating" >
-                                <select class="form-control select2" name="line_type_id[]"placeholder="@lang('Line Type') " multiple>
-                                    <option  disabled hidden value="">@lang('Select')</option>
+                            <div class="col-md-4 pt-2">
+                                <div class="form-floating">
+                                    <select id="line_type_id" class="form-control select2"
+                                        name="line_type_id"placeholder="@lang('Line Type') " >
+                                        <option  value="">@lang('Select')</option>
                                         @foreach ($lineTypes as $line)
-                                            <option {{ !empty(request('line_type_id')) ?(in_array($line->id,request('line_type_id'))? 'selected' :''):''}}
+                                            <option
+                                                {{ !empty(request('line_type_id')) ? (in_array($line->id, request('line_type_id')) ? 'selected' : '') : '' }}
                                                 value="{{ $line->id }}">{{ $line->name }}
                                             </option>
                                         @endforeach
                                     </select>
-                                <label>@lang('Line Type')</label>
+                                    <label>@lang('Line Type')</label>
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 pt-2">
-                            <div class="form-floating" >
-                                <select class="form-control select2" name="sector[]"placeholder="@lang('Sector') " multiple>
-                                    <option  disabled hidden value="">@lang('Select')</option>
-                                        @foreach ($sectors as $key=>$sector)
-                                            <option {{ !empty(request('sector')) ?(in_array($sector,request('sector'))? 'selected' :''):''}}
+                            <div class="col-md-4 pt-2">
+                                <div class="form-floating">
+                                    <select id="sector" class="form-control select2" name="sector" placeholder="@lang('Sector')"
+                                        >
+                                        <option  value="">@lang('Select')</option>
+                                        @foreach ($sectors as $key => $sector)
+                                            <option
+                                                {{ !empty(request('sector')) ? (in_array($sector, request('sector')) ? 'selected' : '') : '' }}
                                                 value="{{ $sector }}">{{ $sector }}
                                             </option>
                                         @endforeach
                                     </select>
-                                <label>@lang('Sector')</label>
+                                    <label>@lang('Sector')</label>
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 pt-2">
-                            <div class="form-floating" >
-                                <style>
-                                    .select2-selection__rendered{
-                                        text-align: center !important
-                                    }
-                                </style>
-                                    <select class="form-control select2" name="work_day[]"placeholder="@lang('Working Days') " multiple>
-                                    <option  disabled hidden value="">@lang('Select')</option>
-                                        @foreach ($days as $key=>$val)
-                                            <option {{ !empty(request('work_day')) ?(in_array($key,request('work_day'))? 'selected' :''):'' }}
+                        
+                       
+                        
+                            <div class="col-md-4 pt-2">
+                                <div class="form-floating">
+                                    <select id="area" class="form-control select2" name="area" placeholder="@lang('Area')"
+                                        >
+                                        <option  value="">@lang('Select')</option>
+                                        @foreach ($areas as $key => $area)
+                                            <option
+                                                {{ !empty(request('area')) ? (in_array($area, request('area')) ? 'selected' : '') : '' }}
+                                                value="{{ $area }}">{{ $area }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label>@lang('Area')</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pt-2">
+                                <div class="form-floating">
+                                    <style>
+                                        .select2-selection__rendered {
+                                            text-align: center !important
+                                        }
+                                    </style>
+                                    <select id="work_day" class="form-control select2" name="work_day"placeholder="@lang('Working Days') "
+                                    >
+                                        <option  value="">@lang('Select')</option>
+                                        @foreach ($days as $key => $val)
+                                            <option
+                                            {{ !empty(request('work_day')) ? (in_array($key, request('work_day')) ? 'selected' : '') : '' }}
                                                 value="{{ $key }}">{{ $val }}
                                             </option>
                                         @endforeach
                                     </select>
-                                <label>@lang('Working Days')</label>
+                                    <label>@lang('Working Days')</label>
 
-                            </div>
-                        </div>
-                        <div class="col-md-4 pt-2">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-floating" >
-                                        <input type="time" class="form-control" name="start_time" value="{{ request()->start_time }}">
-                                        <label>@lang('Start Time')</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating" >
-                                        <input type="time" class="form-control" name="end_time" value="{{ request()->end_time }}">
-                                        <label>@lang('End Time')</label>
-                                    </div>
                                 </div>
                             </div>
+                            <div class="col-md-4 pt-2">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input id="start_time" type="time" class="form-control" name="start_time"
+                                                value="{{ request()->start_time }}">
+                                            <label>@lang('Start Time')</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input id="end_time" type="time" class="form-control" name="end_time"
+                                                value="{{ request()->end_time }}">
+                                            <label>@lang('End Time')</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <br>
+                        <input type="hidden" id="exportInput" name="export">
+                        <button onclick="reloadData( $('#project_id').val(),$('#ups_installation_id').val(),$('#line_type_id').val(),$('#sector').val(),$('#area').val(),$('#work_day').val(),$('#start_time').val(),$('#end_time').val() )" type="button"  class="btn btn-success">@lang('Search')</button>
+                        <a href="{{ route('branches.index') }}" class="btn bg-light btn-default">@lang('Clear')</a>
+                        @if (auth()->user()->can('Branche_export-branches'))
+                        <button type="submit" onclick="exportFile()" class="btn btn-primary">@lang('Export')</button>
+                        @endif
                     </div>
-                    <br>
-                    <button type="submit" class="btn btn-success">@lang('Search')</button>
-                    <a href="{{ route('branches.index') }}" class="btn bg-light btn-default">@lang('Clear')</a>
-
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
     @endif
     @if ($lists->count() > 0)
 
@@ -185,75 +219,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($lists as $list)
-                                    <tr>
-                                        <td>
-                                            <a href="{{ route('branches.edit', $list->id) }}">
-                                                {{ $list->name ?? '' }}
-                                            </a>
-                                        </td>
-                                       
-                                        <td>
-                                            {{ optional($list->project)->name}}
-                                        </td>
-                                        <td>
-                                            {{ $list->sector }}
-                                        </td>
-                                        <td>
-                                            {{ $list->area }}
-                                        </td>
-                                       
-                                        <td>
-                                            {{ optional($list->upsInstallation)->name}}
-                                        </td>
-                                        <td>
-                                            {{ optional($list->lineType)->name}}
-                                        </td>
-                                        <td>
-                                            {{ $list->wan_ip }}
-                                        </td>
-                                        <td>
-                                            {{ $list->lan_ip }}
-                                        </td>
-                                        <td>
-                                            {{ $list->telephone }}
-                                        </td>
-                                        <td>
-                                            {{ $list->address }}
-                                        </td>
-                                        <td>
-                                            {{ $list->main_order_id }}
-                                        </td>
-                                        <td>
-                                            {{ $list->backup_order_id }}
-                                        </td>
-                                        <td style="display: inline-flex;">
-                                           @if (auth()->user()->can('Branche_terminal-branches'))
-                                            <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
-                                                href="{{ route('branches.commander', $list->id) }}">
-                                                <i class="bx bx-terminal"></i>
-                                            </a>
-                                            @endif
-                                           @if (auth()->user()->can('Branche_read-branches'))
-                                            <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
-                                                href="{{ route('branches.show', $list->id) }}">
-                                                <i class="bx bx-zoom-in"></i>
-                                            </a>
-                                           @endif
-                                           @if (auth()->user()->can('Branche_update-branches'))
-                                            <a style="margin-right: 5px;" class="btn btn-outline-secondary btn-sm edit"
-                                                href="{{ route('branches.edit', $list->id) }}">
-                                                <i class="bx bx-pencil"></i>
-                                            </a>
-                                           @endif
-                                           @if (auth()->user()->can('Branche_delete-branches'))
-                                                {!! action_table_delete(route('branches.destroy', $list->id), $list->id) !!}
-                                           @endif
-
-
-                                        </td>
-                                    </tr>
-                                @endforeach
+                               
                             </tbody>
                         </table>
                     </div>
@@ -293,22 +259,65 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
 
     <script>
-        $('#filter').on('click' , function (){
+        $('#filter').on('click', function() {
             $('#filter-body').slideToggle('slow');
         });
 
         $('.select2').select2({});
 
 
-        $(function () {
-            $('#branchesTable').DataTable({
-            'order': [[1, 'desc']],
-                    responsive: true,
-                    "dom": 'lBfrtip',
-                    "buttons": [
-                            'copy', 'csv', 'excel', 'pdf', 'print',
+       
+        function exportFile() {
+            $('#exportInput').val('1');
+            setTimeout(() => {
+                $('#exportInput').val('0');
+            }, 1000);
+        }
+
+
+        function reloadData(project_id,ups_installation_id,line_type_id, sector,work_days,start_time, end_time) {
+            //console.log(level+"-"+department);
+            var url = "{{ route('branches.getData') }}?project_id=" + project_id+"&ups_installation_id="+ ups_installation_id+"&line_type_id="+line_type_id+"&sector="+sector+"&work_days="+work_days+"&start_time="+start_time+"&end_time="+end_time;
+            BranchesDatatable.ajax.url(url).load();
+        }
+
+        var BranchesDatatable = null;
+        function setBranchesDataTable() {
+            var url = "{{ route('branches.getData') }}";
+            BranchesDatatable = $('#branchesTable').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    //"pageLength": 5,
+                    "lengthMenu": [[10, 25, 50, 100,200,300 , 500 , 1000 , 2000 , 5000 , 10000], [10, 25, 50, 100,200,300 , 500 , 1000 , 2000 , 5000 , 10000]],
+                    dom: 'lBfrtip',
+                    // buttons: [
+                    //         'copyHtml5',
+                    //         'excelHtml5',
+                    //         'csvHtml5',
+                    //         'pdfHtml5'
+                    // ],
+                    "sorting": [0, 'DESC'],
+                    "ajax": url,
+                    "columns":[
+                    { "data": "name" },
+                    { "data": "project_id" },
+                    { "data": "sector" },
+                    { "data": "area" },
+                    { "data": "ups_installation_id" },
+                    { "data": "line_type_id" },
+                    { "data": "wan_ip" },
+                    { "data": "lan_ip" },
+                    { "data": "telephone" },
+                    { "data": "address" },
+                    { "data": "main_order_id" },
+                    { "data": "backup_order_id" },
+                    { "data": "action" }
                     ]
             });
+        }
+
+        $(function() {
+            setBranchesDataTable();
         });
     </script>
 @endpush

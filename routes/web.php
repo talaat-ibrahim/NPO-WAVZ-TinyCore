@@ -37,7 +37,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/branches/commander/{branch}', [\App\Http\Controllers\Branches\BranchesController::class, "commander"])->name("branches.commander");
     Route::post('/branches/cmd', [\App\Http\Controllers\Branches\BranchesController::class, "execute"])->name('branches.cmd');
     Route::post('/branches/import', [\App\Http\Controllers\Branches\BranchesController::class, "import"])->name('branches.import');
-    Route::get('/branches/export', [\App\Http\Controllers\Branches\BranchesController::class, 'export'])->name('branches.export');
+    Route::get('/branches/download', [\App\Http\Controllers\Branches\BranchesController::class, 'downloadTemplate'])->name('branches.downloadTemplate');
+    Route::get('/branches/get-datatable', [\App\Http\Controllers\Branches\BranchesController::class, 'getData'])->name('branches.getData');
     Route::resource('/branches', \App\Http\Controllers\Branches\BranchesController::class);
 
     // Network

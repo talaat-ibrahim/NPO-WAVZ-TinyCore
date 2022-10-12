@@ -23,16 +23,6 @@
                             @enderror
                         </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingNumberInput" name="number"
-                                placeholder="@lang('Number')" />
-                            <label for="floatingNumberInput">@lang('Number')</label>
-                            @error('number')
-                                <span style="color:red;">
-                                    {{ $errors->first('number') }}
-                                </span>
-                            @enderror
-                        </div>
 
                         <div class="row" style=" margin-top: 20px; ">
                             <div style="text-align: right">

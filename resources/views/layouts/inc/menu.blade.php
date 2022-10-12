@@ -84,7 +84,7 @@
                     </a>
                 </li>
                 @endif
-                @if(auth()->user()->can('Branche_read-router'))
+                @if(auth()->user()->can('Branche_read-router-type'))
                 <li>
                     <a href="{{ route('routers.index') }}" class="waves-effect">
                         <i class="bx bxs-user-pin"></i>

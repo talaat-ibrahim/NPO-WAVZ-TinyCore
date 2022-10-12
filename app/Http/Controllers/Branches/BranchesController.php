@@ -21,7 +21,7 @@ use App\Models\Router;
 use App\Models\SwitchModel;
 use App\Models\Terminal;
 use App\Models\UpsInstallation;
-
+use DataTables;
 class BranchesController extends Controller
 {
     public function index()
@@ -51,7 +51,7 @@ class BranchesController extends Controller
                     ->orWhere('sector', 'like', '%' . $keyword . '%')
                     ->orWhere('address', 'like', '%' . $keyword . '%')
                     ->orWhere('telephone', 'like', '%' . $keyword . '%');
-            })->orderBy('id', 'asc')->paginate();
+            })->orderBy('id', 'asc')->paginate(30);
 
         }
         //filter by project_id
@@ -76,34 +76,39 @@ class BranchesController extends Controller
         $lists = Branch::when(request('line_type_id'), function ($query) {
             $line_type_id = request('line_type_id');
             $query->whereIn('line_type_id',   $line_type_id );
-        })->orderBy('id', 'asc')->paginate(20);
+        })->orderBy('id', 'asc')->paginate(30);
 
        }
-        //filter by  sector 
+        //filter by  sector
        if(request('sector')){
         $lists = Branch::when(request('sector'), function ($query) {
             $sector = request('sector');
             $query->whereIn('sector',   $sector );
-        })->orderBy('id', 'asc')->paginate(20);
+        })->orderBy('id', 'asc')->paginate(30);
 
        }
-
-        //filter by  time 
+       if(request('area')){
+            $lists = Branch::when(request('area'), function ($query) {
+                $area = request('area');
+                $query->whereIn('area',   $area);
+            })->orderBy('id', 'asc')->paginate(30);
+       }
+        //filter by  time
         if(request('start_time') != null ){
             $lists = Branch::when(request('start_time'), function ($query) {
                 $start_time = request('start_time');
                 $query->where('start_time', '<=',  $start_time );
-            })->orderBy('id', 'asc')->paginate(20);
+            })->orderBy('id', 'asc')->paginate(30);
            }
-        //filter by  time 
+        //filter by  time
         if( request('end_time') != null){
-           
+
             $lists = Branch::when(request('end_time'), function ($query) {
                 $end_time = request('end_time');
                 $query->where('end_time', '>=',  $end_time );
-            })->orderBy('id', 'asc')->paginate(20);
+            })->orderBy('id', 'asc')->paginate(30);
            }
-        //filter by  working days 
+        //filter by  working days
        if(request('work_day')){
         $lists = Branch::when(request('work_day'), function ($query) {
             $work_day = request('work_day');
@@ -112,12 +117,16 @@ class BranchesController extends Controller
               $branch[] =  $query->whereIn('working_days->'.$val,   $work_day )->get();
             }
             $query = $branch;
-            
-        })->orderBy('id', 'asc')->paginate(20);
+
+        })->orderBy('id', 'asc')->paginate(30);
 
        }
-        
-       
+
+       if (request()->export == 1) {
+            return Excel::download(new BranchsExport, 'branches.xlsx');
+       }
+
+
         return view('pages.branches.index', [
             'breadcrumb' => $breadcrumb,
             'lists'     => $lists,
@@ -125,6 +134,7 @@ class BranchesController extends Controller
             'upsInstallations' => UpsInstallation::all(),
             'lineTypes' => LineType::all(),
             'sectors' => Branch::groupby('sector')->distinct()->pluck('sector')->toArray(),
+            'areas' => Branch::groupby('area')->distinct()->pluck('area')->toArray(),
             'days' =>Branch::$DAYS,
         ]);
     }
@@ -192,14 +202,18 @@ class BranchesController extends Controller
         ];
         $work_day=[];
         if($branch->working_days){
-            foreach($branch->working_days as $k=>$v){
+            if (is_array($branch->working_days))
+                $workDays = $branch->working_days;
+            else
+                $workDays = json_decode($branch->working_days);
+            foreach($workDays as $k=>$v){
                 $work_day[]= $k;
             }
         }
         return view('pages.branches.show', [
             'breadcrumb'    =>  $breadcrumb,
             'branch'         =>  $branch,
-            'days' =>Branch::$DAYS,
+            'days' => Branch::$DAYS,
             'work_day'=>$work_day,
         ]);
     }
@@ -221,7 +235,11 @@ class BranchesController extends Controller
         ];
         $work_day=[];
         if($branch->working_days){
-            foreach($branch->working_days as $k=>$v){
+            if (is_array($branch->working_days))
+                $workDays = $branch->working_days;
+            else
+                $workDays = json_decode($branch->working_days);
+            foreach($workDays as $k=>$v){
                 $work_day[]= $k;
             }
         }
@@ -259,7 +277,18 @@ class BranchesController extends Controller
     {
         Excel::import(new BranchesImport, $request->file('file'));
 
-        return redirect('/')->with('success', 'All good!');
+        return redirect()->route('branches.index')->with('success', 'All good!');
+    }
+
+    public function downloadTemplate(Request $request)
+    {
+        $file= public_path(). "/files/Pinger_Excel_Template.xlsx";
+
+        $headers = array(
+            'Content-Type: application/xlsx',
+        );
+
+        return  response()->download($file, 'template.xlsx', $headers);
     }
 
     public function commander(Branch $branch, Request $request) {
@@ -322,5 +351,58 @@ class BranchesController extends Controller
                 "msg" => __('Missing Ip And Command')
             ];
         }
+    }
+
+
+
+    public function getData(Request $request) {
+        $query = Branch::query();
+        //$course = Subject::find(request()->course_id);
+        if(request()->project_id){
+            $query->where('project_id',  request()->project_id);
+        }
+        if(request()->ups_installation_id){
+            $query->where('ups_installation_id',  request()->ups_installation_id);
+        }
+        if(request()->line_type_id){
+            $query->where('line_type_id',  request()->line_type_id);
+        }
+        if(request()->sector){
+            $query->where('sector',  request()->sector);
+        }
+        if(request()->area){
+            $query->where('area',  request()->area);
+        }
+        if(request('start_time') != null ){
+                $query->where('start_time', '<=',  request('start_time') );
+        }
+        //filter by  time
+        if( request('end_time') != null){
+                $query->where('end_time', '>=',  request('end_time') );
+        }
+        if(request('work_day')){
+                $query->where('working_days->'.request('work_day'),  request('work_day') )->get();
+            
+            }
+        
+        return DataTables::eloquent($query->latest())   
+                        ->addColumn('action', function(Branch $branch) {
+                            $type = "action";
+                            return view("pages.branches.action", compact("branch", "type"));
+                        })
+                        
+                        ->editColumn('project_id', function(Branch $branch) {
+                            return optional($branch->project)->name;
+                        })
+                        ->editColumn('ups_installation_id', function(Branch $branch) {
+                            return optional($branch->upsInstallation)->name;
+                        })
+                        ->editColumn('line_type_id', function(Branch $branch) {
+                            return optional($branch->lineType)->name;
+                        })
+                        
+                       
+                        ->rawColumns(['action'])
+                        ->toJson();
     }
 }

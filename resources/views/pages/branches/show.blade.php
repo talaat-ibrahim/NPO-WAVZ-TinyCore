@@ -17,7 +17,7 @@
                     <div class="  p-3" style="border-bottom: 2px dashed lightblue">
                             <b>@lang('Name ') :</b>
                             <span class="me-3 ms-3"> {{ $branch->name}}</span>
-                       
+
                     </div>
                     <div class="p-3" style="border-bottom: 2px dashed lightblue">
                         <div class="row">
@@ -202,15 +202,15 @@
                 </div> <hr style="margin: 0">
                 <div class="card-body bg-white">
                     <div class="p-3" style="border-bottom: 2px dashed lightblue" >
-                        <b>@lang('Technical support name') :</b> 
+                        <b>@lang('Technical support name') :</b>
                         <span class="me-3 ms-3"> {{ $branch->technical_support_name }}</span>
                     </div>
                     <div class="p-3" style="border-bottom: 2px dashed lightblue" >
-                        <b>@lang('Technical support phone') :</b> 
+                        <b>@lang('Technical support phone') :</b>
                         <span class="me-3 ms-3"> {{ $branch->technical_support_phone }}</span>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
         <div class="col-md-6">
             <div class="card  ">
@@ -219,15 +219,15 @@
                 </div> <hr style="margin: 0">
                 <div class="card-body bg-white">
                     <div class="p-3" style="border-bottom: 2px dashed lightblue" >
-                        <b>@lang('Branch Manager name') :</b> 
+                        <b>@lang('Branch Manager name') :</b>
                         <span class="me-3 ms-3"> {{ $branch->branch_manager_name }}</span>
                     </div>
                     <div class="p-3" style="border-bottom: 2px dashed lightblue" >
-                        <b>@lang('Branch Manager phone') :</b> 
+                        <b>@lang('Branch Manager phone') :</b>
                         <span class="me-3 ms-3"> {{ $branch->branch_manager_phone }}</span>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
         <div class="col-md-12">
             <div class="card  ">
@@ -249,12 +249,12 @@
                                     </div>
                                 </td>
                                @endforeach
-                                
-                               
+
+
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
                     </table>
                     <div class="row pt-3">
@@ -270,7 +270,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            
+
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
@@ -287,7 +287,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
 

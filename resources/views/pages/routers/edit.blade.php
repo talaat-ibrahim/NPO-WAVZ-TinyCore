@@ -22,16 +22,6 @@
                             @enderror
                         </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingNumberInput" name="number"
-                                value="{{ old('name', $data->number) }}" placeholder="@lang('Name')" />
-                            <label for="floatingNumberInput">@lang('number')</label>
-                            @error('number')
-                                <span style="color:red;">
-                                    {{ $errors->first('number') }}
-                                </span>
-                            @enderror
-                        </div>
 
                         <div class="row" style=" margin-top: 20px; ">
                             <div style="text-align: right">
