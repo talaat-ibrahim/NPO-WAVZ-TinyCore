@@ -210,7 +210,7 @@ class BranchesController extends Controller
                 $workDays = $branch->working_days;
             else
                 $workDays = json_decode($branch->working_days);
-            foreach($workDays as $k=>$v){
+            foreach($workDays as $v){
                 $work_day[]= $v;
             }
         }
