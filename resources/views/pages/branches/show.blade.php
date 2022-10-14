@@ -176,7 +176,7 @@
                         <span class="me-3 ms-3"> {{ $branch->additional_ips }}</span>
                     </div>
                     <div class="p-3" style="border-bottom: 2px dashed lightblue">
-                        <b>@lang('Ip nots ') :</b>
+                        <b>@lang('Ip nots') :</b>
                         <span class="me-3 ms-3"> {{ $branch->ip_notes }}</span>
                     </div>
                 </div>
@@ -186,7 +186,7 @@
         <div class="col-md-12 col-12">
             <div class="card  ">
                 <div class="card-header bg-white ">
-                    <h5><b>@lang('Route & Switch & AtM'):</b></h5>
+                    <h5><b>@lang('Router | Switch | ATM'):</b></h5>
                 </div>
                 <hr style="margin: 0">
                 <div class="card-body bg-white">
