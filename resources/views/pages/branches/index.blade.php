@@ -23,7 +23,7 @@
                 style="display: flex; justify-content: space-between; gap: 10px">
                 @csrf
                 <div style="height: 40px;">
-                    <input onkeyup="reloadData()" required type="file" class="form-control" name="file" />
+                    <input required type="file" class="form-control" name="file" />
                 </div>
                 <button type="submit" class="btn btn-success">@lang('Import')</button>
                 <a role="button" href="{{ route('branches.downloadTemplate') }}" class="btn btn-primary">@lang('Download Template File')</a>
@@ -44,7 +44,7 @@
                         <div class="row">
                             <div class="col-md-12 pt-2">
                                 <div class="form-floating">
-                                    <input id="keyword" type="text" class="form-control" style="height: 58px;" name="keyword"
+                                    <input onkeyup="reloadData()" id="keyword" type="text" class="form-control" style="height: 58px;" name="keyword"
                                         value="{{ request('keyword') }}" placeholder="@lang('Search...') }}" />
                                     <label style="margin-top: -10px;">@lang('Search...')</label>
                                 </div>
