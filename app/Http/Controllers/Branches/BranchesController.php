@@ -373,6 +373,7 @@ class BranchesController extends Controller
             $keyword = request()->keyword;
             $query->Where('lan_ip', 'like', '%' . $keyword . '%')
                     ->orWhere('wan_ip', 'like', '%' . $keyword . '%')
+                    ->orWhere('name', 'like', '%' . $keyword . '%')
                     ->orWhere('project_id', 'like', '%' . $keyword . '%')
                     ->orWhere('tunnel_ip', 'like', '%' . $keyword . '%')
                     ->orWhere('main_order_id', 'like', '%' . $keyword . '%')
