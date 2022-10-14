@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Branch extends Model
 {
@@ -15,7 +16,7 @@ class Branch extends Model
     protected $casts = [
         'name' => 'json',
         'additional_ips' => 'array',
-        'working_days' => 'json',
+        //'working_days' => 'json',
     ];
 
     public static $DAYS = [
@@ -27,6 +28,10 @@ class Branch extends Model
         'Thu' => 'Thursday' ,
         'Fri' => 'Friday' ,
     ];
+
+    public function getWorkingDaysAttribute() {
+        return DB::table('working_days')->where('branch_id', $this->id)->pluck('day')->toArray();
+    }
 
     public function network()
     {
@@ -83,5 +88,18 @@ class Branch extends Model
 
     public function government(){
         return $this->belongsTo(Government::class);
+    }
+
+    public function createOrUpdateWorkingDays($workingDays) {
+        // delete old
+        DB::table('working_days')->where('branch_id', $this->id)->delete();
+
+        // add new
+        foreach ($workingDays as $item) {
+            DB::table('working_days')->insert([
+                "branch_id" => $this->id,
+                "day" => $item,
+            ]);
+        }
     }
 }

@@ -1,8 +1,17 @@
 @extends('layouts.master')
 @section('PageTitle', $breadcrumb['title'])
 @section('css')
-    <link rel="stylesheet" href="{{ asset('assets/css/datatable/bootstrap.min.css') }}">
-    <link href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css" rel="stylesheet" />
+{{--
+<link href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css" rel="stylesheet" />
+    --}}
+    <link href="{{ url('/assets/css/datatable/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ url('/assets/css/datatable/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
+
+    <style>
+        .select2-selection--multiple {
+            padding-top: 20px!important;
+        }
+    </style>
 @endsection
 @section('PageContent')
     @includeIf('layouts.inc.breadcrumb')
@@ -65,8 +74,7 @@
 
                             <div class="col-md-4 pt-2">
                                 <div class="form-floating">
-                                    <select id="project_id" class="form-control select2" name="project_id"placeholder="@lang('Project')">
-                                        <option  value="">@lang('Select')</option>
+                                    <select id="project_id" multiple class="form-control select2" name="project_id"placeholder="@lang('Project')">
                                         @foreach ($projects as $project)
                                             <option
                                                 {{ !empty(request('project_id')) ? (in_array($project->id, request('project_id')) ? 'selected' : '') : '' }}
@@ -79,8 +87,7 @@
                             </div>
                             <div class="col-md-4 pt-2">
                                 <div class="form-floating">
-                                    <select id="ups_installation_id" class="form-control select2"name="ups_installation_id"placeholder="@lang('UPS installation') ">
-                                        <option  value="">@lang('Select')</option>
+                                    <select id="ups_installation_id" multiple class="form-control select2"name="ups_installation_id"placeholder="@lang('UPS installation') ">
                                         @foreach ($upsInstallations as $ups)
                                             <option
                                                 {{ !empty(request('ups_installation_id')) ? (in_array($ups->id, request('ups_installation_id')) ? 'selected' : '') : '' }}
@@ -94,9 +101,8 @@
                             </div>
                             <div class="col-md-4 pt-2">
                                 <div class="form-floating">
-                                    <select id="line_type_id" class="form-control select2"
+                                    <select id="line_type_id" multiple class="form-control select2"
                                         name="line_type_id"placeholder="@lang('Line Type') " >
-                                        <option  value="">@lang('Select')</option>
                                         @foreach ($lineTypes as $line)
                                             <option
                                                 {{ !empty(request('line_type_id')) ? (in_array($line->id, request('line_type_id')) ? 'selected' : '') : '' }}
@@ -110,9 +116,8 @@
                             </div>
                             <div class="col-md-4 pt-2">
                                 <div class="form-floating">
-                                    <select id="sector" class="form-control select2" name="sector" placeholder="@lang('Sector')"
+                                    <select id="sector" multiple class="form-control select2" name="sector" placeholder="@lang('Sector')"
                                         >
-                                        <option  value="">@lang('Select')</option>
                                         @foreach ($sectors as $key => $sector)
                                             <option
                                                 {{ !empty(request('sector')) ? (in_array($sector, request('sector')) ? 'selected' : '') : '' }}
@@ -124,14 +129,13 @@
 
                                 </div>
                             </div>
-                        
-                       
-                        
+
+
+
                             <div class="col-md-4 pt-2">
                                 <div class="form-floating">
-                                    <select id="area" class="form-control select2" name="area" placeholder="@lang('Area')"
+                                    <select id="area" multiple class="form-control select2" name="area" placeholder="@lang('Area')"
                                         >
-                                        <option  value="">@lang('Select')</option>
                                         @foreach ($areas as $key => $area)
                                             <option
                                                 {{ !empty(request('area')) ? (in_array($area, request('area')) ? 'selected' : '') : '' }}
@@ -149,9 +153,8 @@
                                             text-align: center !important
                                         }
                                     </style>
-                                    <select id="work_day" class="form-control select2" name="work_day"placeholder="@lang('Working Days') "
+                                    <select multiple id="work_day" class="form-control select2" name="work_day"placeholder="@lang('Working Days') "
                                     >
-                                        <option  value="">@lang('Select')</option>
                                         @foreach ($days as $key => $val)
                                             <option
                                             {{ !empty(request('work_day')) ? (in_array($key, request('work_day')) ? 'selected' : '') : '' }}
@@ -219,7 +222,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                             </tbody>
                         </table>
                     </div>
@@ -250,13 +253,16 @@
 
 @endsection
 @push('scripts')
-<script src="{{ asset('assets/js/datatable/dataTables.buttons.min.js') }}"></script>
 <script src="{{ asset('assets/js/datatable/jquery.dataTables.min.js') }}"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.js"></script>    
+<script src="{{ asset('assets/js/datatable/dataTables.bootstrap5.min.js') }}"></script>
+{{--
+<script type="text/javascript" src="{{ url('/') }}/assets/js/datatable/dataTables.buttons.min.js"></script>
+<script src="{{ url('/') }}/assets/js/datatable/buttons.bootstrap.js"></script>
+<script type="text/javascript" src="{{ url('/') }}/assets/js/datatable/buttons.html5.min.js"></script>
 <script src="{{ asset('assets/js/datatable/jszip.min.js') }}"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.bootstrap.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+<script src="{{ url('/') }}/assets/js/datatable/buttons.print.js"></script>
+<script src="{{ asset('assets/js/datatable/dataTables.buttons.min.js') }}"></script>
+ --}}
 
     <script>
         $('#filter').on('click', function() {
@@ -266,7 +272,7 @@
         $('.select2').select2({});
 
 
-       
+
         function exportFile() {
             $('#exportInput').val('1');
             setTimeout(() => {
@@ -276,9 +282,20 @@
 
 
         function reloadData(project_id,ups_installation_id,line_type_id, sector,work_days,start_time, end_time) {
-            //console.log(level+"-"+department);
-            var url = "{{ route('branches.getData') }}?project_id=" + project_id+"&ups_installation_id="+ ups_installation_id+"&line_type_id="+line_type_id+"&sector="+sector+"&work_days="+work_days+"&start_time="+start_time+"&end_time="+end_time;
-            BranchesDatatable.ajax.url(url).load();
+            var url = "{{ route('branches.getData') }}";
+            var data = {
+                project_id: $("#project_id").val(),
+                ups_installation_id: $("#ups_installation_id").val(),
+                line_type_id: $("#line_type_id").val(),
+                sector: $("#sector").val(),
+                area: $("#area").val(),
+                work_day: $("#work_day").val(),
+                start_time: $("#start_time").val(),
+                end_time: $("#end_time").val(),
+            };
+            console.log(data);
+            //var url = "{{ route('branches.getData') }}?project_id=" + project_id+"&ups_installation_id="+ ups_installation_id+"&line_type_id="+line_type_id+"&sector="+sector+"&work_days="+work_days+"&start_time="+start_time+"&end_time="+end_time;
+            BranchesDatatable.ajax.url(url + "?" + $.param(data)).load();
         }
 
         var BranchesDatatable = null;
@@ -289,7 +306,7 @@
                     "serverSide": true,
                     //"pageLength": 5,
                     "lengthMenu": [[10, 25, 50, 100,200,300 , 500 , 1000 , 2000 , 5000 , 10000], [10, 25, 50, 100,200,300 , 500 , 1000 , 2000 , 5000 , 10000]],
-                    dom: 'lBfrtip',
+                   // dom: 'lBfrtip',
                     // buttons: [
                     //         'copyHtml5',
                     //         'excelHtml5',

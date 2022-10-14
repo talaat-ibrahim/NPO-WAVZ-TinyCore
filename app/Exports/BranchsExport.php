@@ -101,7 +101,6 @@ class BranchsExport implements FromView
             $query = $branch;
 
         })->orderBy('id', 'asc')->paginate(20);
-
        }
 
        return $lists;

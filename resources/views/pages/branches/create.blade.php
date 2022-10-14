@@ -558,7 +558,7 @@
                                                 <div class="form-check">
                                                     <label class="form-check-label">
                                                         <input onclick="showInput(this)" data-day="{{ $key }}" class="form-check-input" type="checkbox"
-                                                            name="working_days[{{ $key }}]" value="{{ $key }}">
+                                                            name="working_days[]" value="{{ $key }}">
                                                         {{ $value }}
                                                     </label>
                                                 </div>

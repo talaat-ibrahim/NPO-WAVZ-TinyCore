@@ -553,7 +553,7 @@
                                                 <div class="form-check">
                                                     <label class="form-check-label">
                                                         <input onclick="showInput(this)"  {{in_array($k , $work_day) ? 'checked':'' }} class="form-check-input" type="checkbox"
-                                                            name="working_days[{{ $k }}]" value="{{ $k }}">
+                                                            name="working_days[]" value="{{ $k }}">
                                                        {{  $v }}
                                                     </label>
                                                 </div>

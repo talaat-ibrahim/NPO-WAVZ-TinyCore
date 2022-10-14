@@ -22,6 +22,8 @@ use App\Models\SwitchModel;
 use App\Models\Terminal;
 use App\Models\UpsInstallation;
 use DataTables;
+use Illuminate\Support\Facades\DB;
+
 class BranchesController extends Controller
 {
     public function index()
@@ -37,7 +39,7 @@ class BranchesController extends Controller
             ],
         ];
         $lists = Branch::orderBy('id', 'asc')->paginate();
-        
+
         if(request('keyword')){
             $lists = Branch::when(request('keyword'), function ($query) {
                 $keyword = request('keyword');
@@ -180,8 +182,10 @@ class BranchesController extends Controller
     public function store(CreateBranchesRequest $request)
     {
         $data = $request->all();
+        //dd($data['working_days']);
         $data['user_id'] = auth()->id();
-        Branch::create($data);
+        $resource = Branch::create($data);
+        $resource->createOrUpdateWorkingDays($data['working_days']);
         return redirect()->route('branches.index')->with('success', __("This row has been created."));
     }
 
@@ -239,9 +243,11 @@ class BranchesController extends Controller
                 $workDays = $branch->working_days;
             else
                 $workDays = json_decode($branch->working_days);
-            foreach($workDays as $k=>$v){
+
+            foreach($workDays as $k){
                 $work_day[]= $k;
             }
+
         }
         return view('pages.branches.edit', [
             'breadcrumb'    =>  $breadcrumb,
@@ -263,7 +269,9 @@ class BranchesController extends Controller
 
     public function update(UpdateBranchesRequest $request, Branch $branch)
     {
-        $branch->update($request->all());
+        $data = $request->all();
+        $branch->update($data);
+        $branch->createOrUpdateWorkingDays($data['working_days']);
         return redirect()->route('branches.index')->with('success', __("This row has been updated."));
     }
 
@@ -357,40 +365,64 @@ class BranchesController extends Controller
 
     public function getData(Request $request) {
         $query = Branch::query();
-        //$course = Subject::find(request()->course_id);
-        if(request()->project_id){
-            $query->where('project_id',  request()->project_id);
+
+        if(request('keyword')){
+            $keyword = request()->keyword;
+            $query->Where('lan_ip', 'like', '%' . $keyword . '%')
+                    ->orWhere('wan_ip', 'like', '%' . $keyword . '%')
+                    ->orWhere('project_id', 'like', '%' . $keyword . '%')
+                    ->orWhere('tunnel_ip', 'like', '%' . $keyword . '%')
+                    ->orWhere('main_order_id', 'like', '%' . $keyword . '%')
+                    ->orWhere('backup_order_id', 'like', '%' . $keyword . '%')
+                    ->orWhere('area', 'like', '%' . $keyword . '%')
+                    ->orWhere('sector', 'like', '%' . $keyword . '%')
+                    ->orWhere('address', 'like', '%' . $keyword . '%')
+                    ->orWhere('telephone', 'like', '%' . $keyword . '%');
         }
-        if(request()->ups_installation_id){
-            $query->where('ups_installation_id',  request()->ups_installation_id);
+        //filter by project_id
+       if(request()->project_id){
+            $project_id = request('project_id');
+            $query->whereIn('project_id',  $project_id);
+       }
+        //filter by upsInstallations
+        if(request('ups_installation_id')){
+            $ups_installation_id = request('ups_installation_id');
+            $query->whereIn('ups_installation_id',  $ups_installation_id );
         }
-        if(request()->line_type_id){
-            $query->where('line_type_id',  request()->line_type_id);
-        }
-        if(request()->sector){
-            $query->where('sector',  request()->sector);
-        }
-        if(request()->area){
-            $query->where('area',  request()->area);
-        }
+        //filter by line type id
+       if(request('line_type_id')){
+            $line_type_id = request('line_type_id');
+            $query->whereIn('line_type_id',  $line_type_id);
+       }
+        //filter by  sector
+       if(request('sector')){
+            $sector = request('sector');
+            $query->whereIn('sector',  $sector);
+       }
+       if(request('area')){
+            $area = request('area');
+            $query->whereIn('area',  $area);
+       }
+        //filter by  time
         if(request('start_time') != null ){
-                $query->where('start_time', '<=',  request('start_time') );
+            $start_time = request('start_time');
+            $query->where('start_time', '<=',  $start_time);
         }
         //filter by  time
         if( request('end_time') != null){
-                $query->where('end_time', '>=',  request('end_time') );
+            $end_time = request('end_time');
+            $query->where('end_time', '>=',  $end_time);
         }
-        if(request('work_day')){
-                $query->where('working_days->'.request('work_day'),  request('work_day') )->get();
-            
-            }
-        
-        return DataTables::eloquent($query->latest())   
+        //filter by  working days
+       if(request('work_day')){
+            $query->whereIn(DB::raw('(select day from working_days where branch_id = branches.id)'), request('work_day'));
+       }
+        return DataTables::eloquent($query->latest())
                         ->addColumn('action', function(Branch $branch) {
                             $type = "action";
                             return view("pages.branches.action", compact("branch", "type"));
                         })
-                        
+
                         ->editColumn('project_id', function(Branch $branch) {
                             return optional($branch->project)->name;
                         })
@@ -400,8 +432,8 @@ class BranchesController extends Controller
                         ->editColumn('line_type_id', function(Branch $branch) {
                             return optional($branch->lineType)->name;
                         })
-                        
-                       
+
+
                         ->rawColumns(['action'])
                         ->toJson();
     }

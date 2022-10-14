@@ -170,7 +170,7 @@ class BranchesImport implements ToModel, WithHeadingRow
 
     protected function getWorkDays($data)
     {
-        return json_encode(explode(",", $data));
+        return explode(",", $data);
     }
 
     /**
@@ -191,7 +191,7 @@ class BranchesImport implements ToModel, WithHeadingRow
             "telephone" => $row['telephone'],
             "viop_no" => $row['viop_no'],
             "branch_level_id" => optional($this->createOrUpdateBranchLevel($row['branch_level_id']))->id,
-            "working_days" => $this->getWorkDays($row['working_days']),
+            //"working_days" => $this->getWorkDays($row['working_days']),
             "start_time" => $row['start_time'],
             "end_time" => $row['end_time'],
             "address" => $row['address'],
@@ -203,10 +203,10 @@ class BranchesImport implements ToModel, WithHeadingRow
             "network_id" => optional($this->createOrUpdateNetwork($row['network_id']))->id,
             "line_type_id" => optional($this->createOrUpdateLineType($row['line_type_id']))->id,
             "line_capacity_id" => optional($this->createOrUpdateLineCapacity($row['line_capacity_id']))->id,
-            "entuity_status_id" => optional($this->createOrUpdateEntuityStatus($row['Entuty_add-id']))->id,
+            "entuity_status_id" => optional($this->createOrUpdateEntuityStatus($row['entuty_status_id']))->id,
             "router_model_id" => optional($this->createOrUpdateRouter($row['router_model_id']))->id,
             "switch_model_id" => optional($this->createOrUpdateSwitchModel($row['switch_model_id']))->id,
-            "added_on_entuity" => $row['entuity_status'] == "Yes"? true : false,
+            "added_on_entuity" => $row['added_on_entuity'] == "Yes"? true : false,
             "lan_ip" => $row['lan_ip'],
             "additional_ips" => $row['additional_ips'],
             "ip_notes" => $row['ip_notes'],
@@ -224,6 +224,9 @@ class BranchesImport implements ToModel, WithHeadingRow
             "user_id" => auth()->user()->id,
         ];
 
-        return Branch::create($data);
+        $resource =Branch::create($data);
+        $resource->createOrUpdateWorkingDays($this->getWorkDays($row['working_days']));
+
+        return $resource;
     }
 }
