@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Branch;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,4 +72,9 @@ Route::middleware(['auth'])->group(function () {
 
     // governments
     Route::resource('/government', \App\Http\Controllers\Government\GovernmentController::class);
+
+
+    Route::get('/reset_db', function(){
+        Branch::truncate();
+    });
 });
