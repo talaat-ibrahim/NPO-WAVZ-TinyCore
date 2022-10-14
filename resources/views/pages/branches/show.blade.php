@@ -203,6 +203,10 @@
                         <span class="me-3 ms-3"> {{ $branch->switch_serial }}</span>
                     </div>
                     <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Switch Note') :</b>
+                        <span class="me-3 ms-3"> {{ $branch->switch_nots }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
                         <b>@lang('Router Serial') :</b>
                         <span class="me-3 ms-3"> {{ $branch->router_serial }}</span>
                     </div>
