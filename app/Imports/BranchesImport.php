@@ -200,7 +200,7 @@ class BranchesImport implements ToModel, WithHeadingRow
                 "backup_order_id" => $row['backup_order_id'],
                 "project_id" => optional($this->createOrUpdateProject($row['project_id']))->id,
                 "modeling" => $row['modeling'],
-                "ups_installation_id" => optional($this->createOrUpdateUps($row['project_id']))->id,
+                "ups_installation_id" => optional($this->createOrUpdateUps($row['ups_installation_id']))->id,
                 "network_id" => optional($this->createOrUpdateNetwork($row['network_id']))->id,
                 "line_type_id" => optional($this->createOrUpdateLineType($row['line_type_id']))->id,
                 "line_capacity_id" => optional($this->createOrUpdateLineCapacity($row['line_capacity_id']))->id,
