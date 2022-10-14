@@ -6,7 +6,7 @@
     @includeIf('layouts.inc.breadcrumb')
 
     <div class="row">
-        <div class="col-md-6 col-12">
+        <div class="col-md-12 col-12">
             <div class="card  ">
                 <div class="card-header bg-white ">
                     <h5><b>@lang('Branch Info'):</b></h5>
@@ -152,7 +152,7 @@
             </div>
         </div>
 
-        <div class="col-md-6 col-12">
+        <div class="col-md-12 col-12">
             <div class="card  ">
                 <div class="card-header bg-white ">
                     <h5><b>@lang('Branch Ips'):</b></h5>
@@ -192,7 +192,7 @@
             </div>
         </div>
 
-        <div class="col-md-6 col-12">
+        <div class="col-md-12 col-12">
             <div class="card  ">
                 <div class="card-header bg-white ">
                     <h5><b>@lang('Route & Switch & AtM'):</b></h5>
@@ -228,7 +228,7 @@
         </div>
 
 
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card  ">
                 <div class="card-header bg-white ">
                     <h5><b>@lang('Technical Info'):</b></h5>
@@ -245,7 +245,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card  ">
                 <div class="card-header bg-white ">
                     <h5><b>@lang('Manager  Info'):</b></h5>
