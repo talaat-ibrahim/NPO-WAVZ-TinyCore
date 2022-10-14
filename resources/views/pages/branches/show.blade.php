@@ -172,10 +172,6 @@
                         <span class="me-3 ms-3"> {{ $branch->tunnel_ip }}</span>
                     </div>
                     <div class="p-3" style="border-bottom: 2px dashed lightblue">
-                        <b>@lang('Switch Ip') :</b>
-                        <span class="me-3 ms-3"> {{ $branch->switch_ip }}</span>
-                    </div>
-                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
                         <b>@lang('Additional Ips') :</b>
                         <span class="me-3 ms-3"> {{ $branch->additional_ips }}</span>
                     </div>
@@ -183,11 +179,6 @@
                         <b>@lang('Ip nots ') :</b>
                         <span class="me-3 ms-3"> {{ $branch->ip_notes }}</span>
                     </div>
-                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
-                        <b>@lang('Atm Ip') :</b>
-                        <span class="me-3 ms-3"> {{ $branch->atm_ip }}</span>
-                    </div>
-
                 </div>
             </div>
         </div>
