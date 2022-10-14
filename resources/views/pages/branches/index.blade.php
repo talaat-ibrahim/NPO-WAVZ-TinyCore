@@ -23,7 +23,7 @@
                 style="display: flex; justify-content: space-between; gap: 10px">
                 @csrf
                 <div style="height: 40px;">
-                    <input required type="file" class="form-control" name="file" />
+                    <input onkeyup="reloadData()" required type="file" class="form-control" name="file" />
                 </div>
                 <button type="submit" class="btn btn-success">@lang('Import')</button>
                 <a role="button" href="{{ route('branches.downloadTemplate') }}" class="btn btn-primary">@lang('Download Template File')</a>
