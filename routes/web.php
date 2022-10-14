@@ -74,12 +74,12 @@ Route::middleware(['auth'])->group(function () {
     // governments
     Route::resource('/government', \App\Http\Controllers\Government\GovernmentController::class);
 
-
+/*
     Route::get('/reset_db', function(){
         Branch::truncate();
     });
     Route::get('/drop_db', function(){
         Schema::dropIfExists('branches');
 
-    });
+    });*/
 });
