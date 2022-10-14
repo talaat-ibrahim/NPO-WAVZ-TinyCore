@@ -178,7 +178,6 @@ class BranchesImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        dd($row);
         try {
             $data = [
                 "name" => $row['name'],
@@ -205,7 +204,7 @@ class BranchesImport implements ToModel, WithHeadingRow
                 "network_id" => optional($this->createOrUpdateNetwork($row['network_id']))->id,
                 "line_type_id" => optional($this->createOrUpdateLineType($row['line_type_id']))->id,
                 "line_capacity_id" => optional($this->createOrUpdateLineCapacity($row['line_capacity_id']))->id,
-                "entuity_status_id" => optional($this->createOrUpdateEntuityStatus($row['entuty_status_id']))->id,
+                "entuity_status_id" => optional($this->createOrUpdateEntuityStatus($row['entuity_status_id']))->id,
                 "router_model_id" => optional($this->createOrUpdateRouter($row['router_model_id']))->id,
                 "switch_model_id" => optional($this->createOrUpdateSwitchModel($row['switch_model_id']))->id,
                 "added_on_entuity" => $row['added_on_entuity'] == "Yes"? true : false,
