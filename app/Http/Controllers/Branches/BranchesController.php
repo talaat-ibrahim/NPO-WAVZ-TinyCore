@@ -414,9 +414,9 @@ class BranchesController extends Controller
             $query->where('end_time', '>=',  $end_time);
         }
         //filter by  working days
-       if(request('work_day')){
-            $query->whereIn(DB::raw('(select day from working_days where branch_id = branches.id)'), request('work_day'));
-       }
+        if(request('work_day')){
+            //$query->whereIn(DB::raw('(select day from working_days where branch_id = branches.id)'), request('work_day'));
+        }
         return DataTables::eloquent($query->latest())
                         ->addColumn('action', function(Branch $branch) {
                             $type = "action";
