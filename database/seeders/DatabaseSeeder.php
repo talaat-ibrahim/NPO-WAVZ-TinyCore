@@ -17,10 +17,5 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\PermissiosSeeder::class);
         $this->call(\Database\Seeders\RolesSeeder::class);
         $this->call(\Database\Seeders\AdminSeeder::class);
-        $this->call(\Database\Seeders\NetworkSeeder::class);
-        $this->call(\Database\Seeders\ProjectSeeder::class);
-        $this->call(\Database\Seeders\BranchLevelSeeder::class);
-        $this->call(\Database\Seeders\LineTypeSeeder::class);
-        $this->call(\Database\Seeders\RouterSeeder::class);
     }
 }
