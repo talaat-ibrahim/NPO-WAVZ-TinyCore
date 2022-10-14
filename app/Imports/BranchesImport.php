@@ -178,55 +178,59 @@ class BranchesImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        $data = [
-            "name" => $row['name'],
-            "area" => $row['area'],
-            "sector" => $row['sector'],
-            "financial_code" => $row['financial_code'],
-            "post_number" => $row['post_number'],
-            "technical_support_phone" => $row['technical_support_phone'],
-            "technical_support_name" => $row['technical_support_name'],
-            "branch_manager_phone" => $row['branch_manager_phone'],
-            "branch_manager_name" => $row['branch_manager_name'],
-            "telephone" => $row['telephone'],
-            "viop_no" => $row['viop_no'],
-            "branch_level_id" => optional($this->createOrUpdateBranchLevel($row['branch_level_id']))->id,
-            //"working_days" => $this->getWorkDays($row['working_days']),
-            "start_time" => $row['start_time'],
-            "end_time" => $row['end_time'],
-            "address" => $row['address'],
-            "main_order_id" => $row['main_order_id'],
-            "backup_order_id" => $row['backup_order_id'],
-            "project_id" => optional($this->createOrUpdateProject($row['project_id']))->id,
-            "modeling" => $row['modeling'],
-            "ups_installation_id" => optional($this->createOrUpdateUps($row['project_id']))->id,
-            "network_id" => optional($this->createOrUpdateNetwork($row['network_id']))->id,
-            "line_type_id" => optional($this->createOrUpdateLineType($row['line_type_id']))->id,
-            "line_capacity_id" => optional($this->createOrUpdateLineCapacity($row['line_capacity_id']))->id,
-            "entuity_status_id" => optional($this->createOrUpdateEntuityStatus($row['entuty_status_id']))->id,
-            "router_model_id" => optional($this->createOrUpdateRouter($row['router_model_id']))->id,
-            "switch_model_id" => optional($this->createOrUpdateSwitchModel($row['switch_model_id']))->id,
-            "added_on_entuity" => $row['added_on_entuity'] == "Yes"? true : false,
-            "lan_ip" => $row['lan_ip'],
-            "additional_ips" => $row['additional_ips'],
-            "ip_notes" => $row['ip_notes'],
-            "notes" => $row['notes'],
-            "wan_ip" => $row['wan_ip'],
-            "tunnel_ip" => $row['tunnel_ip'],
-            "router_serial" => $row['router_serial'],
-            "entuity_systemname" => $row['entuity_systemname'],
-            "switch_serial" => $row['switch_serial'],
-            "switch_ip" => $row['switch_ip'],
-            "switch_nots" => $row['switch_nots'],
-            "atm_exists" => $row['atm_exists'] == "Yes" ? true : false,
-            "atm_ip" => $row['atm_ip'],
-            "installation_and_commissioning" => $row['installation_and_commissioning'] == "Yes"? true : false,
-            "user_id" => auth()->user()->id,
-        ];
+        try {
+            $data = [
+                "name" => $row['name'],
+                "area" => $row['area'],
+                "sector" => $row['sector'],
+                "financial_code" => $row['financial_code'],
+                "post_number" => $row['post_number'],
+                "technical_support_phone" => $row['technical_support_phone'],
+                "technical_support_name" => $row['technical_support_name'],
+                "branch_manager_phone" => $row['branch_manager_phone'],
+                "branch_manager_name" => $row['branch_manager_name'],
+                "telephone" => $row['telephone'],
+                "viop_no" => $row['viop_no'],
+                "branch_level_id" => optional($this->createOrUpdateBranchLevel($row['branch_level_id']))->id,
+                //"working_days" => $this->getWorkDays($row['working_days']),
+                "start_time" => $row['start_time'],
+                "end_time" => $row['end_time'],
+                "address" => $row['address'],
+                "main_order_id" => $row['main_order_id'],
+                "backup_order_id" => $row['backup_order_id'],
+                "project_id" => optional($this->createOrUpdateProject($row['project_id']))->id,
+                "modeling" => $row['modeling'],
+                "ups_installation_id" => optional($this->createOrUpdateUps($row['project_id']))->id,
+                "network_id" => optional($this->createOrUpdateNetwork($row['network_id']))->id,
+                "line_type_id" => optional($this->createOrUpdateLineType($row['line_type_id']))->id,
+                "line_capacity_id" => optional($this->createOrUpdateLineCapacity($row['line_capacity_id']))->id,
+                "entuity_status_id" => optional($this->createOrUpdateEntuityStatus($row['entuty_status_id']))->id,
+                "router_model_id" => optional($this->createOrUpdateRouter($row['router_model_id']))->id,
+                "switch_model_id" => optional($this->createOrUpdateSwitchModel($row['switch_model_id']))->id,
+                "added_on_entuity" => $row['added_on_entuity'] == "Yes"? true : false,
+                "lan_ip" => $row['lan_ip'],
+                "additional_ips" => $row['additional_ips'],
+                "ip_notes" => $row['ip_notes'],
+                "notes" => $row['notes'],
+                "wan_ip" => $row['wan_ip'],
+                "tunnel_ip" => $row['tunnel_ip'],
+                "router_serial" => $row['router_serial'],
+                "entuity_systemname" => $row['entuity_systemname'],
+                "switch_serial" => $row['switch_serial'],
+                "switch_ip" => $row['switch_ip'],
+                "switch_nots" => $row['switch_nots'],
+                "atm_exists" => $row['atm_exists'] == "Yes" ? true : false,
+                "atm_ip" => $row['atm_ip'],
+                "installation_and_commissioning" => $row['installation_and_commissioning'] == "Yes"? true : false,
+                "user_id" => auth()->user()->id,
+            ];
 
-        $resource =Branch::create($data);
-        $resource->createOrUpdateWorkingDays($this->getWorkDays($row['working_days']));
+            $resource =Branch::create($data);
+            $resource->createOrUpdateWorkingDays($this->getWorkDays($row['working_days']));
 
-        return $resource;
+            return $resource;
+        } catch (\Exception $th) {
+            return null;
+        }
     }
 }
