@@ -2,6 +2,7 @@
 
 use App\Models\Branch;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,5 +77,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/reset_db', function(){
         Branch::truncate();
+    });
+    Route::get('/drop_db', function(){
+        Schema::dropIfExists('branches');
+
     });
 });

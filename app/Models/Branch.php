@@ -14,7 +14,7 @@ class Branch extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'name' => 'json',
+        //'name' => 'json',
         'additional_ips' => 'array',
         //'working_days' => 'json',
     ];
