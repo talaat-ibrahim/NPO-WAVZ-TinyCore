@@ -37,7 +37,6 @@
     </div>
     @if (auth()->user()->can('Branche_search-filter-branches'))
         <div class="filter p-3 ">
-            <form method="GET" action="{{ route('branches.index') }}">
                 <div class="card">
 
                     <div class="card-body ">
@@ -53,7 +52,6 @@
 
                     </div>
                 </div>
-            </form>
         </div>
     @endif
     @if (auth()->user()->can('Branche_filter-branches'))
