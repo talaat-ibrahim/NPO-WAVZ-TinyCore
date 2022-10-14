@@ -12,6 +12,7 @@ use App\Models\Project;
 use App\Models\Router;
 use App\Models\SwitchModel;
 use App\Models\UpsInstallation;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -178,6 +179,8 @@ class BranchesImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
+        $startTime = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['start_time']));
+        dd($startTime);
         try {
             $data = [
                 "name" => $row['name'],
