@@ -211,7 +211,7 @@ class BranchesController extends Controller
             else
                 $workDays = json_decode($branch->working_days);
             foreach($workDays as $k=>$v){
-                $work_day[]= $k;
+                $work_day[]= $v;
             }
         }
         return view('pages.branches.show', [

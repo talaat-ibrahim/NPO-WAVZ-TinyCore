@@ -179,9 +179,11 @@ class BranchesImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        dd($row['start_time']);
-        $startTime = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['start_time']));
-        dd($startTime);
+        //dd($row['start_time']);
+        //$startTime = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['start_time']));
+        //dd($startTime);
+        $startTime = date(strtotime($row['start_time']), "H:i:s");
+        $endTime = date(strtotime($row['end_time']), "H:i:s");
         try {
             $data = [
                 "name" => $row['name'],
@@ -197,8 +199,8 @@ class BranchesImport implements ToModel, WithHeadingRow
                 "viop_no" => $row['viop_no'],
                 "branch_level_id" => optional($this->createOrUpdateBranchLevel($row['branch_level_id']))->id,
                 //"working_days" => $this->getWorkDays($row['working_days']),
-                "start_time" => $row['start_time'],
-                "end_time" => $row['end_time'],
+                "start_time" => $startTime,
+                "end_time" => $endTime,
                 "address" => $row['address'],
                 "main_order_id" => $row['main_order_id'],
                 "backup_order_id" => $row['backup_order_id'],
@@ -229,7 +231,8 @@ class BranchesImport implements ToModel, WithHeadingRow
                 "user_id" => auth()->user()->id,
             ];
 
-            $resource =Branch::create($data);
+            $resource = Branch::create($data);
+            $resource = $resource->fresh();
             $resource->createOrUpdateWorkingDays($this->getWorkDays($row['working_days']));
 
             return $resource;

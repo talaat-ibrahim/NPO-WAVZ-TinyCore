@@ -244,7 +244,7 @@
                                         <label class="form-check-label">
                                             <input disabled onclick="showInput(this)" data-day="{{ $k }}" {{in_array($k , $work_day) ? 'checked':'' }} class="form-check-input" type="checkbox"
                                                 name="" value="Sat">
-                                           {{  $v }}
+                                           {{ $v }}
                                         </label>
                                     </div>
                                 </td>
