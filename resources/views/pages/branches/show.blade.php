@@ -123,21 +123,8 @@
                     <div class="p-3" style="border-bottom: 2px dashed lightblue">
                         <div class="row">
                             <div class="col-md-6">
-                                <b>@lang('Router ') :</b>
-                                <span class="me-3 ms-3"> {{ optional($branch->routerName)->name }}</span>
-                            </div>
-                            <div class="col-md-6">
                                 <b>@lang('Ups Installiation') :</b>
                                 <span class="me-3 ms-3"> {{ optional($branch->upsInstallation)->name }}</span>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <b>@lang('Model ') :</b>
-                                <span class="me-3 ms-3"> {{ optional($branch->model)->name }}</span>
                             </div>
                             <div class="col-md-6">
                                 <b>@lang('Entuty status') :</b>
@@ -148,11 +135,15 @@
                     </div>
                     <div class="p-3" style="border-bottom: 2px dashed lightblue">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <b>@lang('Government ') :</b>
                                 <span class="me-3 ms-3"> {{ optional($branch->government)->name }}</span>
                             </div>
 
+                            <div class="col-md-6">
+                                <b>@lang('modeling') :</b>
+                                <span class="me-3 ms-3"> {{ $branch->modeling }}</span>
+                            </div>
                         </div>
 
                     </div>
@@ -160,6 +151,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-md-4 col-12">
             <div class="card  ">
                 <div class="card-header bg-white ">
@@ -180,6 +172,10 @@
                         <span class="me-3 ms-3"> {{ $branch->tunnel_ip }}</span>
                     </div>
                     <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Switch Ip') :</b>
+                        <span class="me-3 ms-3"> {{ $branch->switch_ip }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
                         <b>@lang('Additional Ips') :</b>
                         <span class="me-3 ms-3"> {{ $branch->additional_ips }}</span>
                     </div>
@@ -195,6 +191,43 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-4 col-12">
+            <div class="card  ">
+                <div class="card-header bg-white ">
+                    <h5><b>@lang('Branch Ips'):</b></h5>
+                </div>
+                <hr style="margin: 0">
+                <div class="card-body bg-white">
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Switch Model') :</b>
+                        <span class="me-3 ms-3"> {{ optional($branch->model)->name }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Switch Ip') :</b>
+                        <span class="me-3 ms-3"> {{ $branch->switch_ip }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Switch Serial') :</b>
+                        <span class="me-3 ms-3"> {{ $branch->switch_serial }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Router Serial') :</b>
+                        <span class="me-3 ms-3"> {{ $branch->router_serial }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Router Model') :</b>
+                        <span class="me-3 ms-3"> {{ optional($branch->routerName)->name }}</span>
+                    </div>
+                    <div class="p-3" style="border-bottom: 2px dashed lightblue">
+                        <b>@lang('Atm Ip') :</b>
+                        <span class="me-3 ms-3"> {{ $branch->atm_ip }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <div class="col-md-6">
             <div class="card  ">
                 <div class="card-header bg-white ">
