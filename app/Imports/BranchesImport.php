@@ -182,8 +182,8 @@ class BranchesImport implements ToModel, WithHeadingRow
         //dd($row['start_time']);
         //$startTime = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['start_time']));
         //dd($startTime);
-        $startTime = date(strtotime($row['start_time']), "H:i:s");
-        $endTime = date(strtotime($row['end_time']), "H:i:s");
+        $startTime = date("H:i:s", strtotime($row['start_time']));
+        $endTime = date("H:i:s", strtotime($row['end_time']));
         try {
             $data = [
                 "name" => $row['name'],
