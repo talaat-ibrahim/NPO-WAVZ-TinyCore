@@ -28,8 +28,8 @@ class CreateBranchesTable extends Migration
             $table->string('viop_no')->nullable();
             $table->foreignId('branch_level_id')->nullable()->constrained()->cascadeOnDelete();
             $table->json('working_days')->nullable();
-            $table->string('start_time')->nullable();
-            $table->string('end_time')->nullable();
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->text("address")->nullable();
             $table->string("main_order_id")->nullable();
             $table->string("backup_order_id")->nullable();
@@ -37,7 +37,7 @@ class CreateBranchesTable extends Migration
             $table->string('modeling')->nullable();
             $table->foreignId('ups_installation_id')->nullable()->constrained()->cascadeOnDelete();
 
-           
+
             $table->foreignId('line_type_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('line_capacity_id')->nullable()->constrained()->cascadeOnDelete();
             $table->boolean('added_on_entuity')->nullable();
@@ -67,11 +67,11 @@ class CreateBranchesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            
-            
 
 
-            
+
+
+
         });
     }
 

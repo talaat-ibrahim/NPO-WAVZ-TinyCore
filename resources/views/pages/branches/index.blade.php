@@ -23,7 +23,7 @@
                 style="display: flex; justify-content: space-between; gap: 10px">
                 @csrf
                 <div style="height: 40px;">
-                    <input type="file" class="form-control" name="file" />
+                    <input required type="file" class="form-control" name="file" />
                 </div>
                 <button type="submit" class="btn btn-success">@lang('Import')</button>
                 <a role="button" href="{{ route('branches.downloadTemplate') }}" class="btn btn-primary">@lang('Download Template File')</a>
@@ -42,16 +42,12 @@
 
                     <div class="card-body ">
                         <div class="row">
-                            <div class="col-md-10 pt-2">
+                            <div class="col-md-12 pt-2">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" style="height: 58px;" name="keyword"
+                                    <input id="keyword" type="text" class="form-control" style="height: 58px;" name="keyword"
                                         value="{{ request('keyword') }}" placeholder="@lang('Search...') }}" />
                                     <label style="margin-top: -10px;">@lang('Search...')</label>
                                 </div>
-                            </div>
-                            <div class="col-md-2 pt-3">
-                                <button type="submit" class="btn btn-success">@lang('Search')</button>
-
                             </div>
                         </div>
 
@@ -187,8 +183,8 @@
                         </div>
                         <br>
                         <input type="hidden" id="exportInput" name="export">
-                        <button onclick="reloadData( $('#project_id').val(),$('#ups_installation_id').val(),$('#line_type_id').val(),$('#sector').val(),$('#area').val(),$('#work_day').val(),$('#start_time').val(),$('#end_time').val() )" type="button"  class="btn btn-success">@lang('Search')</button>
-                        <a href="{{ route('branches.index') }}" class="btn bg-light btn-default">@lang('Clear')</a>
+                        <button onclick="reloadData()" type="button"  class="btn btn-success">@lang('Search')</button>
+                        <a href="{{ route('branches.index') }}"  class="btn bg-light btn-default">@lang('Clear')</a>
                         @if (auth()->user()->can('Branche_export-branches'))
                         <button type="submit" onclick="exportFile()" class="btn btn-primary">@lang('Export')</button>
                         @endif
@@ -280,8 +276,23 @@
             }, 1000);
         }
 
+        function clearFilter() {
+            $("#project_id").val('');
+            $("#ups_installation_id").val('');
+            $("#line_type_id").val('');
+            $("#sector").val('');
+            $("#area").val('');
+            $("#work_day").val('');
+            $("#start_time").val('');
+            $("#end_time").val('');
+            $("#keyword").val('');
+            $(".select2").select2();
+            var url = "{{ route('branches.getData') }}";
+            BranchesDatatable.ajax.url(url).load();
+        }
 
-        function reloadData(project_id,ups_installation_id,line_type_id, sector,work_days,start_time, end_time) {
+
+        function reloadData() {
             var url = "{{ route('branches.getData') }}";
             var data = {
                 project_id: $("#project_id").val(),
@@ -292,6 +303,7 @@
                 work_day: $("#work_day").val(),
                 start_time: $("#start_time").val(),
                 end_time: $("#end_time").val(),
+                keyword: $("#keyword").val(),
             };
             console.log(data);
             //var url = "{{ route('branches.getData') }}?project_id=" + project_id+"&ups_installation_id="+ ups_installation_id+"&line_type_id="+line_type_id+"&sector="+sector+"&work_days="+work_days+"&start_time="+start_time+"&end_time="+end_time;
@@ -305,6 +317,7 @@
                     "processing": true,
                     "serverSide": true,
                     //"pageLength": 5,
+                    "bFilter": false,
                     "lengthMenu": [[10, 25, 50, 100,200,300 , 500 , 1000 , 2000 , 5000 , 10000], [10, 25, 50, 100,200,300 , 500 , 1000 , 2000 , 5000 , 10000]],
                    // dom: 'lBfrtip',
                     // buttons: [

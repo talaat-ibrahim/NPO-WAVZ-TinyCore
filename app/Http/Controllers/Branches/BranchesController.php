@@ -364,7 +364,10 @@ class BranchesController extends Controller
 
 
     public function getData(Request $request) {
-        $query = Branch::query();
+        $query = Branch::query()->select(
+            "*",
+            DB::raw('DATE_FORMAT(STR_TO_DATE(start_time, "%T"), "%T") as start_time_time')
+        );
 
         if(request('keyword')){
             $keyword = request()->keyword;
@@ -405,24 +408,31 @@ class BranchesController extends Controller
        }
         //filter by  time
         if(request('start_time') != null ){
-            $start_time = request('start_time');
+            $start_time = date("H:i:s", strtotime(request('start_time')));
+            //$query->where(DB::raw('DATE_FORMAT(STR_TO_DATE(start_time, "%T"), "%T")'), '<=', $start_time);
             $query->where('start_time', '<=',  $start_time);
         }
         //filter by  time
         if( request('end_time') != null){
-            $end_time = request('end_time');
+            $end_time = date("H:i:s", strtotime(request('end_time')));
+            //dd($end_time);
+            //$query->where(DB::raw('DATE_FORMAT(STR_TO_DATE(start_time, "%T"), "%T")'), '>=', $end_time);
             $query->where('end_time', '>=',  $end_time);
         }
-        //filter by  working days
+        //filter by working days
         if(request('work_day')){
-            //$query->whereIn(DB::raw('(select day from working_days where branch_id = branches.id)'), request('work_day'));
+            $ids = Branch::join('working_days', 'working_days.branch_id', '=', 'branches.id')
+                ->whereIn('day', request('work_day'))
+                ->select('branches.id as id')
+                ->pluck('id')
+                ->toArray();
+            $query->whereIn('id', $ids);
         }
-        return DataTables::eloquent($query->latest())
+        return DataTables::eloquent($query->latest('id'))
                         ->addColumn('action', function(Branch $branch) {
                             $type = "action";
                             return view("pages.branches.action", compact("branch", "type"));
                         })
-
                         ->editColumn('project_id', function(Branch $branch) {
                             return optional($branch->project)->name;
                         })
@@ -432,8 +442,6 @@ class BranchesController extends Controller
                         ->editColumn('line_type_id', function(Branch $branch) {
                             return optional($branch->lineType)->name;
                         })
-
-
                         ->rawColumns(['action'])
                         ->toJson();
     }
