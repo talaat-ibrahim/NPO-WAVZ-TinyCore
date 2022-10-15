@@ -236,7 +236,7 @@ class BranchesImport implements ToModel, WithHeadingRow
             $resource->createOrUpdateWorkingDays($this->getWorkDays($row['working_days']));
 
             return $resource;
-        } catch (\Exception $th) {
+        } catch (Exception $th) {
             return null;
         }
     }

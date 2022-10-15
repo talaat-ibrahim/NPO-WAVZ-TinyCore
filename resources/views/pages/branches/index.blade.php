@@ -200,7 +200,7 @@
                         <table class="table project-list-table table-nowrap align-middle table-borderless" id="branchesTable">
                             <thead>
                                 <tr>
-                                    <th scope="col">@lang(' Name')</th>
+                                    <th scope="col">@lang('Name')</th>
                                     <th scope="col">@lang('Project')</th>
                                     <th scope="col">@lang('Sector')</th>
                                     <th scope="col">@lang('Area')</th>
