@@ -37,6 +37,7 @@
 </div>
 <br>
 <div class="row">
+    @if (auth()->user()->can('Branche_read-branches'))
     <div class="col-md-4 pt-2">
         <a href="{{ route('branches.index') }}">
             <div class="card">
@@ -49,6 +50,8 @@
             </div>
         </a>
     </div>
+    @endif
+    @if (auth()->user()->can('Branche_read-terminal'))
     <div class="col-md-4 pt-2">
         <a href="{{ route('terminals.index') }}">
             <div class="card">
@@ -61,8 +64,11 @@
             </div>
         </a>
     </div>
+    @endif
+
+    @if (auth()->user()->can('Branche_read-users'))
     <div class="col-md-4 pt-2">
-        <a href="{{ route('users.index') }}">
+        <a href="{{ route('users.index')  }}">
             <div class="card">
                 <div class="card-body">
                     <div>
@@ -73,6 +79,8 @@
             </div>
         </a>
     </div>
+    @endif
+    @if (auth()->user()->can('Branche_read-roles'))
     <div class="col-md-4 pt-2">
         <a href="{{ route('roles.index') }}">
             <div class="card">
@@ -85,6 +93,8 @@
             </div>
         </a>
     </div>
+    @endif
+    @if (auth()->user()->can('Branche_read-network'))
     <div class="col-md-4 pt-2">
         <a href="{{ route('networks.index') }}">
             <div class="card">
@@ -97,6 +107,8 @@
             </div>
         </a>
     </div>
+    @endif
+    @if (auth()->user()->can('Branche_read-project'))
     <div class="col-md-4 pt-2">
         <a href="{{ route('projects.index') }}">
             <div class="card">
@@ -109,6 +121,8 @@
             </div>
         </a>
     </div>
+    @endif
+    @if(auth()->user()->can('Branche_read-branch-level'))
     <div class="col-md-4 pt-2">
         <a href="{{ route('levels.index') }}">
             <div class="card">
@@ -121,6 +135,8 @@
             </div>
         </a>
     </div>
+    @endif
+    @if(auth()->user()->can('Branche_read-line-type'))
     <div class="col-md-4 pt-2">
         <a href="{{ route('line-types.index') }}">
             <div class="card">
@@ -133,6 +149,8 @@
             </div>
         </a>
     </div>
+    @endif
+    @if(auth()->user()->can('Branche_read-switch-model'))
     <div class="col-md-4 pt-2">
         <a href="{{ route('switch-model.index') }}">
             <div class="card">
@@ -145,6 +163,8 @@
             </div>
         </a>
     </div>
+    @endif
+    @if(auth()->user()->can('Branche_read-line-capacity'))
     <div class="col-md-4 pt-2">
         <a href="{{ route('line-capacities.index') }}">
             <div class="card">
@@ -157,6 +177,7 @@
             </div>
         </a>
     </div>
+    @endif
 </div>
 
 
