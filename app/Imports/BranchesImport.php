@@ -34,7 +34,7 @@ class BranchesImport implements ToModel, WithHeadingRow
         $network = Network::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$network) {
-            Network::create(
+            $network =  Network::create(
                 ['name' => $name]
             );
         }
@@ -48,7 +48,7 @@ class BranchesImport implements ToModel, WithHeadingRow
         $project = Project::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$project) {
-            Project::create(
+            $project =  Project::create(
                 ['name' => $name]
             );
         }
@@ -62,7 +62,7 @@ class BranchesImport implements ToModel, WithHeadingRow
         $level = BranchLevel::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$level) {
-            BranchLevel::create(
+            $level = BranchLevel::create(
                 ['name' => $name]
             );
         }
@@ -76,7 +76,7 @@ class BranchesImport implements ToModel, WithHeadingRow
         $lineType = LineType::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$lineType) {
-            LineType::create(
+            $lineType = LineType::create(
                 ['name' => $name]
             );
         }
@@ -90,7 +90,7 @@ class BranchesImport implements ToModel, WithHeadingRow
         $lineCap = LineCapacitie::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$lineCap) {
-            LineCapacitie::create(
+            $lineCap= LineCapacitie::create(
                 ['name' => $name]
             );
         }
@@ -104,7 +104,7 @@ class BranchesImport implements ToModel, WithHeadingRow
         $entuityStatus = EntuityStatus::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$entuityStatus) {
-            EntuityStatus::create(
+            $entuityStatus= EntuityStatus::create(
                 ['name' => $name]
             );
         }
@@ -161,7 +161,7 @@ class BranchesImport implements ToModel, WithHeadingRow
         $ups = UpsInstallation::where('name', 'like', '%' . $name . '%')->first();
 
         if (!$ups) {
-            UpsInstallation::create(
+          $ups=  UpsInstallation::create(
                 ['name' => $name]
             );
         }

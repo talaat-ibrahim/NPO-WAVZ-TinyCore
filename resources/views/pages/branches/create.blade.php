@@ -375,6 +375,18 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="switch_ip"
+                                        value="{{ old('switch_ip') }}" placeholder="@lang('Switch Ip') }}" />
+                                    <label>@lang('Switch Ip')</label>
+                                    @error('switch_ip')
+                                        <span style="color:red;">
+                                            {{ $errors->first('switch_ip') }}
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-floating mb-3">
                                     <textarea class="form-control" name="switch_nots" value="{{ old('switch_nots') }}" placeholder="@lang('Switch Notes')"></textarea>

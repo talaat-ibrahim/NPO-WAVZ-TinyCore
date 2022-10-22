@@ -181,11 +181,11 @@ class BranchesController extends Controller
 
     public function store(CreateBranchesRequest $request)
     {
-        $data = $request->all();
+        $data = $request->except('working_days');
         //dd($data['working_days']);
         $data['user_id'] = auth()->id();
         $resource = Branch::create($data);
-        $resource->createOrUpdateWorkingDays($data['working_days']);
+        $resource->createOrUpdateWorkingDays($request->working_days);
         return redirect()->route('branches.index')->with('success', __("This row has been created."));
     }
 
