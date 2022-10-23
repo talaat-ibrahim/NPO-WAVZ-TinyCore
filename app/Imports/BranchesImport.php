@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Branch;
 use App\Models\BranchLevel;
 use App\Models\EntuityStatus;
+use App\Models\Government;
 use App\Models\LineCapacitie;
 use App\Models\LineType;
 use App\Models\Network;
@@ -168,6 +169,19 @@ class BranchesImport implements ToModel, WithHeadingRow
 
         return $ups;
     }
+    // public function createOrUpdateUGovernment($name)
+    // {
+    //     $name = $this->trim($name);
+    //     $government = Government::where('name', 'like', '%' . $name . '%')->first();
+
+    //     if (!$government) {
+    //       $government=  Government::create(
+    //             ['name' => $name]
+    //         );
+    //     }
+
+    //     return $government;
+    // }
 
     protected function getWorkDays($data)
     {
@@ -213,6 +227,7 @@ class BranchesImport implements ToModel, WithHeadingRow
                 "entuity_status_id" => optional($this->createOrUpdateEntuityStatus($row['entuity_status_id']))->id,
                 "router_model_id" => optional($this->createOrUpdateRouter($row['router_model_id']))->id,
                 "switch_model_id" => optional($this->createOrUpdateSwitchModel($row['switch_model_id']))->id,
+                // "government_id" => optional($this->createOrUpdateUGovernment($row['government_id']))->id,
                 "added_on_entuity" => $row['added_on_entuity'] == "Yes"? true : false,
                 "lan_ip" => $row['lan_ip'],
                 "additional_ips" => $row['additional_ips'],

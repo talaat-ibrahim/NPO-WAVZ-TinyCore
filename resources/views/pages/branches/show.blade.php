@@ -48,13 +48,14 @@
                     <div class="p-3" style="border-bottom: 2px dashed lightblue">
                         <div class="row">
                             <div class="col-md-6">
-                                <b>@lang('Phone') :</b>
-                                <span class="me-3 ms-3"> {{ $branch->telephone }}</span>
+                                <b>@lang('Government ') :</b>
+                                <span class="me-3 ms-3"> {{ optional($branch->government)->name }}</span>
                             </div>
                             <div class="col-md-6">
-                                <b>@lang('Sector') :</b>
-                                <span class="me-3 ms-3"> {{ $branch->sector }}</span>
+                                <b>@lang('Telephone') :</b>
+                                <span class="me-3 ms-3"> {{ $branch->telephone }}</span>
                             </div>
+                            
                         </div>
 
                     </div>
@@ -135,11 +136,11 @@
                     </div>
                     <div class="p-3" style="border-bottom: 2px dashed lightblue">
                         <div class="row">
+                          
                             <div class="col-md-6">
-                                <b>@lang('Government ') :</b>
-                                <span class="me-3 ms-3"> {{ optional($branch->government)->name }}</span>
+                                <b>@lang('Sector') :</b>
+                                <span class="me-3 ms-3"> {{ $branch->sector }}</span>
                             </div>
-
                             <div class="col-md-6">
                                 <b>@lang('modeling') :</b>
                                 <span class="me-3 ms-3"> {{ $branch->modeling }}</span>

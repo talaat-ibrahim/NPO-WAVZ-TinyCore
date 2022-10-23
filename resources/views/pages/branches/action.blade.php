@@ -21,7 +21,7 @@
 </a>
 @endif
 @if (auth()->user()->can('Branche_delete-branches'))
-{!! action_table_delete(route('branches.destroy', $branch->id), $branch->id) !!}
+{!! action_table_delete(route('branches.destroy', $branch->id)) !!}
 @endif
 
 @endif

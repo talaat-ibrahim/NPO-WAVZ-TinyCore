@@ -267,14 +267,14 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <select class="form-control" name="router_model_id" placeholder="@lang('Router')">
+                                    <select class="form-control" name="router_model_id" placeholder="@lang('Router Model')">
                                         @foreach ($routers as $router)
                                             <option selected="{{ old('router_model_id') == $router->id }}"
                                                 value="{{ $router->id }}">{{ $router->name }} -- {{ $router->number }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    <label>@lang('Router')</label>
+                                    <label>@lang('Router Model')</label>
                                     @error('router_model_id')
                                         <span style="color:red;">
                                             {{ $errors->first('router_model_id') }}

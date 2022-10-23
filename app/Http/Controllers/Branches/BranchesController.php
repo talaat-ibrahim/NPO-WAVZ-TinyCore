@@ -443,6 +443,21 @@ class BranchesController extends Controller
                         ->editColumn('line_type_id', function(Branch $branch) {
                             return optional($branch->lineType)->name;
                         })
+                        ->editColumn('brance_level_id', function(Branch $branch) {
+                            return optional($branch->branchLevel)->name;
+                        })
+                        ->editColumn('line_capacity_id', function(Branch $branch) {
+                            return optional($branch->lineCapacity)->name;
+                        })
+                        ->editColumn('entuity_status_id', function(Branch $branch) {
+                            return optional($branch->entutiyStatus)->name;
+                        })
+                        ->editColumn('router_model_id', function(Branch $branch) {
+                            return optional($branch->routerName)->name;
+                        })
+                        ->editColumn('switch_model_id', function(Branch $branch) {
+                            return optional($branch->model)->name;
+                        })
                         ->rawColumns(['action'])
                         ->toJson();
     }

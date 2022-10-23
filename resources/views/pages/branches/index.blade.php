@@ -11,6 +11,31 @@
         .select2-selection--multiple {
             padding-top: 20px!important;
         }
+        #branchesTable > tbody > tr > td:nth-child(14),
+        #branchesTable > tbody > tr > td:nth-child(15),
+        #branchesTable > tbody > tr > td:nth-child(16),
+        #branchesTable > tbody > tr > td:nth-child(17),
+        #branchesTable > tbody > tr > td:nth-child(18),
+        #branchesTable > tbody > tr > td:nth-child(19),
+        #branchesTable > tbody > tr > td:nth-child(20),
+        #branchesTable > tbody > tr > td:nth-child(21),
+        #branchesTable > tbody > tr > td:nth-child(22),
+        #branchesTable > tbody > tr > td:nth-child(23),
+        #branchesTable > tbody > tr > td:nth-child(24),
+        #branchesTable > tbody > tr > td:nth-child(25),
+        #branchesTable > tbody > tr > td:nth-child(26),
+        #branchesTable > tbody > tr > td:nth-child(27),
+        #branchesTable > tbody > tr > td:nth-child(28),
+        #branchesTable > tbody > tr > td:nth-child(29),
+        #branchesTable > tbody > tr > td:nth-child(30),
+        #branchesTable > tbody > tr > td:nth-child(31),
+        #branchesTable > tbody > tr > td:nth-child(32),
+        #branchesTable > tbody > tr > td:nth-child(33),
+        #branchesTable > tbody > tr > td:nth-child(34),
+        #branchesTable > tbody > tr > td:nth-child(35)
+        {
+            display: none   
+        }
     </style>
 @endsection
 @section('PageContent')
@@ -183,9 +208,9 @@
                         <input type="hidden" id="exportInput" name="export">
                         <button onclick="reloadData()" type="button"  class="btn btn-success">@lang('Search')</button>
                         <a href="{{ route('branches.index') }}"  class="btn bg-light btn-default">@lang('Clear')</a>
-                        @if (auth()->user()->can('Branche_export-branches'))
+                        {{-- @if (auth()->user()->can('Branche_export-branches'))
                         <button type="submit" onclick="exportFile()" class="btn btn-primary">@lang('Export')</button>
-                        @endif
+                        @endif --}}
                     </div>
                 </div>
             </form>
@@ -209,9 +234,32 @@
                                     <th scope="col">@lang('Wan IP')</th>
                                     <th scope="col">@lang('Lan IP')</th>
                                     <th scope="col">@lang('Telephone')</th>
-                                    <th scope="col">@lang('address')</th>
+                                    <th scope="col">@lang('Address')</th>
+                                    <th scope="col">@lang('Switch IP')</th>
                                     <th scope="col">@lang('Main Order ID')</th>
                                     <th scope="col">@lang('Backup Order ID')</th>
+                                    <th scope="col" style="display: none">@lang('Tunnel Ip')</th>
+                                    <th scope="col" style="display: none">@lang('Atm Ip')</th>
+                                    <th scope="col" style="display: none">@lang('Financial Code')</th>
+                                    <th scope="col" style="display: none">@lang('Post Number')</th>
+                                    <th scope="col" style="display: none">@lang('Branc Level ')</th>
+                                    <th scope="col" style="display: none">@lang('Line Capacity ')</th>
+                                    <th scope="col" style="display: none">@lang('Entuity Status ')</th>
+                                    <th scope="col" style="display: none">@lang('Additional Ips ')</th>
+                                    <th scope="col" style="display: none">@lang('Router Serial ')</th>
+                                    <th scope="col" style="display: none">@lang('Router Model ')</th>
+                                    <th scope="col" style="display: none">@lang('Switch Serial ')</th>
+                                    <th scope="col" style="display: none">@lang('Switch Model ')</th>
+                                    <th scope="col" style="display: none">@lang('Technical Support Phone')</th>
+                                    <th scope="col" style="display: none">@lang('Technical Support Name')</th>
+                                    <th scope="col" style="display: none">@lang('Branch Manager Phone')</th>
+                                    <th scope="col" style="display: none">@lang('Branch Manager Name')</th>
+                                    <th scope="col" style="display: none">@lang('Working Days')</th>
+                                    <th scope="col" style="display: none">@lang('Start Time')</th>
+                                    <th scope="col" style="display: none">@lang('End Time')</th>
+                                    <th scope="col" style="display: none">@lang('Notes ')</th>
+                                    <th scope="col" style="display: none">@lang('IP Notes')</th>
+                                    <th scope="col" style="display: none">@lang('Switch Notes')</th>
                                     <th scope="col">@lang('Action')</th>
                                 </tr>
                             </thead>
@@ -249,14 +297,14 @@
 @push('scripts')
 <script src="{{ asset('assets/js/datatable/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/js/datatable/dataTables.bootstrap5.min.js') }}"></script>
-{{--
+
 <script type="text/javascript" src="{{ url('/') }}/assets/js/datatable/dataTables.buttons.min.js"></script>
 <script src="{{ url('/') }}/assets/js/datatable/buttons.bootstrap.js"></script>
 <script type="text/javascript" src="{{ url('/') }}/assets/js/datatable/buttons.html5.min.js"></script>
 <script src="{{ asset('assets/js/datatable/jszip.min.js') }}"></script>
 <script src="{{ url('/') }}/assets/js/datatable/buttons.print.js"></script>
 <script src="{{ asset('assets/js/datatable/dataTables.buttons.min.js') }}"></script>
- --}}
+
 
     <script>
         $('#filter').on('click', function() {
@@ -317,13 +365,20 @@
                     //"pageLength": 5,
                     "bFilter": false,
                     "lengthMenu": [[10, 25, 50, 100,200,300 , 500 , 1000 , 2000 , 5000 , 10000], [10, 25, 50, 100,200,300 , 500 , 1000 , 2000 , 5000 , 10000]],
-                   // dom: 'lBfrtip',
-                    // buttons: [
-                    //         'copyHtml5',
-                    //         'excelHtml5',
-                    //         'csvHtml5',
-                    //         'pdfHtml5'
-                    // ],
+                    @if (auth()->user()->can('Branche_export-branches'))
+                   dom: 'lBfrtip',
+                    buttons: [
+                            // 'copyHtml5',
+                            {
+                            extend: 'excelHtml5',
+                            className: 'btn buttons-excel  buttons-html5 btn-primary',
+                            text: 'Export',
+                        
+                            },
+                            // 'csvHtml5',
+                            // 'pdfHtml5'
+                    ],
+                    @endif
                     "sorting": [0, 'DESC'],
                     "ajax": url,
                     "columns":[
@@ -337,8 +392,31 @@
                     { "data": "lan_ip" },
                     { "data": "telephone" },
                     { "data": "address" },
+                    { "data": "switch_ip" },
                     { "data": "main_order_id" },
                     { "data": "backup_order_id" },
+                    { "data": "tunnel_ip" },
+                    { "data": "atm_ip" },
+                    { "data": "financial_code" },
+                    { "data": "post_number" },
+                    { "data": "brance_level_id" },
+                    { "data": "line_capacity_id" },
+                    { "data": "entuity_status_id" },
+                    { "data": "additional_ips" },
+                    { "data": "router_serial" },
+                    { "data": "router_model_id" },
+                    { "data": "switch_serial" },
+                    { "data": "switch_model_id" },
+                    { "data": "technical_support_phone" },
+                    { "data": "technical_support_name" },
+                    { "data": "branch_manager_phone" },
+                    { "data": "branch_manager_name" },
+                    { "data": "working_days" },
+                    { "data": "start_time" },
+                    { "data": "end_time" },
+                    { "data": "notes" },
+                    { "data": "ip_notes" },
+                    { "data": "switch_nots" },
                     { "data": "action" }
                     ]
             });

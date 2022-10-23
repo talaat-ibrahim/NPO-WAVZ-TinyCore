@@ -4,11 +4,6 @@
 
 
 
-
-
-
-
-
             modeling
             ups_installation_id
             network_id
