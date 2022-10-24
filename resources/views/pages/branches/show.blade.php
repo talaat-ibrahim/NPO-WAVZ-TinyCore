@@ -9,7 +9,7 @@
         <div class="col-md-12 col-12">
             <div class="card  ">
                 <div class="card-header bg-white ">
-                    <h5><b>@lang('Branch Info'):</b></h5>
+                    <h5><b class="w3-light-gray p-2 rounded-3">@lang('Branch Info'):</b></h5>
 
                 </div>
                 <hr style="margin: 0">
@@ -156,7 +156,7 @@
         <div class="col-md-12 col-12">
             <div class="card  ">
                 <div class="card-header bg-white ">
-                    <h5><b>@lang('Branch Ips'):</b></h5>
+                    <h5><b class="w3-light-gray p-2 rounded-3">@lang('Branch Ips'):</b></h5>
                 </div>
                 <hr style="margin: 0">
                 <div class="card-body bg-white">
@@ -187,7 +187,7 @@
         <div class="col-md-12 col-12">
             <div class="card  ">
                 <div class="card-header bg-white ">
-                    <h5><b>@lang('Router | Switch | ATM'):</b></h5>
+                    <h5><b class="w3-light-gray p-2 rounded-3">@lang('Router | Switch | ATM'):</b></h5>
                 </div>
                 <hr style="margin: 0">
                 <div class="card-body bg-white">
@@ -227,7 +227,7 @@
         <div class="col-md-12">
             <div class="card  ">
                 <div class="card-header bg-white ">
-                    <h5><b>@lang('Technical Info'):</b></h5>
+                    <h5><b class="w3-light-gray p-2 rounded-3">@lang('Technical Info'):</b></h5>
                 </div> <hr style="margin: 0">
                 <div class="card-body bg-white">
                     <div class="p-3" style="border-bottom: 2px dashed lightblue" >
@@ -244,7 +244,7 @@
         <div class="col-md-12">
             <div class="card  ">
                 <div class="card-header bg-white ">
-                    <h5><b>@lang('Manager  Info'):</b></h5>
+                    <h5><b class="w3-light-gray p-2 rounded-3">@lang('Manager  Info'):</b></h5>
                 </div> <hr style="margin: 0">
                 <div class="card-body bg-white">
                     <div class="p-3" style="border-bottom: 2px dashed lightblue" >
@@ -261,7 +261,7 @@
         <div class="col-md-12">
             <div class="card  ">
                 <div class="card-header bg-white ">
-                    <h5><b>@lang('Branch Schedular:'):</b></h5>
+                    <h5><b class="w3-light-gray p-2 rounded-3">@lang('Branch Schedular:'):</b></h5>
                 </div> <hr style="margin: 0">
                 <div class="card-body bg-white">
                     <table class="mx-2">
